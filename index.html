@@ -59,15 +59,20 @@
     </script>
 </head>
 <body class="bg-white">
+    <!-- Announcement Bar -->
+    <div class="bg-amber-500 text-white text-center py-2 px-4 text-sm font-medium">
+        🎓 Now Enrolling for 2026/2027 Academic Year &nbsp;|&nbsp; <a href="admissions.html" class="underline font-semibold hover:text-amber-100">Apply Now →</a>
+    </div>
+
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white">
+    <nav id="navbar" class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 lg:h-20">
                 <a href="index.html" class="flex items-center gap-2">
                     <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
                         <span class="text-white font-bold text-lg">ES</span>
                     </div>
-                    <div class="hidden sm:block">
+                    <div class="block">
                         <span class="font-bold text-gray-900">Excellent Spirit</span>
                         <span class="block text-xs text-gray-500">International School</span>
                     </div>
@@ -75,13 +80,13 @@
                 
                 <!-- Desktop Menu -->
                 <div class="hidden lg:flex items-center gap-8">
-                    <a href="index.html" class="text-primary-600 font-medium">Home</a>
-                    <a href="about.html" class="text-gray-600 hover:text-primary-600">About Us</a>
-                    <a href="academics.html" class="text-gray-600 hover:text-primary-600">Academics</a>
-                    <a href="admissions.html" class="text-gray-600 hover:text-primary-600">Admissions</a>
-                    <a href="gallery.html" class="text-gray-600 hover:text-primary-600">Gallery</a>
-                    <a href="contact.html" class="text-gray-600 hover:text-primary-600">Contact</a>
-                    <a href="contact.html" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full font-medium transition-all">
+                    <a href="index.html" data-navlink class="text-gray-600 hover:text-primary-600 transition-colors">Home</a>
+                    <a href="about.html" data-navlink class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a>
+                    <a href="academics.html" data-navlink class="text-gray-600 hover:text-primary-600 transition-colors">Academics</a>
+                    <a href="admissions.html" data-navlink class="text-gray-600 hover:text-primary-600 transition-colors">Admissions</a>
+                    <a href="gallery.html" data-navlink class="text-gray-600 hover:text-primary-600 transition-colors">Gallery</a>
+                    <a href="contact.html" data-navlink class="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+                    <a href="admissions.html" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full font-medium transition-all">
                         Enroll Now
                     </a>
                 </div>
@@ -100,20 +105,20 @@
             <!-- Mobile Menu -->
             <div id="mobileMenu" class="lg:hidden hidden pb-4">
                 <div class="flex flex-col gap-2">
-                    <a href="index.html" class="px-4 py-2 text-primary-600 font-medium bg-primary-50 rounded-lg">Home</a>
-                    <a href="about.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">About Us</a>
-                    <a href="academics.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Academics</a>
-                    <a href="admissions.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Admissions</a>
-                    <a href="gallery.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Gallery</a>
-                    <a href="contact.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Contact</a>
-                    <a href="contact.html" class="mt-2 bg-primary-600 text-white px-4 py-3 rounded-lg font-medium text-center">Enroll Now</a>
+                    <a href="index.html" data-navlink class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">Home</a>
+                    <a href="about.html" data-navlink class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">About Us</a>
+                    <a href="academics.html" data-navlink class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">Academics</a>
+                    <a href="admissions.html" data-navlink class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">Admissions</a>
+                    <a href="gallery.html" data-navlink class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">Gallery</a>
+                    <a href="contact.html" data-navlink class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">Contact</a>
+                    <a href="admissions.html" class="mt-2 bg-primary-600 text-white px-4 py-3 rounded-lg font-medium text-center">Enroll Now</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="gradient-bg pt-24 lg:pt-32 pb-20 lg:pb-32 relative overflow-hidden">
+    <section class="gradient-bg pt-16 lg:pt-20 pb-20 lg:pb-32 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
             <div class="absolute bottom-20 right-10 w-96 h-96 bg-amber-400 rounded-full blur-3xl"></div>
@@ -121,9 +126,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <span class="inline-block bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
-                        🎓 Now Enrolling for 2026/2027 Academic Year
-                    </span>
                     <h1 class="text-4xl lg:text-6xl font-bold text-white leading-tight mb-6">
                         Nurturing Excellent Spirits in Every Child
                     </h1>
@@ -434,7 +436,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-gray-900">Email</h4>
-                                <a href="/cdn-cgi/l/email-protection#d9bca1babcb5b5bcb7adaaa9b0abb0adb0b7adbcabb7b8adb0b6b7b8b599beb4b8b0b5f7bab6b4" class="text-primary-600 hover:text-primary-700"><span class="__cf_email__" data-cfemail="583d203b3d34343d362c2b28312a312c31362c3d2a36392c3137363934183f35393134763b3735">[email&#160;protected]</span></a>
+                                <a href="mailto:excellentspiritinternational@gmail.com" class="text-primary-600 hover:text-primary-700">excellentspiritinternational@gmail.com</a>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -510,7 +512,7 @@
                             <span>📍</span> Ashaley Botwe, Old Town, Accra
                         </li>
                         <li class="flex items-center gap-2">
-                            <span>✉️</span> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="06637e65636a6a63687275766f746f726f687263746867726f6968676a46616b676f6a2865696b">[email&#160;protected]</a>
+                            <span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" class="text-gray-400 hover:text-white transition-colors">excellentspiritinternational@gmail.com</a>
                         </li>
                         <li class="flex items-center gap-2">
                             <span>🕐</span> Mon – Fri: [School Hours]
@@ -534,4 +536,29 @@
         </svg>
     </a>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+        <script>
+        // Highlight active nav link based on current page
+        (function() {
+            var page = window.location.pathname.split('/').pop() || 'index.html';
+            if (page === '') page = 'index.html';
+            var links = document.querySelectorAll('[data-navlink]');
+            links.forEach(function(link) {
+                var href = link.getAttribute('href');
+                var isActive = href === page || (page === 'index.html' && href === 'index.html');
+                if (isActive) {
+                    link.classList.add('text-primary-600', 'font-medium');
+                    link.classList.remove('text-gray-600');
+                    // mobile
+                    if (link.classList.contains('px-4')) {
+                        link.classList.add('bg-primary-50');
+                    }
+                }
+            });
+        })();
+
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+            document.getElementById('menuIcon').classList.toggle('hidden');
+            document.getElementById('closeIcon').classList.toggle('hidden');
+        }
+    </script>
