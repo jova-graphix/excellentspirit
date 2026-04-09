@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Excellent Spirit International School</title>
+    <meta name="description" content="Learn about Excellent Spirit International School's mission, vision, and values. Quality education nurturing excellence in every child.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: {
+                        primary: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 lg:h-20">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">ES</span>
+                    </div>
+                    <div class="hidden sm:block">
+                        <span class="font-bold text-gray-900">Excellent Spirit</span>
+                        <span class="block text-xs text-gray-500">International School</span>
+                    </div>
+                </a>
+                <div class="hidden lg:flex items-center gap-8">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-600">Home</a>
+                    <a href="about.html" class="text-primary-600 font-medium">About Us</a>
+                    <a href="academics.html" class="text-gray-600 hover:text-primary-600">Academics</a>
+                    <a href="admissions.html" class="text-gray-600 hover:text-primary-600">Admissions</a>
+                    <a href="gallery.html" class="text-gray-600 hover:text-primary-600">Gallery</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-primary-600">Contact</a>
+                    <a href="contact.html" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full font-medium transition-all">Enroll Now</a>
+                </div>
+                <button onclick="toggleMenu()" class="lg:hidden p-2 text-gray-600">
+                    <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="mobileMenu" class="lg:hidden hidden pb-4">
+                <div class="flex flex-col gap-2">
+                    <a href="index.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Home</a>
+                    <a href="about.html" class="px-4 py-2 text-primary-600 font-medium bg-primary-50 rounded-lg">About Us</a>
+                    <a href="academics.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Academics</a>
+                    <a href="admissions.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Admissions</a>
+                    <a href="gallery.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Gallery</a>
+                    <a href="contact.html" class="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Contact</a>
+                    <a href="contact.html" class="mt-2 bg-primary-600 text-white px-4 py-3 rounded-lg font-medium text-center">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="gradient-bg pt-24 lg:pt-32 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">About Us</span>
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4">Building Tomorrow's Leaders Today</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">Discover our story, mission, and commitment to nurturing excellence in every child.</p>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-primary-600 font-semibold text-sm uppercase tracking-wider">Our Story</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-6">A Tradition of Excellence</h2>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        Excellent Spirit International School was founded with a clear vision: to provide quality education that nurtures the whole child. Located in Ashaley Botwe, Old Town, Accra, we have grown into a trusted educational institution serving families across the community.
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        Our motto, "Excelling in All!" reflects our commitment to developing students who are not only academically strong but also morally upright, socially responsible, and ready to lead in the future.
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        We believe that every child carries an excellent spirit within them. Our dedicated team of educators works tirelessly to help each student discover and develop their unique potential.
+                    </p>
+                </div>
+                <div class="bg-primary-600 rounded-3xl p-8">
+                    <div class="aspect-[4/3] bg-primary-500 rounded-2xl flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <div class="text-6xl mb-4">🏫</div>
+                            <p class="text-lg font-medium">Our School Campus</p>
+                            <p class="text-sm text-white/70">Photo placeholder</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-3xl p-10 shadow-sm">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-6">
+                        <span class="text-4xl">🎯</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        To provide quality education that nurtures academic excellence, builds strong moral character, and develops the whole child in a safe and supportive learning environment. We are committed to preparing our students for success in life through dedicated teaching and meaningful parent partnerships.
+                    </p>
+                </div>
+                <div class="bg-white rounded-3xl p-10 shadow-sm">
+                    <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
+                        <span class="text-4xl">🔭</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        To be a leading educational institution in Ghana that produces well-rounded, confident, and capable young people who excel academically, demonstrate strong character, and contribute positively to their communities and the world.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-primary-600 font-semibold text-sm uppercase tracking-wider">Our Foundation</span>
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-4">Core Values</h2>
+                <p class="text-gray-600 text-lg">The principles that guide everything we do at Excellent Spirit International School.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-8">
+                    <div class="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-4xl">⭐</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Excellence</h3>
+                    <p class="text-gray-600">We strive for the highest standards in everything we do, inspiring our students to reach their full potential.</p>
+                </div>
+                <div class="text-center p-8">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-4xl">🤝</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Integrity</h3>
+                    <p class="text-gray-600">We teach and practice honesty, transparency, and ethical behavior in all our interactions.</p>
+                </div>
+                <div class="text-center p-8">
+                    <div class="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-4xl">💛</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Respect</h3>
+                    <p class="text-gray-600">We value each individual and foster an environment of mutual respect among students, staff, and parents.</p>
+                </div>
+                <div class="text-center p-8">
+                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-4xl">🌱</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Growth</h3>
+                    <p class="text-gray-600">We believe in continuous improvement and support every child's journey of learning and development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Offer -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-primary-600 font-semibold text-sm uppercase tracking-wider">What Sets Us Apart</span>
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-4">Why Families Choose Us</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-8 card-hover shadow-sm">
+                    <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <span class="text-3xl">👨‍🎓</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Nursery to JHS Education</h3>
+                    <p class="text-gray-600">Complete basic education under one roof, providing continuity and consistency for your child's learning journey.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 card-hover shadow-sm">
+                    <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-6">
+                        <span class="text-3xl">👩‍🏫</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Qualified Teachers</h3>
+                    <p class="text-gray-600">Our teachers are trained, experienced, and passionate about education and child development.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 card-hover shadow-sm">
+                    <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mb-6">
+                        <span class="text-3xl">📖</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">GES Curriculum</h3>
+                    <p class="text-gray-600">We follow the Ghana Education Service curriculum, ensuring your child meets national education standards.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 card-hover shadow-sm">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+                        <span class="text-3xl">🔒</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Safe Environment</h3>
+                    <p class="text-gray-600">We maintain a secure, clean, and well-supervised environment where children can learn and play safely.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 card-hover shadow-sm">
+                    <div class="w-14 h-14 bg-rose-100 rounded-xl flex items-center justify-center mb-6">
+                        <span class="text-3xl">👨‍👩‍👧</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Parent Partnership</h3>
+                    <p class="text-gray-600">We believe in working closely with parents to support each child's education and development.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 card-hover shadow-sm">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <span class="text-3xl">⚽</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Holistic Development</h3>
+                    <p class="text-gray-600">Beyond academics, we offer sports, arts, and other activities that help develop the whole child.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">Join the Excellent Spirit Family</h2>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto mb-8">We welcome children from all backgrounds to join our nurturing learning community.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="admissions.html" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all">Start Admissions</a>
+                <a href="contact.html" class="bg-white/20 hover:bg-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all backdrop-blur-sm border border-white/30">Schedule a Visit</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold">ES</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">Excellent Spirit</span>
+                            <span class="block text-xs text-gray-400">International School</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">Nurturing excellence in every child. Quality education in Ashaley Botwe, Accra.</p>
+                    <p class="text-primary-400 font-semibold italic">"Excelling in All!"</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="academics.html" class="text-gray-400 hover:text-white transition-colors">Academics</a></li>
+                        <li><a href="admissions.html" class="text-gray-400 hover:text-white transition-colors">Admissions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Programs</h4>
+                    <ul class="space-y-3">
+                        <li><a href="academics.html" class="text-gray-400 hover:text-white transition-colors">Nursery & Kindergarten</a></li>
+                        <li><a href="academics.html" class="text-gray-400 hover:text-white transition-colors">Primary School</a></li>
+                        <li><a href="academics.html" class="text-gray-400 hover:text-white transition-colors">Junior High School</a></li>
+                        <li><a href="gallery.html" class="text-gray-400 hover:text-white transition-colors">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Contact Info</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center gap-2"><span>📍</span> Ashaley Botwe, Old Town, Accra</li>
+                        <li class="flex items-center gap-2"><span>✉️</span> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="482d302b2d24242d263c3b38213a213c21263c2d3a26293c2127262924082f25292124662b2725">[email&#160;protected]</a></li>
+                        <li class="flex items-center gap-2"><span>🕐</span> Mon – Fri: [School Hours]</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 Excellent Spirit International School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/233547713684?text=Hello%2C%20I%20am%20interested%20in%20Excellent%20Spirit%20International%20School.%20Please%20provide%20more%20information." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 lg:hidden z-50 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all">
+        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        function toggleMenu() {
+            document.
