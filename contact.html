@@ -10,6 +10,59 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
+        (function() {
+            var page = window.location.pathname.split('/').pop() || 'index.html';
+            if (page === '') page = 'index.html';
+            document.querySelectorAll('[data-navlink]').forEach(function(link) {
+                if (link.getAttribute('href') === page) {
+                    link.classList.add('text-primary-600', 'font-medium');
+                    link.classList.remove('text-gray-600');
+                    if (link.classList.contains('px-4')) link.classList.add('bg-primary-50');
+                }
+            });
+        })();
+
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+            document.getElementById('menuIcon').classList.toggle('hidden');
+            document.getElementById('closeIcon').classList.toggle('hidden');
+        }
+
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            const whatsappMsg = encodeURIComponent(
+                'Hello, my name is ' + name + '.\n' +
+                'Phone: ' + phone + '\n' +
+                'Subject: ' + subject + '\n\n' +
+                message
+            );
+            window.open('https://wa.me/233547713684?text=' + whatsappMsg, '_blank');
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Excellent Spirit International School</title>
+    <meta name="description" content="Contact Excellent Spirit International School in Ashaley Botwe, Accra. Visit us, call, or send a message via WhatsApp for admissions inquiries.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
