@@ -35,7 +35,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav id="navbar" class="bg-white shadow-sm">
+    <nav id="navbar" class="bg-white shadow-sm relative z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 lg:h-20">
                 <a href="index.html" class="flex items-center gap-2">
@@ -290,7 +290,7 @@
                     <h4 class="font-bold text-lg mb-6">Contact Info</h4>
                     <ul class="space-y-3 text-gray-400">
                         <li class="flex items-center gap-2"><span>📍</span> Ashaley Botwe, Old Town, Accra</li>
-                        <li class="flex items-center gap-2"><span>✉️</span> <a href="/cdn-cgi/l/email-protection#2d48554e4841414843595e5d445f4459444359485f434c594442434c416d4a404c4441034e4240" class="text-gray-400 hover:text-white transition-colors"><span class="__cf_email__" data-cfemail="42273a21272e2e272c3631322b302b362b2c3627302c23362b2d2c232e02252f232b2e6c212d2f">[email&#160;protected]</span></a></li>
+                        <li class="flex items-center gap-2"><span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" class="text-gray-400 hover:text-white transition-colors">excellentspiritinternational@gmail.com</a></li>
                         <li class="flex items-center gap-2"><span>🕐</span> Mon – Fri: [School Hours]</li>
                     </ul>
                 </div>
@@ -301,10 +301,7 @@
         </div>
     </footer>
 
-    </svg>
-    </a>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Active nav highlight
         (function() {
             var page = window.location.pathname.split('/').pop() || 'index.html';
@@ -318,4 +315,11 @@
             });
         })();
 
-        function togg
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+            document.getElementById('menuIcon').classList.toggle('hidden');
+            document.getElementById('closeIcon').classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
