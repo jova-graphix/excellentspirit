@@ -27,37 +27,48 @@
     </script>
     <style>
         * { font-family: 'Poppins', sans-serif; }
-        .field-input { width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #e5e7eb; border-radius: 0.75rem; outline: none; transition: border-color 0.15s; font-size: 0.9rem; }
+        .field-input { width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #e5e7eb; border-radius: 0.75rem; outline: none; transition: border-color 0.15s; font-size: 1rem; } /* 1rem prevents iOS auto-zoom on focus */
         .field-input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.15); }
         .status-dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
         .spinner { border: 3px solid #d1fae5; border-top-color: #059669; border-radius: 999px; width: 28px; height: 28px; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .image-drop { background-size: cover; background-position: center; }
+        /* Momentum scroll on iOS for horizontal nav */
+        #groupNav { -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        #groupNav::-webkit-scrollbar { display: none; }
+        /* Larger touch targets on mobile */
+        @media (max-width: 639px) {
+            .field-input { padding: 0.75rem 0.875rem; }
+            textarea.field-input { min-height: 80px; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
 
     <!-- Top bar -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-white font-bold text-sm">ES</span>
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-xs sm:text-sm">ES</span>
                 </div>
-                <div>
-                    <h1 class="font-bold text-gray-900 leading-tight">Site Settings</h1>
-                    <p class="text-xs text-gray-500 leading-tight">Excellent Spirit International School</p>
+                <div class="min-w-0">
+                    <h1 class="font-bold text-gray-900 leading-tight text-sm sm:text-base truncate">Site Settings</h1>
+                    <p class="text-xs text-gray-500 leading-tight hidden sm:block">Excellent Spirit International School</p>
                 </div>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
                 <span id="saveStatus" class="hidden text-xs text-gray-500 items-center gap-1.5"></span>
-                <button id="signOutBtn" onclick="cmsSignOut()" class="hidden text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">Sign Out</button>
-                <a href="index.html" class="text-sm font-medium text-primary-700 hover:text-primary-800 px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors">← Back to website</a>
+                <button id="signOutBtn" onclick="cmsSignOut()" class="hidden text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">Sign Out</button>
+                <a href="index.html" class="text-xs sm:text-sm font-medium text-primary-700 hover:text-primary-800 px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors whitespace-nowrap">
+                    <span class="sm:hidden">← Back</span>
+                    <span class="hidden sm:inline">← Back to website</span>
+                </a>
             </div>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         <!-- Loading state -->
         <div id="loadingState" class="flex flex-col items-center justify-center py-24 gap-4">
@@ -99,38 +110,83 @@
             </div>
         </div>
 
-        <!-- Login state -->
+        <!-- Login state: password-only -->
         <div id="loginState" class="hidden">
-            <div class="max-w-sm mx-auto bg-white rounded-3xl shadow-sm p-8 mt-10">
+            <!-- First visit: set a password -->
+            <div id="setupPanel" class="hidden max-w-sm mx-auto bg-white rounded-3xl shadow-sm p-6 sm:p-8 mt-4 sm:mt-10">
+                <div class="w-14 h-14 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                    <span class="text-2xl">🔑</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-900 mb-1 text-center">Create Admin Password</h2>
+                <p class="text-sm text-gray-500 mb-6 text-center">This is your first visit. Set a password to protect the settings page.</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                        <input type="password" id="setupPassword" class="field-input" autocomplete="new-password" placeholder="At least 6 characters">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                        <input type="password" id="setupPasswordConfirm" class="field-input" autocomplete="new-password" placeholder="Repeat password">
+                    </div>
+                    <p id="setupError" class="hidden text-sm text-red-600"></p>
+                    <button onclick="cmsSetupPassword()" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-full transition-colors">Set Password & Enter</button>
+                </div>
+            </div>
+
+            <!-- Returning visit: enter password -->
+            <div id="signinPanel" class="hidden max-w-sm mx-auto bg-white rounded-3xl shadow-sm p-6 sm:p-8 mt-4 sm:mt-10">
                 <div class="w-14 h-14 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
                     <span class="text-2xl">🔐</span>
                 </div>
                 <h2 class="text-xl font-bold text-gray-900 mb-1 text-center">Admin Sign In</h2>
-                <p class="text-sm text-gray-500 mb-6 text-center">Sign in with the admin account you created in Firebase Authentication.</p>
-                <form id="loginForm" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="loginEmail" class="field-input" required autocomplete="username">
-                    </div>
+                <p class="text-sm text-gray-500 mb-6 text-center">Enter your admin password to access site settings.</p>
+                <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" id="loginPassword" class="field-input" required autocomplete="current-password">
+                        <input type="password" id="loginPassword" class="field-input" autocomplete="current-password" placeholder="Your admin password">
                     </div>
                     <p id="loginError" class="hidden text-sm text-red-600"></p>
-                    <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-full transition-colors">Sign In</button>
-                </form>
+                    <button onclick="cmsLocalSignIn()" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-full transition-colors">Sign In</button>
+                </div>
             </div>
         </div>
 
         <!-- Editor state -->
         <div id="editorState" class="hidden">
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-1">Edit Website Content</h2>
-                <p class="text-gray-600">Changes save automatically and appear on the live site for every visitor within a second or two.</p>
+            <div class="mb-6 sm:mb-8">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Edit Website Content</h2>
+                <p class="text-sm sm:text-base text-gray-600">Changes save automatically and appear on the live site for every visitor within a second or two.</p>
+            </div>
+
+            <!-- Change password (collapsible) -->
+            <div class="bg-white rounded-3xl shadow-sm p-6 lg:p-8 mb-8">
+                <button onclick="toggleChangePassword()" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                    <span>🔑</span> Change Admin Password
+                    <svg id="changePwChevron" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div id="changePwForm" class="hidden mt-5 grid gap-4 sm:grid-cols-3 items-end">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+                        <input type="password" id="changePwCurrent" class="field-input" autocomplete="current-password" placeholder="Current password">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                        <input type="password" id="changePwNew" class="field-input" autocomplete="new-password" placeholder="At least 6 characters">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                        <input type="password" id="changePwConfirm" class="field-input" autocomplete="new-password" placeholder="Repeat new password">
+                    </div>
+                    <p id="changePwError" class="hidden text-sm text-red-600 sm:col-span-3"></p>
+                    <p id="changePwSuccess" class="hidden text-sm text-primary-600 sm:col-span-3">&#10003; Password updated successfully.</p>
+                    <div class="sm:col-span-3">
+                        <button onclick="cmsChangePassword()" class="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 sm:py-2.5 rounded-full text-sm transition-colors">Update Password</button>
+                    </div>
+                </div>
             </div>
 
             <!-- Group jump nav -->
-            <div id="groupNav" class="flex gap-2 overflow-x-auto pb-3 mb-6 sticky top-[73px] bg-gray-50 z-30 -mx-1 px-1"></div>
+            <div id="groupNav" class="flex gap-2 overflow-x-auto pb-3 mb-6 sticky top-[57px] sm:top-[73px] bg-gray-50 z-30 -mx-1 px-1"></div>
 
             <div id="fieldGroups" class="space-y-10"></div>
         </div>
@@ -406,42 +462,133 @@
       cmsDocRef = cmsDb.collection(window.CMS_DOC_PATH.collection).doc(window.CMS_DOC_PATH.doc);
       cmsImagesRef = cmsDb.collection(window.CMS_IMAGES_COLLECTION);
 
-      document.getElementById("loginForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-        var email = document.getElementById("loginEmail").value.trim();
-        var password = document.getElementById("loginPassword").value;
-        var errEl = document.getElementById("loginError");
-        errEl.classList.add("hidden");
-        cmsAuth.signInWithEmailAndPassword(email, password).catch(function (err) {
-          errEl.textContent = friendlyAuthError(err);
-          errEl.classList.remove("hidden");
-        });
-      });
-
-      cmsAuth.onAuthStateChanged(function (user) {
-        if (user) {
-          document.getElementById("signOutBtn").classList.remove("hidden");
-          loadContentAndRender();
-        } else {
-          document.getElementById("signOutBtn").classList.add("hidden");
-          show("loginState");
-        }
-      });
+      // Local password-only auth — no Firebase Auth needed for login
+      cmsLocalInit();
     });
 
-    function friendlyAuthError(err) {
-      var map = {
-        "auth/invalid-email": "That doesn't look like a valid email address.",
-        "auth/user-not-found": "No admin account found with that email.",
-        "auth/wrong-password": "Incorrect password.",
-        "auth/invalid-credential": "Incorrect email or password.",
-        "auth/too-many-requests": "Too many attempts — please wait a moment and try again."
-      };
-      return map[err.code] || err.message;
+    /* ---- Local password auth helpers ---- */
+    var CMS_PW_KEY   = "cms_admin_pw_hash";
+    var CMS_SESS_KEY = "cms_admin_session";
+
+    // Simple non-cryptographic hash (good enough for a local admin gate)
+    function cmsHash(str) {
+      var hash = 0;
+      for (var i = 0; i < str.length; i++) {
+        hash = (Math.imul(31, hash) + str.charCodeAt(i)) | 0;
+      }
+      return hash.toString(36) + "_" + str.length;
+    }
+
+    function cmsLocalInit() {
+      var hasPassword = !!localStorage.getItem(CMS_PW_KEY);
+      var hasSession  = !!sessionStorage.getItem(CMS_SESS_KEY);
+
+      if (hasSession) {
+        // Already authenticated this session
+        document.getElementById("signOutBtn").classList.remove("hidden");
+        loadContentAndRender();
+        return;
+      }
+
+      show("loginState");
+      if (hasPassword) {
+        document.getElementById("signinPanel").classList.remove("hidden");
+        document.getElementById("setupPanel").classList.add("hidden");
+      } else {
+        document.getElementById("setupPanel").classList.remove("hidden");
+        document.getElementById("signinPanel").classList.add("hidden");
+      }
+    }
+
+    function cmsSetupPassword() {
+      var pw  = document.getElementById("setupPassword").value;
+      var pw2 = document.getElementById("setupPasswordConfirm").value;
+      var err = document.getElementById("setupError");
+      err.classList.add("hidden");
+
+      if (pw.length < 6) {
+        err.textContent = "Password must be at least 6 characters.";
+        err.classList.remove("hidden");
+        return;
+      }
+      if (pw !== pw2) {
+        err.textContent = "Passwords do not match.";
+        err.classList.remove("hidden");
+        return;
+      }
+
+      localStorage.setItem(CMS_PW_KEY, cmsHash(pw));
+      sessionStorage.setItem(CMS_SESS_KEY, "1");
+      document.getElementById("signOutBtn").classList.remove("hidden");
+      loadContentAndRender();
+    }
+
+    function cmsLocalSignIn() {
+      var pw    = document.getElementById("loginPassword").value;
+      var errEl = document.getElementById("loginError");
+      errEl.classList.add("hidden");
+
+      if (cmsHash(pw) === localStorage.getItem(CMS_PW_KEY)) {
+        sessionStorage.setItem(CMS_SESS_KEY, "1");
+        document.getElementById("signOutBtn").classList.remove("hidden");
+        loadContentAndRender();
+      } else {
+        errEl.textContent = "Incorrect password. Please try again.";
+        errEl.classList.remove("hidden");
+      }
+    }
+
+    function cmsChangePassword() {
+      var current  = document.getElementById("changePwCurrent").value;
+      var newPw    = document.getElementById("changePwNew").value;
+      var confirm  = document.getElementById("changePwConfirm").value;
+      var errEl    = document.getElementById("changePwError");
+      var successEl = document.getElementById("changePwSuccess");
+      errEl.classList.add("hidden");
+      successEl.classList.add("hidden");
+
+      if (cmsHash(current) !== localStorage.getItem(CMS_PW_KEY)) {
+        errEl.textContent = "Current password is incorrect.";
+        errEl.classList.remove("hidden");
+        return;
+      }
+      if (newPw.length < 6) {
+        errEl.textContent = "New password must be at least 6 characters.";
+        errEl.classList.remove("hidden");
+        return;
+      }
+      if (newPw !== confirm) {
+        errEl.textContent = "New passwords do not match.";
+        errEl.classList.remove("hidden");
+        return;
+      }
+
+      localStorage.setItem(CMS_PW_KEY, cmsHash(newPw));
+      document.getElementById("changePwCurrent").value = "";
+      document.getElementById("changePwNew").value = "";
+      document.getElementById("changePwConfirm").value = "";
+      successEl.classList.remove("hidden");
+      setTimeout(function () { successEl.classList.add("hidden"); }, 3000);
+    }
+
+    function toggleChangePassword() {
+      var form     = document.getElementById("changePwForm");
+      var chevron  = document.getElementById("changePwChevron");
+      var isHidden = form.classList.contains("hidden");
+      form.classList.toggle("hidden", !isHidden);
+      chevron.style.transform = isHidden ? "rotate(180deg)" : "";
     }
 
     function cmsSignOut() {
-      cmsAuth.signOut();
+      sessionStorage.removeItem(CMS_SESS_KEY);
+      document.getElementById("signOutBtn").classList.add("hidden");
+      show("loginState");
+      // Re-show sign-in panel (password already set)
+      document.getElementById("signinPanel").classList.remove("hidden");
+      document.getElementById("setupPanel").classList.add("hidden");
+      // Clear the password field
+      var pwField = document.getElementById("loginPassword");
+      if (pwField) pwField.value = "";
     }
 
     function loadContentAndRender() {
@@ -481,6 +628,7 @@
       var bodyEl = document.getElementById("fieldGroups");
       navEl.innerHTML = "";
       bodyEl.innerHTML = "";
+      bodyEl.className = "space-y-6 sm:space-y-10";
 
       groupOrder.forEach(function (groupName, idx) {
         var anchorId = "group-" + idx;
@@ -493,7 +641,7 @@
 
         var card = document.createElement("section");
         card.id = anchorId;
-        card.className = "bg-white rounded-3xl shadow-sm p-6 lg:p-8 scroll-mt-32";
+        card.className = "bg-white rounded-3xl shadow-sm p-5 sm:p-6 lg:p-8 scroll-mt-28 sm:scroll-mt-36";
 
         var heading = document.createElement("h3");
         heading.className = "text-lg font-bold text-gray-900 mb-6";
@@ -585,7 +733,7 @@
       row.className = "flex items-center gap-3";
 
       var fileLabel = document.createElement("label");
-      fileLabel.className = "cursor-pointer text-sm font-medium bg-primary-50 text-primary-700 hover:bg-primary-100 px-4 py-2 rounded-full transition-colors";
+      fileLabel.className = "cursor-pointer text-sm font-medium bg-primary-50 text-primary-700 hover:bg-primary-100 px-4 py-2.5 rounded-full transition-colors flex-1 sm:flex-none text-center";
       fileLabel.textContent = currentDataUrl ? "Replace photo" : "Upload photo";
       var fileInput = document.createElement("input");
       fileInput.type = "file";
