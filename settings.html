@@ -30,58 +30,97 @@
 
         /* ── Inputs ── */
         .field-input {
-            width: 100%; padding: 0.7rem 1rem;
-            border: 1.5px solid #e5e7eb; border-radius: 0.75rem;
-            outline: none; transition: border-color 0.15s, box-shadow 0.15s;
-            font-size: 1rem; background: #fafafa; color: #111827;
+            width: 100%; padding: 0.75rem 1rem;
+            border: 1.5px solid #e5e7eb; border-radius: 0.85rem;
+            outline: none; transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+            font-size: 0.9375rem; background: #fafafa; color: #111827;
         }
-        .field-input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.12); background: #fff; }
-        textarea.field-input { resize: vertical; min-height: 80px; line-height: 1.55; }
+        .field-input:hover { border-color: #d1d5db; }
+        .field-input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.14); background: #fff; }
+        textarea.field-input { resize: vertical; min-height: 84px; line-height: 1.6; }
 
         /* ── Spinner ── */
         .spinner { border: 3px solid #d1fae5; border-top-color: #059669; border-radius: 999px; width: 32px; height: 32px; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── Status dot ── */
+        /* ── Status dot & save pill ── */
         .status-dot { width: 7px; height: 7px; border-radius: 999px; display: inline-block; flex-shrink: 0; }
+        .save-pill { padding: 0.35rem 0.75rem; border-radius: 999px; background: #f9fafb; border: 1px solid #f0f0f0; }
 
         /* ── Image uploader ── */
         .img-preview {
             background-size: cover; background-position: center;
-            aspect-ratio: 4/3; border-radius: 0.875rem;
+            aspect-ratio: 4/3; border-radius: 1rem;
             border: 2px dashed #d1d5db; background-color: #f9fafb;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            overflow: hidden; transition: border-color 0.15s;
-            position: relative;
+            overflow: hidden; transition: border-color 0.15s, box-shadow 0.15s;
+            position: relative; cursor: pointer;
         }
-        .img-preview.has-image { border-style: solid; border-color: #e5e7eb; }
+        .img-preview.has-image { border-style: solid; border-color: #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .img-preview:hover { border-color: #6ee7b7; }
+        .img-preview .img-overlay {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            background: rgba(6,95,70,0.55); color: #fff; font-size: 0.75rem; font-weight: 600;
+            opacity: 0; transition: opacity 0.15s; gap: 0.375rem; letter-spacing: 0.01em;
+        }
+        .img-preview.has-image:hover .img-overlay { opacity: 1; }
 
-        /* ── Nav pills ── */
-        #groupNav { -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-        #groupNav::-webkit-scrollbar { display: none; }
-        .nav-pill {
-            flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.375rem;
-            font-size: 0.8125rem; font-weight: 500;
-            padding: 0.4rem 0.9rem; border-radius: 999px;
-            border: 1.5px solid #e5e7eb; background: #fff; color: #6b7280;
-            text-decoration: none; white-space: nowrap; cursor: pointer;
-            font-family: inherit; transition: border-color 0.15s, color 0.15s, background 0.15s;
+        /* ── Sidebar navigation ── */
+        .sidebar-card {
+            background: #fff; border-radius: 1.25rem; border: 1px solid #f0f0f0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
         }
-        .nav-pill:hover { border-color: #6ee7b7; color: #047857; background: #f0fdf4; }
-        .nav-pill.active { border-color: #10b981; color: #065f46; background: #ecfdf5; }
+        .sidebar-title {
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+            color: #9ca3af; padding: 0 0.25rem 0; margin-bottom: 0.625rem;
+        }
+        #groupNav { -webkit-overflow-scrolling: touch; scrollbar-width: none; display: flex; flex-direction: row; gap: 0.5rem; overflow-x: auto; }
+        #groupNav::-webkit-scrollbar { display: none; }
+        .nav-item {
+            flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.5rem;
+            font-size: 0.8125rem; font-weight: 500;
+            padding: 0.5rem 1rem; border-radius: 999px;
+            border: 1.5px solid #e5e7eb; background: #fff; color: #6b7280;
+            white-space: nowrap; cursor: pointer; font-family: inherit;
+            transition: border-color 0.15s, color 0.15s, background 0.15s, box-shadow 0.15s;
+        }
+        .nav-item:hover { border-color: #6ee7b7; color: #047857; background: #f0fdf4; }
+        .nav-item.active { border-color: #10b981; color: #065f46; background: #ecfdf5; }
+        .nav-icon { font-size: 0.95rem; line-height: 1; }
+        .nav-badge {
+            font-size: 0.65rem; font-weight: 700; color: #9ca3af; background: #f3f4f6;
+            border-radius: 999px; padding: 0.1rem 0.45rem; line-height: 1.3;
+        }
+        .nav-item.active .nav-badge { color: #047857; background: #d1fae5; }
+
+        @media (min-width: 1024px) {
+            #groupNav { flex-direction: column; overflow-x: visible; gap: 0.25rem; }
+            .nav-item {
+                width: 100%; border: none; background: transparent; border-radius: 0.7rem;
+                padding: 0.65rem 0.75rem; justify-content: flex-start; box-shadow: inset 3px 0 0 0 transparent;
+            }
+            .nav-item:hover { background: #f9fafb; color: #374151; border-color: transparent; }
+            .nav-item.active { background: #ecfdf5; color: #065f46; box-shadow: inset 3px 0 0 0 #10b981; border-color: transparent; }
+            .nav-badge { margin-left: auto; }
+        }
 
         /* ── Field wrapper ── */
         .field-wrap { display: flex; flex-direction: column; gap: 0.375rem; }
         .field-label { font-size: 0.8125rem; font-weight: 600; color: #374151; letter-spacing: 0.01em; }
         .field-hint  { font-size: 0.75rem; color: #9ca3af; }
-        .reset-btn   { font-size: 0.7rem; color: #9ca3af; background: none; border: none; cursor: pointer; padding: 0; text-align: right; }
-        .reset-btn:hover { color: #6b7280; }
+        .reset-btn   {
+            font-size: 0.7rem; font-weight: 600; color: #9ca3af; background: none;
+            border: none; cursor: pointer; padding: 0.2rem 0.5rem; border-radius: 999px;
+            text-align: right; transition: color 0.15s, background 0.15s;
+        }
+        .reset-btn:hover { color: #059669; background: #ecfdf5; }
 
         /* ── Section card ── */
-        .section-card { background: #fff; border-radius: 1.25rem; border: 1px solid #f0f0f0; box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03); }
-        .section-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; gap: 0.875rem; }
-        .section-icon { width: 2.25rem; height: 2.25rem; border-radius: 0.625rem; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-        .section-body { padding: 1.5rem; }
+        .section-card { background: #fff; border-radius: 1.25rem; border: 1px solid #f0f0f0; box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03); transition: box-shadow 0.2s; }
+        .section-header { padding: 1.375rem 1.5rem; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; gap: 0.875rem; }
+        .section-icon { width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; font-size: 1.125rem; flex-shrink: 0; }
+        .section-eyebrow { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #9ca3af; margin-bottom: 0.15rem; }
+        .section-body { padding: 1.625rem; }
 
         /* ── Sub-section divider ── */
         .sub-section { padding-top: 1.25rem; margin-top: 1.25rem; border-top: 1px solid #f3f4f6; }
@@ -114,14 +153,14 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-slate-50 min-h-screen">
 
     <!-- Top bar -->
-    <header class="bg-white border-b border-gray-100 sticky top-0 z-40" style="box-shadow:0 1px 8px rgba(0,0,0,0.05)">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
+    <header class="bg-white/90 backdrop-blur border-b border-gray-100 sticky top-0 z-40" style="box-shadow:0 1px 8px rgba(0,0,0,0.05)">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
             <!-- Brand -->
             <div class="flex items-center gap-2.5 min-w-0">
-                <div class="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
                     <span class="text-white font-bold text-xs">ES</span>
                 </div>
                 <div class="min-w-0">
@@ -131,7 +170,7 @@
             </div>
             <!-- Actions -->
             <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-                <span id="saveStatus" class="hidden items-center gap-1.5 text-xs text-gray-500 mr-1"></span>
+                <span id="saveStatus" class="save-pill hidden items-center gap-1.5 text-xs font-medium mr-1"></span>
                 <button id="signOutBtn" onclick="cmsSignOut()" class="hidden text-xs font-semibold text-gray-500 hover:text-gray-800 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">Sign out</button>
                 <a href="index.html" class="text-xs font-semibold text-primary-700 hover:text-primary-800 px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors whitespace-nowrap">
                     <span class="sm:hidden">← Back</span>
@@ -141,7 +180,7 @@
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         <!-- ── Loading ── -->
         <div id="loadingState" class="flex flex-col items-center justify-center py-32 gap-4">
@@ -240,56 +279,66 @@
         </div>
 
         <!-- ── Editor ── -->
-        <div id="editorState" class="hidden">
+        <div id="editorState" class="hidden lg:flex lg:gap-8 lg:items-start">
 
-            <!-- Page title row -->
-            <div class="flex items-start justify-between gap-4 mb-6 sm:mb-8">
-                <div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Edit Website Content</h2>
-                    <p class="text-sm text-gray-400 mt-1">Changes save automatically and go live within seconds.</p>
+            <!-- Sidebar navigation -->
+            <aside class="lg:w-64 lg:flex-shrink-0 lg:sticky lg:top-24 mb-5 lg:mb-0">
+                <div class="sidebar-card p-2.5 lg:p-4">
+                    <p class="sidebar-title hidden lg:block">Content Sections</p>
+                    <nav id="groupNav" aria-label="Content sections"></nav>
                 </div>
-            </div>
+            </aside>
 
-            <!-- Change password card -->
-            <div class="section-card mb-6 sm:mb-8">
-                <button onclick="toggleChangePassword()" class="section-header w-full text-left hover:bg-gray-50 transition-colors rounded-t-[1.25rem]" style="cursor:pointer">
-                    <div class="section-icon bg-gray-100"><span>🔑</span></div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-semibold text-gray-800 text-sm leading-tight">Change Admin Password</p>
-                        <p class="text-xs text-gray-400 mt-0.5">Update the password used to log into this page</p>
-                    </div>
-                    <svg id="changePwChevron" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 transition-transform flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div id="changePwForm" class="hidden section-body border-t border-gray-100">
-                    <div class="grid gap-4 sm:grid-cols-3">
-                        <div class="field-wrap">
-                            <label class="field-label" for="changePwCurrent">Current Password</label>
-                            <input type="password" id="changePwCurrent" class="field-input" autocomplete="current-password" placeholder="Current password">
-                        </div>
-                        <div class="field-wrap">
-                            <label class="field-label" for="changePwNew">New Password</label>
-                            <input type="password" id="changePwNew" class="field-input" autocomplete="new-password" placeholder="At least 6 characters">
-                        </div>
-                        <div class="field-wrap">
-                            <label class="field-label" for="changePwConfirm">Confirm New Password</label>
-                            <input type="password" id="changePwConfirm" class="field-input" autocomplete="new-password" placeholder="Repeat new password">
-                        </div>
-                    </div>
-                    <p id="changePwError" class="hidden text-xs text-red-500 font-medium mt-3"></p>
-                    <p id="changePwSuccess" class="hidden text-xs text-primary-600 font-semibold mt-3">&#10003; Password updated successfully.</p>
-                    <div class="mt-4">
-                        <button onclick="cmsChangePassword()" class="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">Update Password</button>
+            <!-- Main column -->
+            <div class="flex-1 min-w-0">
+
+                <!-- Page title row -->
+                <div class="flex items-start justify-between gap-4 mb-6 sm:mb-8">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Edit Website Content</h2>
+                        <p class="text-sm text-gray-400 mt-1">Changes save automatically and go live within seconds.</p>
                     </div>
                 </div>
+
+                <!-- Change password card -->
+                <div class="section-card mb-6 sm:mb-8">
+                    <button onclick="toggleChangePassword()" class="section-header w-full text-left hover:bg-gray-50 transition-colors rounded-t-[1.25rem]" style="cursor:pointer">
+                        <div class="section-icon bg-gray-100"><span>🔑</span></div>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-semibold text-gray-800 text-sm leading-tight">Change Admin Password</p>
+                            <p class="text-xs text-gray-400 mt-0.5">Update the password used to log into this page</p>
+                        </div>
+                        <svg id="changePwChevron" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 transition-transform flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div id="changePwForm" class="hidden section-body border-t border-gray-100">
+                        <div class="grid gap-4 sm:grid-cols-3">
+                            <div class="field-wrap">
+                                <label class="field-label" for="changePwCurrent">Current Password</label>
+                                <input type="password" id="changePwCurrent" class="field-input" autocomplete="current-password" placeholder="Current password">
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label" for="changePwNew">New Password</label>
+                                <input type="password" id="changePwNew" class="field-input" autocomplete="new-password" placeholder="At least 6 characters">
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label" for="changePwConfirm">Confirm New Password</label>
+                                <input type="password" id="changePwConfirm" class="field-input" autocomplete="new-password" placeholder="Repeat new password">
+                            </div>
+                        </div>
+                        <p id="changePwError" class="hidden text-xs text-red-500 font-medium mt-3"></p>
+                        <p id="changePwSuccess" class="hidden text-xs text-primary-600 font-semibold mt-3">&#10003; Password updated successfully.</p>
+                        <div class="mt-4">
+                            <button onclick="cmsChangePassword()" class="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">Update Password</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Field sections -->
+                <div id="fieldGroups" class="space-y-5 sm:space-y-7"></div>
+
             </div>
-
-            <!-- Group jump nav -->
-            <div id="groupNav" class="flex gap-2 overflow-x-auto pb-3 mb-6 sticky top-[52px] sm:top-[57px] z-30 -mx-1 px-1" style="background:transparent"></div>
-
-            <!-- Field sections -->
-            <div id="fieldGroups" class="space-y-5 sm:space-y-7"></div>
 
         </div>
 
@@ -752,12 +801,15 @@
         var anchorId = "group-" + idx;
         var meta = sectionMeta[groupName] || { icon: "📄", bg: "bg-gray-100", desc: "" };
 
-        // Nav pill (button — shows only this section's content when clicked)
+        // Nav item (sidebar button — shows only this section's content when clicked)
         var pill = document.createElement("button");
         pill.type = "button";
         pill.href = "#" + anchorId;
-        pill.className = "nav-pill";
-        pill.innerHTML = '<span>' + meta.icon + '</span>' + groupName.replace(/^Global — .+/, "Global").replace(/ Page.*/, "");
+        pill.className = "nav-item";
+        pill.innerHTML =
+          '<span class="nav-icon">' + meta.icon + '</span>' +
+          '<span>' + groupName.replace(/^Global — .+/, "Global").replace(/ Page.*/, "") + '</span>' +
+          '<span class="nav-badge">' + groups[groupName].length + '</span>';
         pill.addEventListener("click", function () { showGroup(anchorId); });
         navEl.appendChild(pill);
 
@@ -771,7 +823,7 @@
         header.className = "section-header";
         header.innerHTML =
           '<div class="section-icon ' + meta.bg + '"><span>' + meta.icon + '</span></div>' +
-          '<div class="min-w-0"><p class="font-bold text-gray-900 text-sm sm:text-base leading-tight">' + groupName + '</p>' +
+          '<div class="min-w-0"><p class="section-eyebrow">Section ' + (idx + 1) + ' of ' + groupOrder.length + '</p><p class="font-bold text-gray-900 text-sm sm:text-base leading-tight">' + groupName + '</p>' +
           (meta.desc ? '<p class="text-xs text-gray-400 mt-0.5 leading-snug">' + meta.desc + '</p>' : '') + '</div>';
         card.appendChild(header);
 
@@ -840,8 +892,8 @@
         bodyEl.appendChild(card);
       });
 
-      // Show only one section's content at a time — switches when a nav pill is clicked
-      var pills = navEl.querySelectorAll(".nav-pill");
+      // Show only one section's content at a time — switches when a nav item is clicked
+      var pills = navEl.querySelectorAll(".nav-item");
       var sections = bodyEl.querySelectorAll("section[id]");
 
       function showGroup(anchorId) {
@@ -924,6 +976,12 @@
         '<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>' +
         '<span style="font-size:0.7rem;color:#9ca3af">Default photo shown</span>';
       preview.appendChild(placeholderInner);
+
+      var overlay = document.createElement("div");
+      overlay.className = "img-overlay";
+      overlay.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg><span>Change photo</span>';
+      preview.appendChild(overlay);
+      preview.addEventListener("click", function () { fileInput.click(); });
       wrap.appendChild(preview);
 
       // Controls row
