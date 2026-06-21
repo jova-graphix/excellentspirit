@@ -64,8 +64,8 @@
             font-size: 0.8125rem; font-weight: 500;
             padding: 0.4rem 0.9rem; border-radius: 999px;
             border: 1.5px solid #e5e7eb; background: #fff; color: #6b7280;
-            text-decoration: none; white-space: nowrap;
-            transition: border-color 0.15s, color 0.15s, background 0.15s;
+            text-decoration: none; white-space: nowrap; cursor: pointer;
+            font-family: inherit; transition: border-color 0.15s, color 0.15s, background 0.15s;
         }
         .nav-pill:hover { border-color: #6ee7b7; color: #047857; background: #f0fdf4; }
         .nav-pill.active { border-color: #10b981; color: #065f46; background: #ecfdf5; }
@@ -752,17 +752,19 @@
         var anchorId = "group-" + idx;
         var meta = sectionMeta[groupName] || { icon: "📄", bg: "bg-gray-100", desc: "" };
 
-        // Nav pill
-        var pill = document.createElement("a");
+        // Nav pill (button — shows only this section's content when clicked)
+        var pill = document.createElement("button");
+        pill.type = "button";
         pill.href = "#" + anchorId;
         pill.className = "nav-pill";
         pill.innerHTML = '<span>' + meta.icon + '</span>' + groupName.replace(/^Global — .+/, "Global").replace(/ Page.*/, "");
+        pill.addEventListener("click", function () { showGroup(anchorId); });
         navEl.appendChild(pill);
 
         // Card
         var card = document.createElement("section");
         card.id = anchorId;
-        card.className = "section-card scroll-mt-28 sm:scroll-mt-32";
+        card.className = "section-card scroll-mt-28 sm:scroll-mt-32 hidden";
 
         // Card header
         var header = document.createElement("div");
@@ -838,20 +840,18 @@
         bodyEl.appendChild(card);
       });
 
-      // Intersection observer for active nav pill
+      // Show only one section's content at a time — switches when a nav pill is clicked
       var pills = navEl.querySelectorAll(".nav-pill");
       var sections = bodyEl.querySelectorAll("section[id]");
-      if ("IntersectionObserver" in window) {
-        var obs = new IntersectionObserver(function(entries) {
-          entries.forEach(function(e) {
-            if (e.isIntersecting) {
-              pills.forEach(function(p) { p.classList.remove("active"); });
-              var idx2 = Array.prototype.indexOf.call(sections, e.target);
-              if (pills[idx2]) pills[idx2].classList.add("active");
-            }
-          });
-        }, { rootMargin: "-30% 0px -60% 0px" });
-        sections.forEach(function(s) { obs.observe(s); });
+
+      function showGroup(anchorId) {
+        sections.forEach(function (s) { s.classList.toggle("hidden", s.id !== anchorId); });
+        pills.forEach(function (p) { p.classList.toggle("active", p.getAttribute("href") === "#" + anchorId); });
+      }
+
+      // Open the first group by default
+      if (sections.length) {
+        showGroup(sections[0].id);
       }
     }
 
