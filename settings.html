@@ -27,42 +27,115 @@
     </script>
     <style>
         * { font-family: 'Poppins', sans-serif; }
-        .field-input { width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #e5e7eb; border-radius: 0.75rem; outline: none; transition: border-color 0.15s; font-size: 1rem; } /* 1rem prevents iOS auto-zoom on focus */
-        .field-input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.15); }
-        .status-dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
-        .spinner { border: 3px solid #d1fae5; border-top-color: #059669; border-radius: 999px; width: 28px; height: 28px; animation: spin 0.8s linear infinite; }
+
+        /* ── Inputs ── */
+        .field-input {
+            width: 100%; padding: 0.7rem 1rem;
+            border: 1.5px solid #e5e7eb; border-radius: 0.75rem;
+            outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+            font-size: 1rem; background: #fafafa; color: #111827;
+        }
+        .field-input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.12); background: #fff; }
+        textarea.field-input { resize: vertical; min-height: 80px; line-height: 1.55; }
+
+        /* ── Spinner ── */
+        .spinner { border: 3px solid #d1fae5; border-top-color: #059669; border-radius: 999px; width: 32px; height: 32px; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .image-drop { background-size: cover; background-position: center; }
-        /* Momentum scroll on iOS for horizontal nav */
+
+        /* ── Status dot ── */
+        .status-dot { width: 7px; height: 7px; border-radius: 999px; display: inline-block; flex-shrink: 0; }
+
+        /* ── Image uploader ── */
+        .img-preview {
+            background-size: cover; background-position: center;
+            aspect-ratio: 4/3; border-radius: 0.875rem;
+            border: 2px dashed #d1d5db; background-color: #f9fafb;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            overflow: hidden; transition: border-color 0.15s;
+            position: relative;
+        }
+        .img-preview.has-image { border-style: solid; border-color: #e5e7eb; }
+
+        /* ── Nav pills ── */
         #groupNav { -webkit-overflow-scrolling: touch; scrollbar-width: none; }
         #groupNav::-webkit-scrollbar { display: none; }
-        /* Larger touch targets on mobile */
+        .nav-pill {
+            flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.375rem;
+            font-size: 0.8125rem; font-weight: 500;
+            padding: 0.4rem 0.9rem; border-radius: 999px;
+            border: 1.5px solid #e5e7eb; background: #fff; color: #6b7280;
+            text-decoration: none; white-space: nowrap;
+            transition: border-color 0.15s, color 0.15s, background 0.15s;
+        }
+        .nav-pill:hover { border-color: #6ee7b7; color: #047857; background: #f0fdf4; }
+        .nav-pill.active { border-color: #10b981; color: #065f46; background: #ecfdf5; }
+
+        /* ── Field wrapper ── */
+        .field-wrap { display: flex; flex-direction: column; gap: 0.375rem; }
+        .field-label { font-size: 0.8125rem; font-weight: 600; color: #374151; letter-spacing: 0.01em; }
+        .field-hint  { font-size: 0.75rem; color: #9ca3af; }
+        .reset-btn   { font-size: 0.7rem; color: #9ca3af; background: none; border: none; cursor: pointer; padding: 0; text-align: right; }
+        .reset-btn:hover { color: #6b7280; }
+
+        /* ── Section card ── */
+        .section-card { background: #fff; border-radius: 1.25rem; border: 1px solid #f0f0f0; box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03); }
+        .section-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; gap: 0.875rem; }
+        .section-icon { width: 2.25rem; height: 2.25rem; border-radius: 0.625rem; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .section-body { padding: 1.5rem; }
+
+        /* ── Sub-section divider ── */
+        .sub-section { padding-top: 1.25rem; margin-top: 1.25rem; border-top: 1px solid #f3f4f6; }
+        .sub-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #9ca3af; margin-bottom: 1rem; }
+
+        /* ── Login card ── */
+        .login-card { max-width: 22rem; margin: 2rem auto 0; background: #fff; border-radius: 1.5rem; border: 1px solid #f0f0f0; box-shadow: 0 4px 24px rgba(0,0,0,0.07); padding: 2rem 1.75rem; }
+        @media (min-width: 640px) { .login-card { margin-top: 4rem; padding: 2.5rem 2.25rem; } }
+
+        /* ── Upload button ── */
+        .upload-btn {
+            display: inline-flex; align-items: center; gap: 0.375rem;
+            font-size: 0.8125rem; font-weight: 600;
+            padding: 0.5rem 1.1rem; border-radius: 999px; cursor: pointer;
+            background: #ecfdf5; color: #065f46; border: 1.5px solid #a7f3d0;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .upload-btn:hover { background: #d1fae5; border-color: #6ee7b7; }
+        .remove-btn {
+            font-size: 0.8125rem; font-weight: 500; color: #9ca3af;
+            background: none; border: none; cursor: pointer; padding: 0.5rem 0.75rem;
+            border-radius: 999px; transition: color 0.15s, background 0.15s;
+        }
+        .remove-btn:hover { color: #ef4444; background: #fef2f2; }
+
+        /* ── Responsive ── */
         @media (max-width: 639px) {
-            .field-input { padding: 0.75rem 0.875rem; }
-            textarea.field-input { min-height: 80px; }
+            .section-header { padding: 1rem 1.125rem; }
+            .section-body   { padding: 1.125rem; }
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
 
     <!-- Top bar -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-2">
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-40" style="box-shadow:0 1px 8px rgba(0,0,0,0.05)">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
+            <!-- Brand -->
             <div class="flex items-center gap-2.5 min-w-0">
-                <div class="w-8 h-8 sm:w-9 sm:h-9 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-white font-bold text-xs sm:text-sm">ES</span>
+                <div class="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-xs">ES</span>
                 </div>
                 <div class="min-w-0">
-                    <h1 class="font-bold text-gray-900 leading-tight text-sm sm:text-base truncate">Site Settings</h1>
-                    <p class="text-xs text-gray-500 leading-tight hidden sm:block">Excellent Spirit International School</p>
+                    <p class="font-bold text-gray-900 text-sm leading-tight truncate">Site Settings</p>
+                    <p class="text-xs text-gray-400 leading-tight hidden sm:block">Excellent Spirit International School</p>
                 </div>
             </div>
-            <div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-                <span id="saveStatus" class="hidden text-xs text-gray-500 items-center gap-1.5"></span>
-                <button id="signOutBtn" onclick="cmsSignOut()" class="hidden text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">Sign Out</button>
-                <a href="index.html" class="text-xs sm:text-sm font-medium text-primary-700 hover:text-primary-800 px-2.5 sm:px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors whitespace-nowrap">
+            <!-- Actions -->
+            <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                <span id="saveStatus" class="hidden items-center gap-1.5 text-xs text-gray-500 mr-1"></span>
+                <button id="signOutBtn" onclick="cmsSignOut()" class="hidden text-xs font-semibold text-gray-500 hover:text-gray-800 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">Sign out</button>
+                <a href="index.html" class="text-xs font-semibold text-primary-700 hover:text-primary-800 px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors whitespace-nowrap">
                     <span class="sm:hidden">← Back</span>
-                    <span class="hidden sm:inline">← Back to website</span>
+                    <span class="hidden sm:inline">← Back to site</span>
                 </a>
             </div>
         </div>
@@ -70,125 +143,154 @@
 
     <main class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
-        <!-- Loading state -->
-        <div id="loadingState" class="flex flex-col items-center justify-center py-24 gap-4">
+        <!-- ── Loading ── -->
+        <div id="loadingState" class="flex flex-col items-center justify-center py-32 gap-4">
             <div class="spinner"></div>
-            <p class="text-gray-500 text-sm">Connecting…</p>
+            <p class="text-gray-400 text-sm">Connecting…</p>
         </div>
 
-        <!-- Not configured yet -->
+        <!-- ── Not configured ── -->
         <div id="notConfiguredState" class="hidden">
-            <div class="bg-white rounded-3xl shadow-sm p-8 lg:p-10">
-                <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
-                    <span class="text-2xl">🔌</span>
+            <div class="section-card max-w-2xl mx-auto">
+                <div class="section-header">
+                    <div class="section-icon bg-amber-100"><span>🔌</span></div>
+                    <div>
+                        <p class="font-bold text-gray-900 text-base leading-tight">Firebase isn't connected yet</p>
+                        <p class="text-xs text-gray-400 mt-0.5">Follow the steps below to get started</p>
+                    </div>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">Firebase isn't connected yet</h2>
-                <p class="text-gray-600 mb-8">This page edits the text and photos shown across your website, syncing instantly to every visitor on every device. To turn it on, connect a free Firebase project — it takes about 5 minutes.</p>
-                <ol class="space-y-5 mb-8">
-                    <li class="flex gap-4">
-                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-                        <p class="text-gray-700 pt-0.5">Go to <a href="https://console.firebase.google.com" target="_blank" rel="noopener" class="text-primary-700 underline">console.firebase.google.com</a> and create a free project.</p>
-                    </li>
-                    <li class="flex gap-4">
-                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-                        <p class="text-gray-700 pt-0.5">Enable <strong>Firestore Database</strong> and <strong>Authentication</strong> (Email/Password method) from the Build menu.</p>
-                    </li>
-                    <li class="flex gap-4">
-                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-                        <p class="text-gray-700 pt-0.5">In Authentication → Users, add yourself with an email and password — that's how you'll log in here.</p>
-                    </li>
-                    <li class="flex gap-4">
-                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-                        <p class="text-gray-700 pt-0.5">Register a Web app in Project Settings, copy the <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">firebaseConfig</code> values into the <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">CMS_FIREBASE_CONFIG</code> block near the bottom of <strong>every</strong> page (this file and all 6 site pages), and apply the security rules from <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">FIREBASE-SETUP.md</code>.</p>
-                    </li>
-                    <li class="flex gap-4">
-                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-                        <p class="text-gray-700 pt-0.5">Re-upload the updated files to your host, then refresh this page.</p>
-                    </li>
-                </ol>
-                <p class="text-sm text-gray-500">Until then, every page simply shows its normal built-in text and photos — nothing is broken.</p>
+                <div class="section-body">
+                    <p class="text-sm text-gray-600 mb-6 leading-relaxed">This page edits the text and photos shown across your website, syncing instantly to every visitor on every device. To turn it on, connect a free Firebase project — it takes about 5 minutes.</p>
+                    <ol class="space-y-4 mb-6">
+                        <li class="flex gap-3">
+                            <span class="w-6 h-6 rounded-full bg-primary-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                            <p class="text-sm text-gray-700">Go to <a href="https://console.firebase.google.com" target="_blank" rel="noopener" class="text-primary-700 underline font-medium">console.firebase.google.com</a> and create a free project.</p>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="w-6 h-6 rounded-full bg-primary-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                            <p class="text-sm text-gray-700">Enable <strong>Firestore Database</strong> and <strong>Authentication</strong> (Email/Password) from the Build menu.</p>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="w-6 h-6 rounded-full bg-primary-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                            <p class="text-sm text-gray-700">In Authentication → Users, add one user with your email and a password.</p>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="w-6 h-6 rounded-full bg-primary-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                            <p class="text-sm text-gray-700">Register a Web app in Project Settings, copy the <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs">firebaseConfig</code> values into <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs">CMS_FIREBASE_CONFIG</code> in every page file, and apply the security rules from <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs">FIREBASE-SETUP.md</code>.</p>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="w-6 h-6 rounded-full bg-primary-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                            <p class="text-sm text-gray-700">Re-upload the updated files to your host, then refresh this page.</p>
+                        </li>
+                    </ol>
+                    <p class="text-xs text-gray-400">Until then, every page shows its built-in content — nothing is broken.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Login state: password-only -->
+        <!-- ── Login ── -->
         <div id="loginState" class="hidden">
-            <!-- First visit: set a password -->
-            <div id="setupPanel" class="hidden max-w-sm mx-auto bg-white rounded-3xl shadow-sm p-6 sm:p-8 mt-4 sm:mt-10">
-                <div class="w-14 h-14 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <span class="text-2xl">🔑</span>
+
+            <!-- First visit: set password -->
+            <div id="setupPanel" class="hidden login-card">
+                <div class="text-center mb-6">
+                    <div class="w-12 h-12 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <span class="text-xl">🔑</span>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-900">Create Admin Password</h2>
+                    <p class="text-xs text-gray-400 mt-1 leading-relaxed">First visit — set a password to protect this settings page.</p>
                 </div>
-                <h2 class="text-xl font-bold text-gray-900 mb-1 text-center">Create Admin Password</h2>
-                <p class="text-sm text-gray-500 mb-6 text-center">This is your first visit. Set a password to protect the settings page.</p>
                 <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                    <div class="field-wrap">
+                        <label class="field-label" for="setupPassword">New Password</label>
                         <input type="password" id="setupPassword" class="field-input" autocomplete="new-password" placeholder="At least 6 characters">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                    <div class="field-wrap">
+                        <label class="field-label" for="setupPasswordConfirm">Confirm Password</label>
                         <input type="password" id="setupPasswordConfirm" class="field-input" autocomplete="new-password" placeholder="Repeat password">
                     </div>
-                    <p id="setupError" class="hidden text-sm text-red-600"></p>
-                    <button onclick="cmsSetupPassword()" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-full transition-colors">Set Password & Enter</button>
+                    <p id="setupError" class="hidden text-xs text-red-500 font-medium pt-1"></p>
+                    <button onclick="cmsSetupPassword()" class="w-full bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-semibold py-3 rounded-xl transition-colors mt-2 text-sm">
+                        Set Password &amp; Enter
+                    </button>
                 </div>
             </div>
 
-            <!-- Returning visit: enter password -->
-            <div id="signinPanel" class="hidden max-w-sm mx-auto bg-white rounded-3xl shadow-sm p-6 sm:p-8 mt-4 sm:mt-10">
-                <div class="w-14 h-14 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                    <span class="text-2xl">🔐</span>
+            <!-- Returning visit: sign in -->
+            <div id="signinPanel" class="hidden login-card">
+                <div class="text-center mb-6">
+                    <div class="w-12 h-12 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <span class="text-xl">🔐</span>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-900">Admin Sign In</h2>
+                    <p class="text-xs text-gray-400 mt-1">Enter your password to access site settings.</p>
                 </div>
-                <h2 class="text-xl font-bold text-gray-900 mb-1 text-center">Admin Sign In</h2>
-                <p class="text-sm text-gray-500 mb-6 text-center">Enter your admin password to access site settings.</p>
                 <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="field-wrap">
+                        <label class="field-label" for="loginPassword">Password</label>
                         <input type="password" id="loginPassword" class="field-input" autocomplete="current-password" placeholder="Your admin password">
                     </div>
-                    <p id="loginError" class="hidden text-sm text-red-600"></p>
-                    <button onclick="cmsLocalSignIn()" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-full transition-colors">Sign In</button>
+                    <p id="loginError" class="hidden text-xs text-red-500 font-medium pt-1"></p>
+                    <button onclick="cmsLocalSignIn()" class="w-full bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-semibold py-3 rounded-xl transition-colors mt-2 text-sm">
+                        Sign In
+                    </button>
                 </div>
             </div>
+
         </div>
 
-        <!-- Editor state -->
+        <!-- ── Editor ── -->
         <div id="editorState" class="hidden">
-            <div class="mb-6 sm:mb-8">
-                <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Edit Website Content</h2>
-                <p class="text-sm sm:text-base text-gray-600">Changes save automatically and appear on the live site for every visitor within a second or two.</p>
+
+            <!-- Page title row -->
+            <div class="flex items-start justify-between gap-4 mb-6 sm:mb-8">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Edit Website Content</h2>
+                    <p class="text-sm text-gray-400 mt-1">Changes save automatically and go live within seconds.</p>
+                </div>
             </div>
 
-            <!-- Change password (collapsible) -->
-            <div class="bg-white rounded-3xl shadow-sm p-6 lg:p-8 mb-8">
-                <button onclick="toggleChangePassword()" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
-                    <span>🔑</span> Change Admin Password
-                    <svg id="changePwChevron" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <!-- Change password card -->
+            <div class="section-card mb-6 sm:mb-8">
+                <button onclick="toggleChangePassword()" class="section-header w-full text-left hover:bg-gray-50 transition-colors rounded-t-[1.25rem]" style="cursor:pointer">
+                    <div class="section-icon bg-gray-100"><span>🔑</span></div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-semibold text-gray-800 text-sm leading-tight">Change Admin Password</p>
+                        <p class="text-xs text-gray-400 mt-0.5">Update the password used to log into this page</p>
+                    </div>
+                    <svg id="changePwChevron" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 transition-transform flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
                 </button>
-                <div id="changePwForm" class="hidden mt-5 grid gap-4 sm:grid-cols-3 items-end">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
-                        <input type="password" id="changePwCurrent" class="field-input" autocomplete="current-password" placeholder="Current password">
+                <div id="changePwForm" class="hidden section-body border-t border-gray-100">
+                    <div class="grid gap-4 sm:grid-cols-3">
+                        <div class="field-wrap">
+                            <label class="field-label" for="changePwCurrent">Current Password</label>
+                            <input type="password" id="changePwCurrent" class="field-input" autocomplete="current-password" placeholder="Current password">
+                        </div>
+                        <div class="field-wrap">
+                            <label class="field-label" for="changePwNew">New Password</label>
+                            <input type="password" id="changePwNew" class="field-input" autocomplete="new-password" placeholder="At least 6 characters">
+                        </div>
+                        <div class="field-wrap">
+                            <label class="field-label" for="changePwConfirm">Confirm New Password</label>
+                            <input type="password" id="changePwConfirm" class="field-input" autocomplete="new-password" placeholder="Repeat new password">
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                        <input type="password" id="changePwNew" class="field-input" autocomplete="new-password" placeholder="At least 6 characters">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-                        <input type="password" id="changePwConfirm" class="field-input" autocomplete="new-password" placeholder="Repeat new password">
-                    </div>
-                    <p id="changePwError" class="hidden text-sm text-red-600 sm:col-span-3"></p>
-                    <p id="changePwSuccess" class="hidden text-sm text-primary-600 sm:col-span-3">&#10003; Password updated successfully.</p>
-                    <div class="sm:col-span-3">
-                        <button onclick="cmsChangePassword()" class="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-3 sm:py-2.5 rounded-full text-sm transition-colors">Update Password</button>
+                    <p id="changePwError" class="hidden text-xs text-red-500 font-medium mt-3"></p>
+                    <p id="changePwSuccess" class="hidden text-xs text-primary-600 font-semibold mt-3">&#10003; Password updated successfully.</p>
+                    <div class="mt-4">
+                        <button onclick="cmsChangePassword()" class="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">Update Password</button>
                     </div>
                 </div>
             </div>
 
             <!-- Group jump nav -->
-            <div id="groupNav" class="flex gap-2 overflow-x-auto pb-3 mb-6 sticky top-[57px] sm:top-[73px] bg-gray-50 z-30 -mx-1 px-1"></div>
+            <div id="groupNav" class="flex gap-2 overflow-x-auto pb-3 mb-6 sticky top-[52px] sm:top-[57px] z-30 -mx-1 px-1" style="background:transparent"></div>
 
-            <div id="fieldGroups" class="space-y-10"></div>
+            <!-- Field sections -->
+            <div id="fieldGroups" class="space-y-5 sm:space-y-7"></div>
+
         </div>
 
     </main>
@@ -614,58 +716,148 @@
     }
 
     function renderForm() {
+      // Section metadata: icon colour, emoji, and a short description shown under the heading
+      var sectionMeta = {
+        "Global — Header, Footer & Contact Details": { icon: "🌐", bg: "bg-blue-50",   desc: "Shared across every page of the site" },
+        "Home Page":       { icon: "🏠", bg: "bg-indigo-50",  desc: "Hero, about, why-choose-us, admissions banner, and contact preview" },
+        "About Page":      { icon: "📖", bg: "bg-violet-50",  desc: "Story, mission, vision, and campus photo" },
+        "Academics Page":  { icon: "🎓", bg: "bg-cyan-50",    desc: "Program descriptions and photos for Nursery, Primary, and JHS" },
+        "Admissions Page": { icon: "📋", bg: "bg-orange-50",  desc: "Documents intro, enrolment call-to-action, and photo" },
+        "Contact Page":    { icon: "📍", bg: "bg-rose-50",    desc: "Hero text, form intro, map embed URL, and call-to-action" },
+        "Gallery Page":    { icon: "🖼️", bg: "bg-teal-50",    desc: "Hero headline and subtitle for the gallery page" },
+        "Gallery Page — 12 Photos": { icon: "📷", bg: "bg-teal-50", desc: "Photos, titles, and captions for all 12 gallery slots" }
+      };
+
+      // Sub-group labels for Global fields to break them into logical clusters
+      var globalSubGroups = {
+        "School Identity":  ["global_schoolName","global_schoolNameSub","global_logoInitials","global_tagline"],
+        "Contact Details":  ["global_address","global_email","global_phone","global_whatsappNumber","global_weekdayHours","global_saturdayHours"],
+        "Site-wide Text":   ["global_announcementText","global_footerDescription","global_copyrightText"]
+      };
+
       var groups = {};
       var groupOrder = [];
       window.CMS_FIELDS.forEach(function (f) {
-        if (!groups[f.group]) {
-          groups[f.group] = [];
-          groupOrder.push(f.group);
-        }
+        if (!groups[f.group]) { groups[f.group] = []; groupOrder.push(f.group); }
         groups[f.group].push(f);
       });
 
-      var navEl = document.getElementById("groupNav");
+      var navEl  = document.getElementById("groupNav");
       var bodyEl = document.getElementById("fieldGroups");
-      navEl.innerHTML = "";
+      navEl.innerHTML  = "";
       bodyEl.innerHTML = "";
-      bodyEl.className = "space-y-6 sm:space-y-10";
+      bodyEl.className = "space-y-5 sm:space-y-7";
 
       groupOrder.forEach(function (groupName, idx) {
         var anchorId = "group-" + idx;
+        var meta = sectionMeta[groupName] || { icon: "📄", bg: "bg-gray-100", desc: "" };
 
+        // Nav pill
         var pill = document.createElement("a");
         pill.href = "#" + anchorId;
-        pill.className = "flex-shrink-0 text-sm font-medium px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 hover:border-primary-400 hover:text-primary-700 transition-colors";
-        pill.textContent = groupName.replace(/^Global — /, "Global: ");
+        pill.className = "nav-pill";
+        pill.innerHTML = '<span>' + meta.icon + '</span>' + groupName.replace(/^Global — .+/, "Global").replace(/ Page.*/, "");
         navEl.appendChild(pill);
 
+        // Card
         var card = document.createElement("section");
         card.id = anchorId;
-        card.className = "bg-white rounded-3xl shadow-sm p-5 sm:p-6 lg:p-8 scroll-mt-28 sm:scroll-mt-36";
+        card.className = "section-card scroll-mt-28 sm:scroll-mt-32";
 
-        var heading = document.createElement("h3");
-        heading.className = "text-lg font-bold text-gray-900 mb-6";
-        heading.textContent = groupName;
-        card.appendChild(heading);
+        // Card header
+        var header = document.createElement("div");
+        header.className = "section-header";
+        header.innerHTML =
+          '<div class="section-icon ' + meta.bg + '"><span>' + meta.icon + '</span></div>' +
+          '<div class="min-w-0"><p class="font-bold text-gray-900 text-sm sm:text-base leading-tight">' + groupName + '</p>' +
+          (meta.desc ? '<p class="text-xs text-gray-400 mt-0.5 leading-snug">' + meta.desc + '</p>' : '') + '</div>';
+        card.appendChild(header);
 
-        if (groupName.indexOf("Gallery Page — ") === 0) {
-          card.appendChild(renderGalleryGrid(groups[groupName]));
-        } else {
-          var grid = document.createElement("div");
-          grid.className = "grid sm:grid-cols-2 gap-6";
-          groups[groupName].forEach(function (field) {
-            grid.appendChild(renderField(field));
+        // Card body
+        var body = document.createElement("div");
+        body.className = "section-body";
+
+        if (groupName === "Global — Header, Footer & Contact Details") {
+          // Render global fields in labelled sub-sections
+          var fieldsByKey = {};
+          groups[groupName].forEach(function (f) { fieldsByKey[f.key] = f; });
+          var subKeys = Object.keys(globalSubGroups);
+          subKeys.forEach(function (subLabel, si) {
+            var subDiv = document.createElement("div");
+            subDiv.className = si === 0 ? "" : "sub-section";
+            var subHead = document.createElement("p");
+            subHead.className = "sub-label";
+            subHead.textContent = subLabel;
+            subDiv.appendChild(subHead);
+            var grid = document.createElement("div");
+            grid.className = "grid sm:grid-cols-2 gap-4 sm:gap-5";
+            globalSubGroups[subLabel].forEach(function (key) {
+              if (fieldsByKey[key]) grid.appendChild(renderField(fieldsByKey[key]));
+            });
+            subDiv.appendChild(grid);
+            body.appendChild(subDiv);
           });
-          card.appendChild(grid);
+
+        } else if (groupName === "Gallery Page — 12 Photos") {
+          body.appendChild(renderGalleryGrid(groups[groupName]));
+
+        } else {
+          // General pages: split text fields and image fields into sub-sections
+          var textFields  = groups[groupName].filter(function(f){ return f.type !== "image"; });
+          var imageFields = groups[groupName].filter(function(f){ return f.type === "image"; });
+
+          if (textFields.length) {
+            if (imageFields.length) {
+              var tHead = document.createElement("p");
+              tHead.className = "sub-label";
+              tHead.textContent = "Text Content";
+              body.appendChild(tHead);
+            }
+            var tGrid = document.createElement("div");
+            tGrid.className = "grid sm:grid-cols-2 gap-4 sm:gap-5";
+            textFields.forEach(function(f){ tGrid.appendChild(renderField(f)); });
+            body.appendChild(tGrid);
+          }
+
+          if (imageFields.length) {
+            var iSec = document.createElement("div");
+            iSec.className = textFields.length ? "sub-section" : "";
+            var iHead = document.createElement("p");
+            iHead.className = "sub-label";
+            iHead.textContent = "Photos";
+            iSec.appendChild(iHead);
+            var iGrid = document.createElement("div");
+            iGrid.className = "grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5";
+            imageFields.forEach(function(f){ iGrid.appendChild(renderField(f)); });
+            iSec.appendChild(iGrid);
+            body.appendChild(iSec);
+          }
         }
 
+        card.appendChild(body);
         bodyEl.appendChild(card);
       });
+
+      // Intersection observer for active nav pill
+      var pills = navEl.querySelectorAll(".nav-pill");
+      var sections = bodyEl.querySelectorAll("section[id]");
+      if ("IntersectionObserver" in window) {
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) {
+              pills.forEach(function(p) { p.classList.remove("active"); });
+              var idx2 = Array.prototype.indexOf.call(sections, e.target);
+              if (pills[idx2]) pills[idx2].classList.add("active");
+            }
+          });
+        }, { rootMargin: "-30% 0px -60% 0px" });
+        sections.forEach(function(s) { obs.observe(s); });
+      }
     }
 
     function renderField(field) {
       var wrap = document.createElement("div");
-      if (field.type === "textarea") wrap.className = "sm:col-span-2";
+      wrap.className = "field-wrap" + (field.type === "textarea" ? " sm:col-span-2" : "");
 
       if (field.type === "image") {
         wrap.appendChild(renderImageField(field));
@@ -673,7 +865,7 @@
       }
 
       var label = document.createElement("label");
-      label.className = "block text-sm font-medium text-gray-700 mb-1.5";
+      label.className = "field-label";
       label.textContent = field.label;
       wrap.appendChild(label);
 
@@ -689,17 +881,15 @@
       input.className = "field-input";
       input.value = value;
       input.placeholder = field.defaultValue || "";
-      input.addEventListener("input", function () {
-        queueSave(field.key, input.value);
-      });
+      input.addEventListener("input", function () { queueSave(field.key, input.value); });
       wrap.appendChild(input);
 
       if (field.defaultValue !== undefined) {
         var resetRow = document.createElement("div");
-        resetRow.className = "mt-1 flex justify-end";
+        resetRow.style.cssText = "display:flex;justify-content:flex-end;margin-top:0.25rem";
         var resetBtn = document.createElement("button");
         resetBtn.type = "button";
-        resetBtn.className = "text-xs text-gray-400 hover:text-gray-600";
+        resetBtn.className = "reset-btn";
         resetBtn.textContent = "↺ Reset to default";
         resetBtn.addEventListener("click", function () {
           input.value = field.defaultValue || "";
@@ -714,43 +904,55 @@
 
     function renderImageField(field) {
       var wrap = document.createElement("div");
+      wrap.className = "field-wrap";
+
       var label = document.createElement("label");
-      label.className = "block text-sm font-medium text-gray-700 mb-1.5";
+      label.className = "field-label";
       label.textContent = field.label;
       wrap.appendChild(label);
 
+      // Preview box
       var preview = document.createElement("div");
-      preview.className = "image-drop aspect-[4/3] rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center mb-2 overflow-hidden";
       var currentDataUrl = currentImages[field.key];
+      preview.className = "img-preview" + (currentDataUrl ? " has-image" : "");
       if (currentDataUrl) preview.style.backgroundImage = "url(\"" + currentDataUrl + "\")";
-      var placeholderText = document.createElement("span");
-      placeholderText.className = "text-xs text-gray-400 px-3 text-center";
-      placeholderText.textContent = currentDataUrl ? "" : "Default photo shown";
-      preview.appendChild(placeholderText);
+
+      var placeholderInner = document.createElement("div");
+      placeholderInner.className = "flex flex-col items-center gap-1.5 pointer-events-none";
+      placeholderInner.style.display = currentDataUrl ? "none" : "flex";
+      placeholderInner.innerHTML =
+        '<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>' +
+        '<span style="font-size:0.7rem;color:#9ca3af">Default photo shown</span>';
+      preview.appendChild(placeholderInner);
       wrap.appendChild(preview);
 
+      // Controls row
       var row = document.createElement("div");
-      row.className = "flex items-center gap-3";
+      row.style.cssText = "display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap";
 
       var fileLabel = document.createElement("label");
-      fileLabel.className = "cursor-pointer text-sm font-medium bg-primary-50 text-primary-700 hover:bg-primary-100 px-4 py-2.5 rounded-full transition-colors flex-1 sm:flex-none text-center";
-      fileLabel.textContent = currentDataUrl ? "Replace photo" : "Upload photo";
+      fileLabel.className = "upload-btn";
+      fileLabel.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>';
+      var fileLabelText = document.createTextNode(currentDataUrl ? " Replace photo" : " Upload photo");
+      fileLabel.appendChild(fileLabelText);
+
       var fileInput = document.createElement("input");
       fileInput.type = "file";
       fileInput.accept = "image/*";
-      fileInput.className = "hidden";
+      fileInput.style.display = "none";
       fileLabel.appendChild(fileInput);
       row.appendChild(fileLabel);
 
       var removeBtn = document.createElement("button");
       removeBtn.type = "button";
-      removeBtn.className = "text-sm text-gray-400 hover:text-red-600" + (currentDataUrl ? "" : " hidden");
+      removeBtn.className = "remove-btn";
+      removeBtn.style.display = currentDataUrl ? "" : "none";
       removeBtn.textContent = "Remove";
       row.appendChild(removeBtn);
+      wrap.appendChild(row);
 
       var progress = document.createElement("p");
-      progress.className = "hidden text-xs text-gray-500 mt-2";
-      wrap.appendChild(row);
+      progress.style.cssText = "display:none;font-size:0.75rem;color:#6b7280;margin-top:0.375rem";
       wrap.appendChild(progress);
 
       fileInput.addEventListener("change", function () {
@@ -758,16 +960,17 @@
         if (!file) return;
         if (!file.type.startsWith("image/")) {
           progress.textContent = "Please choose an image file.";
-          progress.classList.remove("hidden");
+          progress.style.display = "";
           return;
         }
         progress.textContent = "Compressing photo…";
-        progress.classList.remove("hidden");
+        progress.style.display = "";
         resizeImageToDataUrl(file, MAX_IMAGE_DIMENSION, MAX_IMAGE_BYTES).then(function (dataUrl) {
           preview.style.backgroundImage = "url(\"" + dataUrl + "\")";
-          placeholderText.textContent = "";
-          fileLabel.textContent = "Replace photo";
-          removeBtn.classList.remove("hidden");
+          preview.classList.add("has-image");
+          placeholderInner.style.display = "none";
+          fileLabelText.textContent = " Replace photo";
+          removeBtn.style.display = "";
           progress.textContent = "Saving…";
           saveImageNow(field.key, dataUrl, progress);
         }).catch(function (err) {
@@ -778,9 +981,10 @@
 
       removeBtn.addEventListener("click", function () {
         preview.style.backgroundImage = "";
-        placeholderText.textContent = "Default photo shown";
-        removeBtn.classList.add("hidden");
-        fileLabel.textContent = "Upload photo";
+        preview.classList.remove("has-image");
+        placeholderInner.style.display = "flex";
+        removeBtn.style.display = "none";
+        fileLabelText.textContent = " Upload photo";
         resetField(field.key, true);
       });
 
@@ -799,19 +1003,21 @@
       });
 
       var grid = document.createElement("div");
-      grid.className = "grid sm:grid-cols-2 lg:grid-cols-3 gap-6";
+      grid.className = "grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5";
 
       Object.keys(byIndex).sort(function (a, b) { return a - b; }).forEach(function (n) {
         var group = byIndex[n];
         var card = document.createElement("div");
-        card.className = "border border-gray-100 rounded-2xl p-4";
+        card.style.cssText = "border:1px solid #f0f0f0;border-radius:0.875rem;padding:1rem;background:#fafafa;display:flex;flex-direction:column;gap:0.875rem";
+
         card.appendChild(renderImageField(group.image));
-        var titleField = renderField(group.caption);
-        titleField.className += " mt-3";
-        card.appendChild(titleField);
-        var subField = renderField(group.subcaption);
-        subField.className += " mt-3";
-        card.appendChild(subField);
+
+        var textWrap = document.createElement("div");
+        textWrap.style.cssText = "display:flex;flex-direction:column;gap:0.625rem";
+        textWrap.appendChild(renderField(group.caption));
+        textWrap.appendChild(renderField(group.subcaption));
+        card.appendChild(textWrap);
+
         grid.appendChild(card);
       });
 
