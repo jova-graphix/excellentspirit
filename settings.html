@@ -102,6 +102,17 @@
             .nav-item:hover { background: #f9fafb; color: #374151; border-color: transparent; }
             .nav-item.active { background: #ecfdf5; color: #065f46; box-shadow: inset 3px 0 0 0 #10b981; border-color: transparent; }
             .nav-badge { margin-left: auto; }
+
+            /* Collapsed sidebar (icon-only) */
+            #sidebarAside.collapsed { width: 4.5rem; }
+            #sidebarAside.collapsed .sidebar-inner { padding: 0.625rem; }
+            #sidebarAside.collapsed .sidebar-head-row { justify-content: center; }
+            #sidebarAside.collapsed .sidebar-title { display: none; }
+            #sidebarAside.collapsed .nav-label,
+            #sidebarAside.collapsed .nav-badge { display: none; }
+            #sidebarAside.collapsed .nav-item { justify-content: center; padding: 0.65rem; gap: 0; }
+            #sidebarAside.collapsed .nav-icon { font-size: 1.1rem; }
+            #sidebarToggleIcon.rotate-180 { transform: rotate(180deg); }
         }
 
         /* ── Field wrapper ── */
@@ -282,9 +293,16 @@
         <div id="editorState" class="hidden lg:flex lg:gap-8 lg:items-start">
 
             <!-- Sidebar navigation -->
-            <aside class="lg:w-64 lg:flex-shrink-0 lg:sticky lg:top-24 mb-5 lg:mb-0">
-                <div class="sidebar-card p-2.5 lg:p-4">
-                    <p class="sidebar-title hidden lg:block">Content Sections</p>
+            <aside id="sidebarAside" class="lg:w-64 lg:flex-shrink-0 lg:sticky lg:top-24 mb-5 lg:mb-0 transition-all duration-200">
+                <div class="sidebar-card sidebar-inner p-2.5 lg:p-4">
+                    <div class="sidebar-head-row flex items-center justify-between mb-2 lg:mb-2.5">
+                        <p class="sidebar-title hidden lg:block mb-0">Content Sections</p>
+                        <button id="sidebarToggleBtn" type="button" onclick="toggleSidebar()" class="hidden lg:flex items-center justify-center w-6 h-6 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors flex-shrink-0" title="Collapse sidebar" aria-label="Collapse sidebar">
+                            <svg id="sidebarToggleIcon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                    </div>
                     <nav id="groupNav" aria-label="Content sections"></nav>
                 </div>
             </aside>
@@ -582,6 +600,17 @@
       });
     }
 
+    function toggleSidebar() {
+      var aside = document.getElementById("sidebarAside");
+      var icon = document.getElementById("sidebarToggleIcon");
+      var btn = document.getElementById("sidebarToggleBtn");
+      var collapsed = aside.classList.toggle("collapsed");
+      icon.classList.toggle("rotate-180", collapsed);
+      var label = collapsed ? "Expand sidebar" : "Collapse sidebar";
+      btn.title = label;
+      btn.setAttribute("aria-label", label);
+    }
+
     function setSaveStatus(text, kind) {
       if (!statusEl) statusEl = document.getElementById("saveStatus");
       if (!text) {
@@ -806,9 +835,11 @@
         pill.type = "button";
         pill.href = "#" + anchorId;
         pill.className = "nav-item";
+        pill.title = groupName;
+        pill.setAttribute("aria-label", groupName);
         pill.innerHTML =
           '<span class="nav-icon">' + meta.icon + '</span>' +
-          '<span>' + groupName.replace(/^Global — .+/, "Global").replace(/ Page.*/, "") + '</span>' +
+          '<span class="nav-label">' + groupName.replace(/^Global — .+/, "Global").replace(/ Page.*/, "") + '</span>' +
           '<span class="nav-badge">' + groups[groupName].length + '</span>';
         pill.addEventListener("click", function () { showGroup(anchorId); });
         navEl.appendChild(pill);
