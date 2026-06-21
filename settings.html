@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Site Settings | Excellent Spirit International School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: {
+                        primary: {
+                            50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7',
+                            400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857',
+                            800: '#065f46', 900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        .field-input { width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #e5e7eb; border-radius: 0.75rem; outline: none; transition: border-color 0.15s; font-size: 0.9rem; }
+        .field-input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.15); }
+        .status-dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
+        .spinner { border: 3px solid #d1fae5; border-top-color: #059669; border-radius: 999px; width: 28px; height: 28px; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .image-drop { background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Top bar -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-sm">ES</span>
+                </div>
+                <div>
+                    <h1 class="font-bold text-gray-900 leading-tight">Site Settings</h1>
+                    <p class="text-xs text-gray-500 leading-tight">Excellent Spirit International School</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <span id="saveStatus" class="hidden text-xs text-gray-500 items-center gap-1.5"></span>
+                <button id="signOutBtn" onclick="cmsSignOut()" class="hidden text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">Sign Out</button>
+                <a href="index.html" class="text-sm font-medium text-primary-700 hover:text-primary-800 px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors">← Back to website</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+
+        <!-- Loading state -->
+        <div id="loadingState" class="flex flex-col items-center justify-center py-24 gap-4">
+            <div class="spinner"></div>
+            <p class="text-gray-500 text-sm">Connecting…</p>
+        </div>
+
+        <!-- Not configured yet -->
+        <div id="notConfiguredState" class="hidden">
+            <div class="bg-white rounded-3xl shadow-sm p-8 lg:p-10">
+                <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
+                    <span class="text-2xl">🔌</span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Firebase isn't connected yet</h2>
+                <p class="text-gray-600 mb-8">This page edits the text and photos shown across your website, syncing instantly to every visitor on every device. To turn it on, connect a free Firebase project — it takes about 5 minutes.</p>
+                <ol class="space-y-5 mb-8">
+                    <li class="flex gap-4">
+                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+                        <p class="text-gray-700 pt-0.5">Go to <a href="https://console.firebase.google.com" target="_blank" rel="noopener" class="text-primary-700 underline">console.firebase.google.com</a> and create a free project.</p>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+                        <p class="text-gray-700 pt-0.5">Enable <strong>Firestore Database</strong> and <strong>Authentication</strong> (Email/Password method) from the Build menu.</p>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+                        <p class="text-gray-700 pt-0.5">In Authentication → Users, add yourself with an email and password — that's how you'll log in here.</p>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+                        <p class="text-gray-700 pt-0.5">Register a Web app in Project Settings, copy the <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">firebaseConfig</code> values into the <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">CMS_FIREBASE_CONFIG</code> block near the bottom of <strong>every</strong> page (this file and all 6 site pages), and apply the security rules from <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">FIREBASE-SETUP.md</code>.</p>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="w-7 h-7 rounded-full bg-primary-600 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+                        <p class="text-gray-700 pt-0.5">Re-upload the updated files to your host, then refresh this page.</p>
+                    </li>
+                </ol>
+                <p class="text-sm text-gray-500">Until then, every page simply shows its normal built-in text and photos — nothing is broken.</p>
+            </div>
+        </div>
+
+        <!-- Login state -->
+        <div id="loginState" class="hidden">
+            <div class="max-w-sm mx-auto bg-white rounded-3xl shadow-sm p-8 mt-10">
+                <div class="w-14 h-14 bg-primary-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                    <span class="text-2xl">🔐</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-900 mb-1 text-center">Admin Sign In</h2>
+                <p class="text-sm text-gray-500 mb-6 text-center">Sign in with the admin account you created in Firebase Authentication.</p>
+                <form id="loginForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="loginEmail" class="field-input" required autocomplete="username">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="loginPassword" class="field-input" required autocomplete="current-password">
+                    </div>
+                    <p id="loginError" class="hidden text-sm text-red-600"></p>
+                    <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-full transition-colors">Sign In</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Editor state -->
+        <div id="editorState" class="hidden">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-1">Edit Website Content</h2>
+                <p class="text-gray-600">Changes save automatically and appear on the live site for every visitor within a second or two.</p>
+            </div>
+
+            <!-- Group jump nav -->
+            <div id="groupNav" class="flex gap-2 overflow-x-auto pb-3 mb-6 sticky top-[73px] bg-gray-50 z-30 -mx-1 px-1"></div>
+
+            <div id="fieldGroups" class="space-y-10"></div>
+        </div>
+
+    </main>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+    <script>
+    /* ============================================================
+       FIREBASE CONFIGURATION
+       ============================================================
+       This file connects your website to YOUR Firebase project so
+       that text and photo changes made on settings.html sync to
+       every visitor, on every device, in real time.
+
+       This setup uses only Firestore + Authentication — both free
+       on Firebase's no-cost "Spark" plan, no credit card needed.
+       Photos are stored as compressed text inside Firestore itself,
+       so Firebase Storage (which now requires a billing plan) is
+       never used.
+
+       HOW TO SET THIS UP (takes about 5 minutes):
+       1. Go to https://console.firebase.google.com and create a
+          free project (any name, e.g. "excellent-spirit-website").
+       2. In the project, click "Build > Firestore Database" and
+          click "Create database" (start in production mode).
+       3. Click "Build > Authentication" > "Get started" > enable
+          the "Email/Password" sign-in method. Then go to the
+          "Users" tab and add ONE user with your own email and a
+          password you choose — this is how you'll log in to
+          settings.html to make edits.
+       4. Click the gear icon > "Project settings" > scroll to
+          "Your apps" > click the </> (Web) icon to register a web
+          app (no need to set up hosting). Firebase will show you a
+          firebaseConfig object — copy those values into the
+          CMS_FIREBASE_CONFIG object below, replacing the
+          placeholders.
+       5. In Firestore, set the security rules shown in
+          FIREBASE-SETUP.md so visitors can read content but only
+          your logged-in admin account can change it.
+
+       IMPORTANT: this config block is repeated on every page (not
+       loaded from one shared file), so paste your real values into
+       this same block on all 7 files: index.html, about.html,
+       academics.html, admissions.html, gallery.html, contact.html,
+       and settings.html.
+
+       Until you complete this, every page will simply show its
+       original built-in text and images (nothing breaks) — only
+       settings.html will show a "Firebase not connected yet" notice.
+       ============================================================ */
+
+    window.CMS_FIREBASE_CONFIG = {
+      apiKey: "AIzaSyBLxNm9Rq6hRAzVat11UYaJFW6viH9pZzI",
+      authDomain: "esis-ec217.firebaseapp.com",
+      projectId: "esis-ec217",
+      storageBucket: "esis-ec217.firebasestorage.app",
+      messagingSenderId: "367089969270",
+      appId: "1:367089969270:web:831d1f682f81605d675757"
+    };
+
+    // The single Firestore document all site text is stored in.
+    window.CMS_DOC_PATH = { collection: "content", doc: "site" };
+
+    // The Firestore collection photos are stored in — one small document
+    // per photo (so a page full of photos never risks one document
+    // growing past Firestore's 1MB-per-document limit).
+    window.CMS_IMAGES_COLLECTION = "siteImages";
+
+    // Treated as "not configured yet" until real values are pasted in above.
+    window.CMS_IS_CONFIGURED = window.CMS_FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY" &&
+                                window.CMS_FIREBASE_CONFIG.projectId !== "YOUR_PROJECT_ID";
+    </script>
+    <script>
+    /* ============================================================
+       CMS FIELD MANIFEST
+       ============================================================
+       Single source of truth describing every piece of text and
+       every image across the site that can be edited from
+       settings.html. Each entry's "key" matches a data-cms-text
+       or data-cms-img attribute somewhere in the site's HTML.
+
+       type: "text"     -> single-line input
+             "textarea" -> multi-line input
+             "image"    -> file upload + preview
+       ============================================================ */
+
+    (function () {
+      var fields = [];
+
+      function addGroup(groupLabel, items) {
+        items.forEach(function (item) {
+          item.group = groupLabel;
+          fields.push(item);
+        });
+      }
+
+      // ---------- GLOBAL (appears on every page) ----------
+      addGroup("Global — Header, Footer & Contact Details", [
+        { key: "global_schoolName", label: "School name (line 1)", type: "text", defaultValue: "Excellent Spirit" },
+        { key: "global_schoolNameSub", label: "School name (line 2)", type: "text", defaultValue: "International School" },
+        { key: "global_logoInitials", label: "Logo initials (e.g. ES)", type: "text", defaultValue: "ES" },
+        { key: "global_tagline", label: "Motto / tagline", type: "text", defaultValue: "Excelling in All!" },
+        { key: "global_footerDescription", label: "Footer description", type: "textarea", defaultValue: "Nurturing excellence in every child. Quality education in Ashaley Botwe, Accra." },
+        { key: "global_address", label: "School address", type: "textarea", defaultValue: "Ashaley Botwe, Old Town, Accra, Ghana" },
+        { key: "global_email", label: "Email address", type: "text", defaultValue: "excellentspiritinternational@gmail.com" },
+        { key: "global_phone", label: "Phone number (digits only, e.g. 0547713684)", type: "text", defaultValue: "0547713684" },
+        { key: "global_whatsappNumber", label: "WhatsApp number (international format, no +, e.g. 233547713684)", type: "text", defaultValue: "233547713684" },
+        { key: "global_weekdayHours", label: "Weekday school hours", type: "text", defaultValue: "8:00 AM – 3:00 PM" },
+        { key: "global_saturdayHours", label: "Saturday hours", type: "text", defaultValue: "Closed" },
+        { key: "global_announcementText", label: "Top announcement bar text", type: "text", defaultValue: "🎓 Now Enrolling for 2026/2027 Academic Year" },
+        { key: "global_copyrightText", label: "Footer copyright line", type: "text", defaultValue: "© 2026 Excellent Spirit International School. All rights reserved." }
+      ]);
+
+      // ---------- HOME PAGE ----------
+      addGroup("Home Page", [
+        { key: "home_heroTitle", label: "Hero headline", type: "text", defaultValue: "Nurturing Excellent Spirits in Every Child" },
+        { key: "home_heroSubtitle", label: "Hero subtitle", type: "textarea", defaultValue: "Quality nursery, primary, and JHS education in Ashaley Botwe, Accra. Where academic excellence meets character development." },
+        { key: "home_heroImage", label: "Hero photo", type: "image" },
+        { key: "home_aboutTitle", label: "\"About\" section heading", type: "text", defaultValue: "Building Tomorrow's Leaders Today" },
+        { key: "home_aboutParagraph1", label: "\"About\" paragraph 1", type: "textarea", defaultValue: "Excellent Spirit International School is a trusted educational institution located in Ashaley Botwe, Old Town, Accra, Ghana. We are committed to providing quality education that nurtures the whole child — academically, morally, and socially." },
+        { key: "home_aboutParagraph2", label: "\"About\" paragraph 2", type: "textarea", defaultValue: "Our school offers a supportive learning environment where children are encouraged to discover their potential, develop strong values, and excel in all areas of life." },
+        { key: "home_aboutImage", label: "\"About\" section photo (school campus)", type: "image" },
+        { key: "home_whyChooseTitle", label: "\"Why choose us\" heading", type: "text", defaultValue: "Why Parents Trust Excellent Spirit" },
+        { key: "home_whyChooseSubtitle", label: "\"Why choose us\" subtitle", type: "textarea", defaultValue: "We understand that choosing the right school is one of the most important decisions you'll make for your child." },
+        { key: "home_admissionsCtaTitle", label: "Admissions banner heading", type: "text", defaultValue: "Ready to Give Your Child an Excellent Education?" },
+        { key: "home_admissionsCtaSubtitle", label: "Admissions banner text", type: "textarea", defaultValue: "Join the Excellent Spirit family. We're now accepting applications for the 2026/2027 academic year." },
+        { key: "home_contactPreviewTitle", label: "Contact section heading", type: "text", defaultValue: "Visit Us or Get in Touch" },
+        { key: "home_contactPreviewParagraph", label: "Contact section text", type: "textarea", defaultValue: "We'd love to hear from you! Whether you have questions about admissions, want to schedule a visit, or need any information, we're here to help." }
+      ]);
+
+      // ---------- ABOUT PAGE ----------
+      addGroup("About Page", [
+        { key: "about_heroTitle", label: "Page headline", type: "text", defaultValue: "Building Tomorrow's Leaders Today" },
+        { key: "about_heroSubtitle", label: "Page subtitle", type: "textarea", defaultValue: "Discover our story, mission, and commitment to nurturing excellence in every child." },
+        { key: "about_storyParagraph1", label: "Our story — paragraph 1", type: "textarea", defaultValue: "Excellent Spirit International School was founded with a clear vision: to provide quality education that nurtures the whole child. Located in Ashaley Botwe, Old Town, Accra, we have grown into a trusted educational institution serving families across the community." },
+        { key: "about_storyParagraph2", label: "Our story — paragraph 2", type: "textarea", defaultValue: "Our motto, \"Excelling in All!\" reflects our commitment to developing students who are not only academically strong but also morally upright, socially responsible, and ready to lead in the future." },
+        { key: "about_storyParagraph3", label: "Our story — paragraph 3", type: "textarea", defaultValue: "We believe that every child carries an excellent spirit within them. Our dedicated team of educators works tirelessly to help each student discover and develop their unique potential." },
+        { key: "about_campusImage", label: "Campus photo", type: "image" },
+        { key: "about_missionText", label: "Mission statement", type: "textarea", defaultValue: "To provide quality education that nurtures academic excellence, builds strong moral character, and develops the whole child in a safe and supportive learning environment. We are committed to preparing our students for success in life through dedicated teaching and meaningful parent partnerships." },
+        { key: "about_visionText", label: "Vision statement", type: "textarea", defaultValue: "To be a leading educational institution in Ghana that produces well-rounded, confident, and capable young people who excel academically, demonstrate strong character, and contribute positively to their communities and the world." }
+      ]);
+
+      // ---------- ACADEMICS PAGE ----------
+      addGroup("Academics Page", [
+        { key: "academics_heroTitle", label: "Page headline", type: "text", defaultValue: "Academic Programs" },
+        { key: "academics_heroSubtitle", label: "Page subtitle", type: "textarea", defaultValue: "Comprehensive education from nursery through junior high school, following the Ghana Education Service curriculum." },
+        { key: "academics_nurseryImage", label: "Nursery & Kindergarten photo", type: "image" },
+        { key: "academics_nurseryIntro", label: "Nursery & Kindergarten description", type: "textarea", defaultValue: "A joyful introduction to learning through play, stories, and creative activities. Our early years program builds strong foundations in literacy, numeracy, and social skills in a warm, nurturing environment." },
+        { key: "academics_primaryImage", label: "Primary School photo", type: "image" },
+        { key: "academics_primaryIntro", label: "Primary School description", type: "textarea", defaultValue: "A comprehensive primary education following the Ghana Education Service curriculum. Our primary program develops strong academic skills while encouraging students to explore their interests and talents." },
+        { key: "academics_jhsImage", label: "Junior High School photo", type: "image" },
+        { key: "academics_jhsIntro", label: "Junior High School description", type: "textarea", defaultValue: "Rigorous preparation for the Basic Education Certificate Examination (BECE) and beyond. Our JHS program equips students with the knowledge and skills needed for success in senior high school." }
+      ]);
+
+      // ---------- ADMISSIONS PAGE ----------
+      addGroup("Admissions Page", [
+        { key: "admissions_heroTitle", label: "Page headline", type: "text", defaultValue: "Admissions" },
+        { key: "admissions_heroSubtitle", label: "Page subtitle", type: "textarea", defaultValue: "We welcome children from all backgrounds to join our nurturing learning community. Apply today!" },
+        { key: "admissions_documentsIntro", label: "Required documents intro text", type: "textarea", defaultValue: "To complete your child's admission, please prepare the following documents. If you have any questions about the requirements, feel free to contact us." },
+        { key: "admissions_readyImage", label: "\"Ready to enroll\" photo", type: "image" },
+        { key: "admissions_ctaTitle", label: "Bottom call-to-action heading", type: "text", defaultValue: "Ready to Start the Process?" },
+        { key: "admissions_ctaSubtitle", label: "Bottom call-to-action text", type: "textarea", defaultValue: "Contact us today to schedule a visit or request an admission form. We're here to help!" }
+      ]);
+
+      // ---------- CONTACT PAGE ----------
+      addGroup("Contact Page", [
+        { key: "contact_heroTitle", label: "Page headline", type: "text", defaultValue: "Contact Us" },
+        { key: "contact_heroSubtitle", label: "Page subtitle", type: "textarea", defaultValue: "We'd love to hear from you! Reach out for admissions inquiries, school visits, or any questions." },
+        { key: "contact_formIntro", label: "Contact form intro text", type: "textarea", defaultValue: "Fill out the form below and we'll get back to you as soon as possible. You can also reach us directly via phone or WhatsApp." },
+        { key: "contact_infoIntro", label: "Contact info intro text", type: "textarea", defaultValue: "Visit us at our campus in Ashaley Botwe or reach out through any of the channels below." },
+        { key: "contact_mapEmbedUrl", label: "Google Maps embed URL (paste from Google Maps → Share → Embed a map)", type: "text", defaultValue: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15882.5!2d-0.17!3d5.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sAshaley+Botwe!5e0!3m2!1sen!2sgh!4v1" },
+        { key: "contact_ctaTitle", label: "Bottom call-to-action heading", type: "text", defaultValue: "Ready to Visit Our School?" },
+        { key: "contact_ctaSubtitle", label: "Bottom call-to-action text", type: "textarea", defaultValue: "We welcome prospective parents to tour our facilities and meet our dedicated team." }
+      ]);
+
+      // ---------- GALLERY PAGE (generated) ----------
+      addGroup("Gallery Page", [
+        { key: "gallery_heroTitle", label: "Page headline", type: "text", defaultValue: "Life at Excellent Spirit" },
+        { key: "gallery_heroSubtitle", label: "Page subtitle", type: "textarea", defaultValue: "Take a glimpse into our school environment, classrooms, and student activities." }
+      ]);
+      var galleryDefaults = [
+        ["Our School Building", "Main campus entrance"],
+        ["School Entrance", "Welcoming our students"],
+        ["School Compound", "Play and recreation area"],
+        ["Nursery Classroom", "Colorful learning space"],
+        ["Primary Classroom", "Focused learning environment"],
+        ["Computer Lab", "Digital literacy center"],
+        ["Sports Activities", "Building healthy bodies"],
+        ["Creative Arts", "Expressing creativity"],
+        ["Music & Dance", "Cultural activities"],
+        ["Graduation Ceremony", "Celebrating achievements"],
+        ["School Open Day", "Parents visiting our school"],
+        ["Prize Giving Day", "Recognizing excellence"]
+      ];
+      var galleryItems = [];
+      galleryDefaults.forEach(function (pair, i) {
+        var n = i + 1;
+        galleryItems.push({ key: "gallery_image" + n, label: "Photo " + n + " — " + pair[0], type: "image" });
+        galleryItems.push({ key: "gallery_caption" + n, label: "Photo " + n + " — title", type: "text", defaultValue: pair[0] });
+        galleryItems.push({ key: "gallery_subcaption" + n, label: "Photo " + n + " — caption", type: "text", defaultValue: pair[1] });
+      });
+      addGroup("Gallery Page — 12 Photos", galleryItems);
+
+      window.CMS_FIELDS = fields;
+    })();
+    </script>
+    <script>
+    /* ============================================================
+       SETTINGS APP
+       ============================================================
+       Powers settings.html: Firebase Auth login gate, renders an
+       editor form from the CMS_FIELDS list below, and saves changes to
+       Firestore so they sync to every page, on every device, in
+       real time.
+
+       Text fields are saved together in one small document
+       (content/site). Photos are compressed in the browser and
+       saved as base64 text, one per document in the siteImages
+       collection — this avoids Firebase Storage entirely (which
+       now requires a paid Blaze plan to enable), keeping the whole
+       setup on Firebase's free Spark plan.
+       ============================================================ */
+
+    var cmsAuth, cmsDb, cmsDocRef, cmsImagesRef;
+    var currentData = {};
+    var currentImages = {};
+    var saveTimers = {};
+    var statusEl;
+
+    // Keep each photo's base64 text comfortably under Firestore's 1MB-per-document
+    // limit (a document also needs room for field names/metadata).
+    var MAX_IMAGE_BYTES = 700000;
+    var MAX_IMAGE_DIMENSION = 1280;
+
+    function show(id) {
+      ["loadingState", "notConfiguredState", "loginState", "editorState"].forEach(function (s) {
+        document.getElementById(s).classList.toggle("hidden", s !== id);
+      });
+    }
+
+    function setSaveStatus(text, kind) {
+      if (!statusEl) statusEl = document.getElementById("saveStatus");
+      if (!text) {
+        statusEl.classList.add("hidden");
+        return;
+      }
+      var dotColor = kind === "error" ? "bg-red-500" : kind === "saving" ? "bg-amber-400" : "bg-primary-500";
+      statusEl.innerHTML = '<span class="status-dot ' + dotColor + '"></span> ' + text;
+      statusEl.classList.remove("hidden");
+      statusEl.classList.add("flex");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!window.CMS_IS_CONFIGURED) {
+        show("notConfiguredState");
+        return;
+      }
+
+      try {
+        firebase.initializeApp(window.CMS_FIREBASE_CONFIG);
+      } catch (e) {
+        console.error(e);
+        show("notConfiguredState");
+        return;
+      }
+
+      cmsAuth = firebase.auth();
+      cmsDb = firebase.firestore();
+      cmsDocRef = cmsDb.collection(window.CMS_DOC_PATH.collection).doc(window.CMS_DOC_PATH.doc);
+      cmsImagesRef = cmsDb.collection(window.CMS_IMAGES_COLLECTION);
+
+      document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var email = document.getElementById("loginEmail").value.trim();
+        var password = document.getElementById("loginPassword").value;
+        var errEl = document.getElementById("loginError");
+        errEl.classList.add("hidden");
+        cmsAuth.signInWithEmailAndPassword(email, password).catch(function (err) {
+          errEl.textContent = friendlyAuthError(err);
+          errEl.classList.remove("hidden");
+        });
+      });
+
+      cmsAuth.onAuthStateChanged(function (user) {
+        if (user) {
+          document.getElementById("signOutBtn").classList.remove("hidden");
+          loadContentAndRender();
+        } else {
+          document.getElementById("signOutBtn").classList.add("hidden");
+          show("loginState");
+        }
+      });
+    });
+
+    function friendlyAuthError(err) {
+      var map = {
+        "auth/invalid-email": "That doesn't look like a valid email address.",
+        "auth/user-not-found": "No admin account found with that email.",
+        "auth/wrong-password": "Incorrect password.",
+        "auth/invalid-credential": "Incorrect email or password.",
+        "auth/too-many-requests": "Too many attempts — please wait a moment and try again."
+      };
+      return map[err.code] || err.message;
+    }
+
+    function cmsSignOut() {
+      cmsAuth.signOut();
+    }
+
+    function loadContentAndRender() {
+      Promise.all([
+        cmsDocRef.get().catch(function (err) { console.error(err); return null; }),
+        cmsImagesRef.get().catch(function (err) { console.error(err); return null; })
+      ]).then(function (results) {
+        var textSnap = results[0];
+        var imagesSnap = results[1];
+        currentData = textSnap && textSnap.exists ? textSnap.data() : {};
+        currentImages = {};
+        if (imagesSnap) {
+          imagesSnap.forEach(function (doc) {
+            currentImages[doc.id] = (doc.data() || {}).data;
+          });
+        }
+        if (!textSnap || !imagesSnap) {
+          setSaveStatus("Couldn't load content — check Firestore rules", "error");
+        }
+        renderForm();
+        show("editorState");
+      });
+    }
+
+    function renderForm() {
+      var groups = {};
+      var groupOrder = [];
+      window.CMS_FIELDS.forEach(function (f) {
+        if (!groups[f.group]) {
+          groups[f.group] = [];
+          groupOrder.push(f.group);
+        }
+        groups[f.group].push(f);
+      });
+
+      var navEl = document.getElementById("groupNav");
+      var bodyEl = document.getElementById("fieldGroups");
+      navEl.innerHTML = "";
+      bodyEl.innerHTML = "";
+
+      groupOrder.forEach(function (groupName, idx) {
+        var anchorId = "group-" + idx;
+
+        var pill = document.createElement("a");
+        pill.href = "#" + anchorId;
+        pill.className = "flex-shrink-0 text-sm font-medium px-4 py-2 rounded-full bg-white border border-gray-200 text-gray-600 hover:border-primary-400 hover:text-primary-700 transition-colors";
+        pill.textContent = groupName.replace(/^Global — /, "Global: ");
+        navEl.appendChild(pill);
+
+        var card = document.createElement("section");
+        card.id = anchorId;
+        card.className = "bg-white rounded-3xl shadow-sm p-6 lg:p-8 scroll-mt-32";
+
+        var heading = document.createElement("h3");
+        heading.className = "text-lg font-bold text-gray-900 mb-6";
+        heading.textContent = groupName;
+        card.appendChild(heading);
+
+        if (groupName.indexOf("Gallery Page — ") === 0) {
+          card.appendChild(renderGalleryGrid(groups[groupName]));
+        } else {
+          var grid = document.createElement("div");
+          grid.className = "grid sm:grid-cols-2 gap-6";
+          groups[groupName].forEach(function (field) {
+            grid.appendChild(renderField(field));
+          });
+          card.appendChild(grid);
+        }
+
+        bodyEl.appendChild(card);
+      });
+    }
+
+    function renderField(field) {
+      var wrap = document.createElement("div");
+      if (field.type === "textarea") wrap.className = "sm:col-span-2";
+
+      if (field.type === "image") {
+        wrap.appendChild(renderImageField(field));
+        return wrap;
+      }
+
+      var label = document.createElement("label");
+      label.className = "block text-sm font-medium text-gray-700 mb-1.5";
+      label.textContent = field.label;
+      wrap.appendChild(label);
+
+      var value = currentData[field.key] !== undefined ? currentData[field.key] : (field.defaultValue || "");
+      var input;
+      if (field.type === "textarea") {
+        input = document.createElement("textarea");
+        input.rows = 3;
+      } else {
+        input = document.createElement("input");
+        input.type = "text";
+      }
+      input.className = "field-input";
+      input.value = value;
+      input.placeholder = field.defaultValue || "";
+      input.addEventListener("input", function () {
+        queueSave(field.key, input.value);
+      });
+      wrap.appendChild(input);
+
+      if (field.defaultValue !== undefined) {
+        var resetRow = document.createElement("div");
+        resetRow.className = "mt-1 flex justify-end";
+        var resetBtn = document.createElement("button");
+        resetBtn.type = "button";
+        resetBtn.className = "text-xs text-gray-400 hover:text-gray-600";
+        resetBtn.textContent = "↺ Reset to default";
+        resetBtn.addEventListener("click", function () {
+          input.value = field.defaultValue || "";
+          resetField(field.key);
+        });
+        resetRow.appendChild(resetBtn);
+        wrap.appendChild(resetRow);
+      }
+
+      return wrap;
+    }
+
+    function renderImageField(field) {
+      var wrap = document.createElement("div");
+      var label = document.createElement("label");
+      label.className = "block text-sm font-medium text-gray-700 mb-1.5";
+      label.textContent = field.label;
+      wrap.appendChild(label);
+
+      var preview = document.createElement("div");
+      preview.className = "image-drop aspect-[4/3] rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center mb-2 overflow-hidden";
+      var currentDataUrl = currentImages[field.key];
+      if (currentDataUrl) preview.style.backgroundImage = "url(\"" + currentDataUrl + "\")";
+      var placeholderText = document.createElement("span");
+      placeholderText.className = "text-xs text-gray-400 px-3 text-center";
+      placeholderText.textContent = currentDataUrl ? "" : "Default photo shown";
+      preview.appendChild(placeholderText);
+      wrap.appendChild(preview);
+
+      var row = document.createElement("div");
+      row.className = "flex items-center gap-3";
+
+      var fileLabel = document.createElement("label");
+      fileLabel.className = "cursor-pointer text-sm font-medium bg-primary-50 text-primary-700 hover:bg-primary-100 px-4 py-2 rounded-full transition-colors";
+      fileLabel.textContent = currentDataUrl ? "Replace photo" : "Upload photo";
+      var fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+      fileInput.className = "hidden";
+      fileLabel.appendChild(fileInput);
+      row.appendChild(fileLabel);
+
+      var removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "text-sm text-gray-400 hover:text-red-600" + (currentDataUrl ? "" : " hidden");
+      removeBtn.textContent = "Remove";
+      row.appendChild(removeBtn);
+
+      var progress = document.createElement("p");
+      progress.className = "hidden text-xs text-gray-500 mt-2";
+      wrap.appendChild(row);
+      wrap.appendChild(progress);
+
+      fileInput.addEventListener("change", function () {
+        var file = fileInput.files[0];
+        if (!file) return;
+        if (!file.type.startsWith("image/")) {
+          progress.textContent = "Please choose an image file.";
+          progress.classList.remove("hidden");
+          return;
+        }
+        progress.textContent = "Compressing photo…";
+        progress.classList.remove("hidden");
+        resizeImageToDataUrl(file, MAX_IMAGE_DIMENSION, MAX_IMAGE_BYTES).then(function (dataUrl) {
+          preview.style.backgroundImage = "url(\"" + dataUrl + "\")";
+          placeholderText.textContent = "";
+          fileLabel.textContent = "Replace photo";
+          removeBtn.classList.remove("hidden");
+          progress.textContent = "Saving…";
+          saveImageNow(field.key, dataUrl, progress);
+        }).catch(function (err) {
+          console.error(err);
+          progress.textContent = "Couldn't process that image — try a different file.";
+        });
+      });
+
+      removeBtn.addEventListener("click", function () {
+        preview.style.backgroundImage = "";
+        placeholderText.textContent = "Default photo shown";
+        removeBtn.classList.add("hidden");
+        fileLabel.textContent = "Upload photo";
+        resetField(field.key, true);
+      });
+
+      return wrap;
+    }
+
+    // Renders the 12 gallery photos as compact combined cards (image + title + caption together)
+    function renderGalleryGrid(fields) {
+      var byIndex = {};
+      fields.forEach(function (f) {
+        var m = f.key.match(/^gallery_(image|caption|subcaption)(\d+)$/);
+        if (!m) return;
+        var n = m[2];
+        if (!byIndex[n]) byIndex[n] = {};
+        byIndex[n][m[1]] = f;
+      });
+
+      var grid = document.createElement("div");
+      grid.className = "grid sm:grid-cols-2 lg:grid-cols-3 gap-6";
+
+      Object.keys(byIndex).sort(function (a, b) { return a - b; }).forEach(function (n) {
+        var group = byIndex[n];
+        var card = document.createElement("div");
+        card.className = "border border-gray-100 rounded-2xl p-4";
+        card.appendChild(renderImageField(group.image));
+        var titleField = renderField(group.caption);
+        titleField.className += " mt-3";
+        card.appendChild(titleField);
+        var subField = renderField(group.subcaption);
+        subField.className += " mt-3";
+        card.appendChild(subField);
+        grid.appendChild(card);
+      });
+
+      return grid;
+    }
+
+    // Resizes/compresses an image client-side and returns a base64 JPEG data URL,
+    // shrinking quality (and dimensions, if needed) until it fits under maxBytes.
+    function resizeImageToDataUrl(file, maxDim, maxBytes) {
+      return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var img = new Image();
+          img.onload = function () {
+            function renderAt(dim) {
+              var w = img.width, h = img.height;
+              if (w > dim || h > dim) {
+                if (w > h) { h = Math.round(h * (dim / w)); w = dim; }
+                else { w = Math.round(w * (dim / h)); h = dim; }
+              }
+              var canvas = document.createElement("canvas");
+              canvas.width = w; canvas.height = h;
+              canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+              return canvas;
+            }
+
+            var dim = maxDim;
+            var canvas = renderAt(dim);
+            var quality = 0.85;
+            var dataUrl = canvas.toDataURL("image/jpeg", quality);
+
+            // Step 1: reduce quality.
+            while (dataUrl.length > maxBytes && quality > 0.35) {
+              quality -= 0.1;
+              dataUrl = canvas.toDataURL("image/jpeg", quality);
+            }
+            // Step 2: if still too big, shrink dimensions and try again.
+            var attempts = 0;
+            while (dataUrl.length > maxBytes && attempts < 3) {
+              dim = Math.round(dim * 0.75);
+              canvas = renderAt(dim);
+              quality = 0.7;
+              dataUrl = canvas.toDataURL("image/jpeg", quality);
+              while (dataUrl.length > maxBytes && quality > 0.35) {
+                quality -= 0.1;
+                dataUrl = canvas.toDataURL("image/jpeg", quality);
+              }
+              attempts++;
+            }
+
+            resolve(dataUrl);
+          };
+          img.onerror = function () { reject(new Error("Could not read that image file.")); };
+          img.src = e.target.result;
+        };
+        reader.onerror = function () { reject(new Error("Could not read that file.")); };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function queueSave(key, value) {
+      setSaveStatus("Saving…", "saving");
+      clearTimeout(saveTimers[key]);
+      saveTimers[key] = setTimeout(function () {
+        saveFieldNow(key, value);
+      }, 700);
+    }
+
+    function saveFieldNow(key, value) {
+      var update = {};
+      update[key] = value;
+      cmsDocRef.set(update, { merge: true }).then(function () {
+        currentData[key] = value;
+        setSaveStatus("All changes saved", "ok");
+        setTimeout(function () { setSaveStatus(""); }, 2000);
+      }).catch(function (err) {
+        console.error(err);
+        setSaveStatus("Couldn't save — check Firestore rules", "error");
+      });
+    }
+
+    function saveImageNow(key, dataUrl, progressEl) {
+      setSaveStatus("Saving…", "saving");
+      cmsImagesRef.doc(key).set({
+        data: dataUrl,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(function () {
+        currentImages[key] = dataUrl;
+        setSaveStatus("All changes saved", "ok");
+        if (progressEl) progressEl.classList.add("hidden");
+        setTimeout(function () { setSaveStatus(""); }, 2000);
+      }).catch(function (err) {
+        console.error(err);
+        setSaveStatus("Couldn't save photo — check Firestore rules", "error");
+        if (progressEl) progressEl.textContent = "Couldn't save — check Firestore rules.";
+      });
+    }
+
+    function resetField(key, isImage) {
+      setSaveStatus("Saving…", "saving");
+      if (isImage) {
+        cmsImagesRef.doc(key).delete().then(function () {
+          delete currentImages[key];
+          setSaveStatus("All changes saved", "ok");
+          setTimeout(function () { setSaveStatus(""); }, 2000);
+        }).catch(function (err) {
+          console.error(err);
+          setSaveStatus("Couldn't reset — check Firestore rules", "error");
+        });
+        return;
+      }
+      var update = {};
+      update[key] = firebase.firestore.FieldValue.delete();
+      cmsDocRef.set(update, { merge: true }).then(function () {
+        delete currentData[key];
+        setSaveStatus("All changes saved", "ok");
+        setTimeout(function () { setSaveStatus(""); }, 2000);
+      }).catch(function (err) {
+        console.error(err);
+        setSaveStatus("Couldn't reset — check Firestore rules", "error");
+      });
+    }
+    </script>
+</body>
+</html>

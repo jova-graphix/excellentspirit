@@ -10,59 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
-        (function() {
-            var page = window.location.pathname.split('/').pop() || 'index.html';
-            if (page === '') page = 'index.html';
-            document.querySelectorAll('[data-navlink]').forEach(function(link) {
-                if (link.getAttribute('href') === page) {
-                    link.classList.add('text-primary-600', 'font-medium');
-                    link.classList.remove('text-gray-600');
-                    if (link.classList.contains('px-4')) link.classList.add('bg-primary-50');
-                }
-            });
-        })();
-
-        function toggleMenu() {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
-            document.getElementById('menuIcon').classList.toggle('hidden');
-            document.getElementById('closeIcon').classList.toggle('hidden');
-        }
-
-        function toggleFaq(button) {
-            const content = button.nextElementSibling;
-            const icon = button.querySelector('svg');
-            content.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-        }
-
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            const whatsappMsg = encodeURIComponent(
-                'Hello, my name is ' + name + '.\n' +
-                'Phone: ' + phone + '\n' +
-                'Subject: ' + subject + '\n\n' +
-                message
-            );
-            window.open('https://wa.me/233547713684?text=' + whatsappMsg, '_blank');
-        });
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Excellent Spirit International School</title>
-    <meta name="description" content="Contact Excellent Spirit International School in Ashaley Botwe, Accra. Visit us, call, or send a message via WhatsApp for admissions inquiries.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -84,7 +31,7 @@
 <body class="bg-white">
     <!-- Announcement Bar -->
     <div class="bg-amber-500 text-white text-center py-2 px-4 text-sm font-medium">
-        🎓 Now Enrolling for 2026/2027 Academic Year &nbsp;|&nbsp; <a href="admissions.html" class="underline font-semibold hover:text-amber-100">Apply Now →</a>
+        <span data-cms-text="global_announcementText">🎓 Now Enrolling for 2026/2027 Academic Year</span> &nbsp;|&nbsp; <a href="admissions.html" class="underline font-semibold hover:text-amber-100">Apply Now →</a>
     </div>
 
     <!-- Navigation -->
@@ -93,11 +40,11 @@
             <div class="flex justify-between items-center h-16 lg:h-20">
                 <a href="index.html" class="flex items-center gap-2">
                     <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">ES</span>
+                        <span class="text-white font-bold text-lg" data-cms-text="global_logoInitials">ES</span>
                     </div>
                     <div class="block">
-                        <span class="font-bold text-gray-900">Excellent Spirit</span>
-                        <span class="block text-xs text-gray-500">International School</span>
+                        <span class="font-bold text-gray-900" data-cms-text="global_schoolName">Excellent Spirit</span>
+                        <span class="block text-xs text-gray-500" data-cms-text="global_schoolNameSub">International School</span>
                     </div>
                 </a>
                 <div class="hidden lg:flex items-center gap-8">
@@ -136,8 +83,8 @@
     <section class="gradient-bg pt-16 lg:pt-20 pb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span class="inline-block bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">Get in Touch</span>
-            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4">Contact Us</h1>
-            <p class="text-xl text-white/90 max-w-2xl mx-auto">We'd love to hear from you! Reach out for admissions inquiries, school visits, or any questions.</p>
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4" data-cms-text="contact_heroTitle">Contact Us</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto" data-cms-text="contact_heroSubtitle">We'd love to hear from you! Reach out for admissions inquiries, school visits, or any questions.</p>
         </div>
     </section>
 
@@ -148,7 +95,7 @@
                 <!-- Contact Form -->
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
-                    <p class="text-gray-600 mb-8">Fill out the form below and we'll get back to you as soon as possible. You can also reach us directly via phone or WhatsApp.</p>
+                    <p class="text-gray-600 mb-8" data-cms-text="contact_formIntro">Fill out the form below and we'll get back to you as soon as possible. You can also reach us directly via phone or WhatsApp.</p>
                     
                     <form id="contactForm" class="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
@@ -189,7 +136,7 @@
                 <!-- Contact Info -->
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900 mb-6">Contact Information</h2>
-                    <p class="text-gray-600 mb-8">Visit us at our campus in Ashaley Botwe or reach out through any of the channels below.</p>
+                    <p class="text-gray-600 mb-8" data-cms-text="contact_infoIntro">Visit us at our campus in Ashaley Botwe or reach out through any of the channels below.</p>
                     
                     <div class="space-y-6 mb-10">
                         <div class="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl">
@@ -198,8 +145,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-gray-900 mb-1">Our Location</h4>
-                                <p class="text-gray-600">Ashaley Botwe, Old Town</p>
-                                <p class="text-gray-600">Accra, Ghana</p>
+                                <p class="text-gray-600" data-cms-text="global_address">Ashaley Botwe, Old Town, Accra, Ghana</p>
                             </div>
                         </div>
                         
@@ -209,7 +155,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-gray-900 mb-1">Email Address</h4>
-                                <a href="mailto:excellentspiritinternational@gmail.com" class="text-primary-600 hover:text-primary-700 break-all">excellentspiritinternational@gmail.com</a>
+                                <a href="mailto:excellentspiritinternational@gmail.com" data-cms-mailto="global_email" data-cms-text="global_email" class="text-primary-600 hover:text-primary-700 break-all">excellentspiritinternational@gmail.com</a>
                             </div>
                         </div>
                         
@@ -219,7 +165,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-gray-900 mb-1">Phone Number</h4>
-                                <p class="text-gray-600">0547713684</p>
+                                <p class="text-gray-600" data-cms-text="global_phone">0547713684</p>
                                 <p class="text-sm text-gray-500">Call us during school hours</p>
                             </div>
                         </div>
@@ -230,21 +176,21 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-gray-900 mb-1">School Hours</h4>
-                                <p class="text-gray-600">Monday – Friday: [School Hours]</p>
-                                <p class="text-gray-600">Saturday: [If applicable]</p>
+                                <p class="text-gray-600">Monday – Friday: <span data-cms-text="global_weekdayHours">[School Hours]</span></p>
+                                <p class="text-gray-600">Saturday: <span data-cms-text="global_saturdayHours">[If applicable]</span></p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Quick Contact Buttons -->
                     <div class="flex flex-wrap gap-4">
-                        <a href="tel:0547713684" class="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full font-medium transition-all">
+                        <a href="tel:0547713684" data-cms-tel="global_phone" class="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full font-medium transition-all">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                             </svg>
                             Call Now
                         </a>
-                        <a href="https://wa.me/233547713684?text=Hello%2C%20I%20am%20interested%20in%20Excellent%20Spirit%20International%20School.%20Please%20provide%20more%20information." target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium transition-all">
+                        <a href="https://wa.me/233547713684?text=Hello%2C%20I%20am%20interested%20in%20Excellent%20Spirit%20International%20School.%20Please%20provide%20more%20information." data-cms-wa="global_whatsappNumber" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium transition-all">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                             </svg>
@@ -266,6 +212,7 @@
             <div class="bg-gray-200 rounded-3xl overflow-hidden h-96 lg:h-[500px]">
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15882.5!2d-0.17!3d5.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sAshaley+Botwe!5e0!3m2!1sen!2sgh!4v1"
+                    data-cms-iframe="contact_mapEmbedUrl"
                     width="100%" 
                     height="100%" 
                     style="border:0;" 
@@ -325,7 +272,7 @@
                         </svg>
                     </button>
                     <div class="faq-content hidden px-6 pb-6">
-                        <p class="text-gray-600">Our school hours are [School Hours] Monday through Friday. Please contact us for specific class schedules.</p>
+                        <p class="text-gray-600">Our school hours are <span data-cms-text="global_weekdayHours">[School Hours]</span> Monday through Friday. Please contact us for specific class schedules.</p>
                     </div>
                 </div>
                 
@@ -383,10 +330,10 @@
     <!-- CTA Section -->
     <section class="py-20 gradient-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">Ready to Visit Our School?</h2>
-            <p class="text-xl text-white/90 max-w-2xl mx-auto mb-8">We welcome prospective parents to tour our facilities and meet our dedicated team.</p>
+            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6" data-cms-text="contact_ctaTitle">Ready to Visit Our School?</h2>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto mb-8" data-cms-text="contact_ctaSubtitle">We welcome prospective parents to tour our facilities and meet our dedicated team.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="https://wa.me/233547713684?text=Hello%2C%20I%20would%20like%20to%20schedule%20a%20visit%20to%20Excellent%20Spirit%20International%20School." target="_blank" rel="noopener noreferrer" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all">Schedule a Visit</a>
+                <a href="https://wa.me/233547713684?text=Hello%2C%20I%20would%20like%20to%20schedule%20a%20visit%20to%20Excellent%20Spirit%20International%20School." data-cms-wa="global_whatsappNumber" target="_blank" rel="noopener noreferrer" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all">Schedule a Visit</a>
                 <a href="admissions.html" class="bg-white/20 hover:bg-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all backdrop-blur-sm border border-white/30">Start Admissions</a>
             </div>
         </div>
@@ -399,15 +346,15 @@
                 <div>
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold">ES</span>
+                            <span class="text-white font-bold" data-cms-text="global_logoInitials">ES</span>
                         </div>
                         <div>
-                            <span class="font-bold">Excellent Spirit</span>
-                            <span class="block text-xs text-gray-400">International School</span>
+                            <span class="font-bold" data-cms-text="global_schoolName">Excellent Spirit</span>
+                            <span class="block text-xs text-gray-400" data-cms-text="global_schoolNameSub">International School</span>
                         </div>
                     </div>
-                    <p class="text-gray-400 mb-6">Nurturing excellence in every child. Quality education in Ashaley Botwe, Accra.</p>
-                    <p class="text-primary-400 font-semibold italic">"Excelling in All!"</p>
+                    <p class="text-gray-400 mb-6" data-cms-text="global_footerDescription">Nurturing excellence in every child. Quality education in Ashaley Botwe, Accra.</p>
+                    <p class="text-primary-400 font-semibold italic">"<span data-cms-text="global_tagline">Excelling in All!</span>"</p>
                 </div>
                 <div>
                     <h4 class="font-bold text-lg mb-6">Quick Links</h4>
@@ -430,22 +377,210 @@
                 <div>
                     <h4 class="font-bold text-lg mb-6">Contact Info</h4>
                     <ul class="space-y-3 text-gray-400">
-                        <li class="flex items-center gap-2"><span>📍</span> Ashaley Botwe, Old Town, Accra</li>
-                        <li class="flex items-center gap-2"><span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" class="text-gray-400 hover:text-white transition-colors">excellentspiritinternational@gmail.com</a></li>
-                        <li class="flex items-center gap-2"><span>🕐</span> Mon – Fri: [School Hours]</li>
+                        <li class="flex items-center gap-2"><span>📍</span> <span data-cms-text="global_address">Ashaley Botwe, Old Town, Accra, Ghana</span></li>
+                        <li class="flex items-center gap-2"><span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" data-cms-mailto="global_email" data-cms-text="global_email" class="text-gray-400 hover:text-white transition-colors">excellentspiritinternational@gmail.com</a></li>
+                        <li class="flex items-center gap-2"><span>🕐</span> Mon – Fri: <span data-cms-text="global_weekdayHours">[School Hours]</span></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p>&copy; 2026 Excellent Spirit International School. All rights reserved.</p>
+                <p data-cms-text="global_copyrightText">&copy; 2026 Excellent Spirit International School. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/233547713684?text=Hello%2C%20I%20am%20interested%20in%20Excellent%20Spirit%20International%20School.%20Please%20provide%20more%20information." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 lg:hidden z-50 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all">
+    <a href="https://wa.me/233547713684?text=Hello%2C%20I%20am%20interested%20in%20Excellent%20Spirit%20International%20School.%20Please%20provide%20more%20information." data-cms-wa="global_whatsappNumber" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 lg:hidden z-50 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all">
         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
+
+    <!-- Live content sync (Firebase) -->
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+    <script>
+    /* ============================================================
+       FIREBASE CONFIGURATION
+       ============================================================
+       This file connects your website to YOUR Firebase project so
+       that text and photo changes made on settings.html sync to
+       every visitor, on every device, in real time.
+
+       This setup uses only Firestore + Authentication — both free
+       on Firebase's no-cost "Spark" plan, no credit card needed.
+       Photos are stored as compressed text inside Firestore itself,
+       so Firebase Storage (which now requires a billing plan) is
+       never used.
+
+       HOW TO SET THIS UP (takes about 5 minutes):
+       1. Go to https://console.firebase.google.com and create a
+          free project (any name, e.g. "excellent-spirit-website").
+       2. In the project, click "Build > Firestore Database" and
+          click "Create database" (start in production mode).
+       3. Click "Build > Authentication" > "Get started" > enable
+          the "Email/Password" sign-in method. Then go to the
+          "Users" tab and add ONE user with your own email and a
+          password you choose — this is how you'll log in to
+          settings.html to make edits.
+       4. Click the gear icon > "Project settings" > scroll to
+          "Your apps" > click the </> (Web) icon to register a web
+          app (no need to set up hosting). Firebase will show you a
+          firebaseConfig object — copy those values into the
+          CMS_FIREBASE_CONFIG object below, replacing the
+          placeholders.
+       5. In Firestore, set the security rules shown in
+          FIREBASE-SETUP.md so visitors can read content but only
+          your logged-in admin account can change it.
+
+       IMPORTANT: this config block is repeated on every page (not
+       loaded from one shared file), so paste your real values into
+       this same block on all 7 files: index.html, about.html,
+       academics.html, admissions.html, gallery.html, contact.html,
+       and settings.html.
+
+       Until you complete this, every page will simply show its
+       original built-in text and images (nothing breaks) — only
+       settings.html will show a "Firebase not connected yet" notice.
+       ============================================================ */
+
+    window.CMS_FIREBASE_CONFIG = {
+      apiKey: "AIzaSyBLxNm9Rq6hRAzVat11UYaJFW6viH9pZzI",
+      authDomain: "esis-ec217.firebaseapp.com",
+      projectId: "esis-ec217",
+      storageBucket: "esis-ec217.firebasestorage.app",
+      messagingSenderId: "367089969270",
+      appId: "1:367089969270:web:831d1f682f81605d675757"
+    };
+
+    // The single Firestore document all site text is stored in.
+    window.CMS_DOC_PATH = { collection: "content", doc: "site" };
+
+    // The Firestore collection photos are stored in — one small document
+    // per photo (so a page full of photos never risks one document
+    // growing past Firestore's 1MB-per-document limit).
+    window.CMS_IMAGES_COLLECTION = "siteImages";
+
+    // Treated as "not configured yet" until real values are pasted in above.
+    window.CMS_IS_CONFIGURED = window.CMS_FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY" &&
+                                window.CMS_FIREBASE_CONFIG.projectId !== "YOUR_PROJECT_ID";
+    </script>
+    <script>
+    /* ============================================================
+       CMS SYNC (read-only)
+       ============================================================
+       Included on every public page (not settings.html). Connects
+       to Firestore in real time and, whenever the admin saves a
+       change on settings.html, updates matching elements on this
+       page instantly — no refresh needed, and it syncs the same
+       way on every device.
+
+       Text lives in one shared document (content/site). Photos are
+       stored as compressed base64 strings, one per document in the
+       siteImages collection — no Firebase Storage involved, so no
+       billing plan is required to run this.
+
+       If Firebase hasn't been configured yet (see the CMS_FIREBASE_CONFIG block below)
+       this script quietly does nothing and the page just shows its
+       normal built-in text and images.
+       ============================================================ */
+
+    window.CMS_DATA = {};
+
+    (function () {
+      if (!window.CMS_IS_CONFIGURED) {
+        console.info("[CMS] Firebase not configured yet — showing default site content. See the CMS_FIREBASE_CONFIG block in this page's <head>/<body> scripts.");
+        return;
+      }
+
+      try {
+        firebase.initializeApp(window.CMS_FIREBASE_CONFIG);
+      } catch (e) {
+        console.warn("[CMS] Firebase failed to initialize:", e);
+        return;
+      }
+
+      var db = firebase.firestore();
+      var docRef = db.collection(window.CMS_DOC_PATH.collection).doc(window.CMS_DOC_PATH.doc);
+      var imagesRef = db.collection(window.CMS_IMAGES_COLLECTION);
+
+      function applyText(key, value) {
+        if (value === undefined || value === null || value === "") return;
+        document.querySelectorAll('[data-cms-text="' + key + '"]').forEach(function (el) {
+          el.textContent = value;
+        });
+      }
+
+      function applyImage(key, dataUrl) {
+        document.querySelectorAll('[data-cms-img="' + key + '"]').forEach(function (el) {
+          var placeholder = el.querySelector(".cms-placeholder-content");
+          if (dataUrl) {
+            el.style.backgroundImage = "url(\"" + dataUrl + "\")";
+            el.style.backgroundSize = "cover";
+            el.style.backgroundPosition = "center";
+            if (placeholder) placeholder.style.display = "none";
+          } else {
+            el.style.backgroundImage = "";
+            if (placeholder) placeholder.style.display = "";
+          }
+        });
+      }
+
+      function applyHref(key, value) {
+        if (!value) return;
+        // tel: links
+        document.querySelectorAll('[data-cms-tel="' + key + '"]').forEach(function (el) {
+          el.setAttribute("href", "tel:" + value.replace(/\s+/g, ""));
+        });
+        // mailto: links
+        document.querySelectorAll('[data-cms-mailto="' + key + '"]').forEach(function (el) {
+          el.setAttribute("href", "mailto:" + value);
+        });
+        // wa.me links (preserves any ?text= query already on the link)
+        document.querySelectorAll('[data-cms-wa="' + key + '"]').forEach(function (el) {
+          var href = el.getAttribute("href") || "";
+          el.setAttribute("href", href.replace(/wa\.me\/\d+/, "wa.me/" + value));
+        });
+        // iframe embeds (e.g. Google Maps)
+        document.querySelectorAll('[data-cms-iframe="' + key + '"]').forEach(function (el) {
+          el.setAttribute("src", value);
+        });
+      }
+
+      function applyAll(data) {
+        window.CMS_DATA = data || {};
+        Object.keys(window.CMS_DATA).forEach(function (key) {
+          applyText(key, window.CMS_DATA[key]);
+          applyHref(key, window.CMS_DATA[key]);
+        });
+        // Let the page know fresh data has arrived (contact form etc. can listen for this)
+        document.dispatchEvent(new CustomEvent("cms:updated", { detail: window.CMS_DATA }));
+      }
+
+      // Text + links: all stored in one small document, read together.
+      docRef.onSnapshot(
+        function (snap) {
+          applyAll(snap.exists ? snap.data() : {});
+        },
+        function (err) {
+          console.warn("[CMS] Could not read live content (check Firestore security rules):", err);
+        }
+      );
+
+      // Photos: each lives in its own document (one per field) so a handful of
+      // photos never risk pushing a single document over Firestore's 1MB limit.
+      imagesRef.onSnapshot(
+        function (snap) {
+          snap.docChanges().forEach(function (change) {
+            var key = change.doc.id;
+            var dataUrl = change.type === "removed" ? null : (change.doc.data() || {}).data;
+            applyImage(key, dataUrl);
+          });
+        },
+        function (err) {
+          console.warn("[CMS] Could not read live photos (check Firestore security rules):", err);
+        }
+      );
+    })();
+    </script>
 
     <script>
         // Highlight active nav link based on current page
@@ -482,4 +617,18 @@
             e.preventDefault();
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
-            const subject = document.getEl
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            const whatsappMsg = encodeURIComponent(
+                'Hello, my name is ' + name + '.\n' +
+                'Phone: ' + phone + '\n' +
+                'Subject: ' + subject + '\n\n' +
+                message
+            );
+            var waNumber = (window.CMS_DATA && window.CMS_DATA.global_whatsappNumber) || '233547713684';
+            window.open('https://wa.me/' + waNumber + '?text=' + whatsappMsg, '_blank');
+        });
+    </script>
+</body>
+</html>
+

@@ -31,7 +31,7 @@
 <body class="bg-white">
     <!-- Announcement Bar -->
     <div class="bg-amber-500 text-white text-center py-2 px-4 text-sm font-medium">
-        🎓 Now Enrolling for 2026/2027 Academic Year &nbsp;|&nbsp; <a href="admissions.html" class="underline font-semibold hover:text-amber-100">Apply Now →</a>
+        <span data-cms-text="global_announcementText">🎓 Now Enrolling for 2026/2027 Academic Year</span> &nbsp;|&nbsp; <a href="admissions.html" class="underline font-semibold hover:text-amber-100">Apply Now →</a>
     </div>
 
     <!-- Navigation -->
@@ -40,11 +40,11 @@
             <div class="flex justify-between items-center h-16 lg:h-20">
                 <a href="index.html" class="flex items-center gap-2">
                     <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">ES</span>
+                        <span class="text-white font-bold text-lg" data-cms-text="global_logoInitials">ES</span>
                     </div>
                     <div class="block">
-                        <span class="font-bold text-gray-900">Excellent Spirit</span>
-                        <span class="block text-xs text-gray-500">International School</span>
+                        <span class="font-bold text-gray-900" data-cms-text="global_schoolName">Excellent Spirit</span>
+                        <span class="block text-xs text-gray-500" data-cms-text="global_schoolNameSub">International School</span>
                     </div>
                 </a>
                 <div class="hidden lg:flex items-center gap-8">
@@ -83,8 +83,8 @@
     <section class="gradient-bg pt-16 lg:pt-20 pb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span class="inline-block bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">Photo Gallery</span>
-            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4">Life at Excellent Spirit</h1>
-            <p class="text-xl text-white/90 max-w-2xl mx-auto">Take a glimpse into our school environment, classrooms, and student activities.</p>
+            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4" data-cms-text="gallery_heroTitle">Life at Excellent Spirit</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto" data-cms-text="gallery_heroSubtitle">Take a glimpse into our school environment, classrooms, and student activities.</p>
         </div>
     </section>
 
@@ -106,185 +106,185 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="galleryGrid">
                 <!-- Campus Photos -->
-                <div class="gallery-item campus group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item campus group cursor-pointer" data-category="campus" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-primary-200 to-primary-400 flex items-center justify-center" data-cms-img="gallery_image1">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">🏫</span>
                                 <p class="mt-2 font-medium">School Building</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Our School Building</h4>
-                            <p class="text-sm text-gray-500">Main campus entrance</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption1">Our School Building</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption1">Main campus entrance</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="gallery-item campus group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item campus group cursor-pointer" data-category="campus" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-teal-200 to-teal-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-teal-200 to-teal-400 flex items-center justify-center" data-cms-img="gallery_image2">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">🚪</span>
                                 <p class="mt-2 font-medium">School Gate</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">School Entrance</h4>
-                            <p class="text-sm text-gray-500">Welcoming our students</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption2">School Entrance</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption2">Welcoming our students</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="gallery-item campus group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item campus group cursor-pointer" data-category="campus" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-amber-200 to-amber-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-amber-200 to-amber-400 flex items-center justify-center" data-cms-img="gallery_image3">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">🌳</span>
                                 <p class="mt-2 font-medium">School Compound</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">School Compound</h4>
-                            <p class="text-sm text-gray-500">Play and recreation area</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption3">School Compound</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption3">Play and recreation area</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Classroom Photos -->
-                <div class="gallery-item classroom group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item classroom group cursor-pointer" data-category="classroom" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-blue-200 to-blue-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-blue-200 to-blue-400 flex items-center justify-center" data-cms-img="gallery_image4">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">📚</span>
                                 <p class="mt-2 font-medium">Classroom</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Nursery Classroom</h4>
-                            <p class="text-sm text-gray-500">Colorful learning space</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption4">Nursery Classroom</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption4">Colorful learning space</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="gallery-item classroom group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item classroom group cursor-pointer" data-category="classroom" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-purple-200 to-purple-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-purple-200 to-purple-400 flex items-center justify-center" data-cms-img="gallery_image5">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">✏️</span>
                                 <p class="mt-2 font-medium">Learning</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Primary Classroom</h4>
-                            <p class="text-sm text-gray-500">Focused learning environment</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption5">Primary Classroom</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption5">Focused learning environment</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="gallery-item classroom group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item classroom group cursor-pointer" data-category="classroom" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-rose-200 to-rose-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-rose-200 to-rose-400 flex items-center justify-center" data-cms-img="gallery_image6">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">💻</span>
                                 <p class="mt-2 font-medium">ICT Lab</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Computer Lab</h4>
-                            <p class="text-sm text-gray-500">Digital literacy center</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption6">Computer Lab</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption6">Digital literacy center</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Activities Photos -->
-                <div class="gallery-item activities group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item activities group cursor-pointer" data-category="activities" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-green-200 to-green-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-green-200 to-green-400 flex items-center justify-center" data-cms-img="gallery_image7">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">⚽</span>
                                 <p class="mt-2 font-medium">Sports</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Sports Activities</h4>
-                            <p class="text-sm text-gray-500">Building healthy bodies</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption7">Sports Activities</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption7">Building healthy bodies</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="gallery-item activities group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item activities group cursor-pointer" data-category="activities" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-orange-200 to-orange-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-orange-200 to-orange-400 flex items-center justify-center" data-cms-img="gallery_image8">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">🎨</span>
                                 <p class="mt-2 font-medium">Arts</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Creative Arts</h4>
-                            <p class="text-sm text-gray-500">Expressing creativity</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption8">Creative Arts</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption8">Expressing creativity</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="gallery-item activities group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item activities group cursor-pointer" data-category="activities" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-pink-200 to-pink-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-pink-200 to-pink-400 flex items-center justify-center" data-cms-img="gallery_image9">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">🎵</span>
                                 <p class="mt-2 font-medium">Music</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Music & Dance</h4>
-                            <p class="text-sm text-gray-500">Cultural activities</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption9">Music & Dance</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption9">Cultural activities</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Events Photos -->
-                <div class="gallery-item events group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item events group cursor-pointer" data-category="events" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-indigo-200 to-indigo-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-indigo-200 to-indigo-400 flex items-center justify-center" data-cms-img="gallery_image10">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">🎓</span>
                                 <p class="mt-2 font-medium">Graduation</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Graduation Ceremony</h4>
-                            <p class="text-sm text-gray-500">Celebrating achievements</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption10">Graduation Ceremony</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption10">Celebrating achievements</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="gallery-item events group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item events group cursor-pointer" data-category="events" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-cyan-200 to-cyan-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-cyan-200 to-cyan-400 flex items-center justify-center" data-cms-img="gallery_image11">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">🎪</span>
                                 <p class="mt-2 font-medium">Open Day</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">School Open Day</h4>
-                            <p class="text-sm text-gray-500">Parents visiting our school</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption11">School Open Day</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption11">Parents visiting our school</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="gallery-item events group cursor-pointer" onclick="openModal(this)">
+                <div class="gallery-item events group cursor-pointer" data-category="events" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                        <div class="aspect-[4/3] bg-gradient-to-br from-yellow-200 to-yellow-400 flex items-center justify-center">
-                            <div class="text-center text-white">
+                        <div class="aspect-[4/3] bg-gradient-to-br from-yellow-200 to-yellow-400 flex items-center justify-center" data-cms-img="gallery_image12">
+                            <div class="text-center text-white cms-placeholder-content">
                                 <span class="text-5xl">🏆</span>
                                 <p class="mt-2 font-medium">Awards</p>
                             </div>
                         </div>
                         <div class="p-4">
-                            <h4 class="font-semibold text-gray-900">Prize Giving Day</h4>
-                            <p class="text-sm text-gray-500">Recognizing excellence</p>
+                            <h4 class="font-semibold text-gray-900" data-cms-text="gallery_caption12">Prize Giving Day</h4>
+                            <p class="text-sm text-gray-500" data-cms-text="gallery_subcaption12">Recognizing excellence</p>
                         </div>
                     </div>
                 </div>
@@ -313,6 +313,22 @@
         </div>
     </section>
 
+    <!-- Photo Modal (lightbox) -->
+    <div id="galleryModal" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4" onclick="closeModal()">
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-white text-4xl leading-none hover:text-gray-300">&times;</button>
+        <div class="max-w-3xl w-full" onclick="event.stopPropagation()">
+            <div id="galleryModalImage" class="aspect-[4/3] rounded-2xl bg-gray-700 flex items-center justify-center overflow-hidden">
+                <div id="galleryModalPlaceholder" class="text-center text-white">
+                    <span id="galleryModalEmoji" class="text-7xl"></span>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <h3 id="galleryModalCaption" class="text-white text-xl font-bold"></h3>
+                <p id="galleryModalSub" class="text-white/70"></p>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-slate-900 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -320,15 +336,15 @@
                 <div>
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold">ES</span>
+                            <span class="text-white font-bold" data-cms-text="global_logoInitials">ES</span>
                         </div>
                         <div>
-                            <span class="font-bold">Excellent Spirit</span>
-                            <span class="block text-xs text-gray-400">International School</span>
+                            <span class="font-bold" data-cms-text="global_schoolName">Excellent Spirit</span>
+                            <span class="block text-xs text-gray-400" data-cms-text="global_schoolNameSub">International School</span>
                         </div>
                     </div>
-                    <p class="text-gray-400 mb-6">Nurturing excellence in every child. Quality education in Ashaley Botwe, Accra.</p>
-                    <p class="text-primary-400 font-semibold italic">"Excelling in All!"</p>
+                    <p class="text-gray-400 mb-6" data-cms-text="global_footerDescription">Nurturing excellence in every child. Quality education in Ashaley Botwe, Accra.</p>
+                    <p class="text-primary-400 font-semibold italic">"<span data-cms-text="global_tagline">Excelling in All!</span>"</p>
                 </div>
                 <div>
                     <h4 class="font-bold text-lg mb-6">Quick Links</h4>
@@ -351,20 +367,208 @@
                 <div>
                     <h4 class="font-bold text-lg mb-6">Contact Info</h4>
                     <ul class="space-y-3 text-gray-400">
-                        <li class="flex items-center gap-2"><span>📍</span> Ashaley Botwe, Old Town, Accra</li>
-                        <li class="flex items-center gap-2"><span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" class="text-gray-400 hover:text-white transition-colors">excellentspiritinternational@gmail.com</a></li>
-                        <li class="flex items-center gap-2"><span>🕐</span> Mon – Fri: [School Hours]</li>
+                        <li class="flex items-center gap-2"><span>📍</span> <span data-cms-text="global_address">Ashaley Botwe, Old Town, Accra, Ghana</span></li>
+                        <li class="flex items-center gap-2"><span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" data-cms-mailto="global_email" data-cms-text="global_email" class="text-gray-400 hover:text-white transition-colors">excellentspiritinternational@gmail.com</a></li>
+                        <li class="flex items-center gap-2"><span>🕐</span> Mon – Fri: <span data-cms-text="global_weekdayHours">[School Hours]</span></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p>&copy; 2026 Excellent Spirit International School. All rights reserved.</p>
+                <p data-cms-text="global_copyrightText">&copy; 2026 Excellent Spirit International School. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     </svg>
     </a>
+
+    <!-- Live content sync (Firebase) -->
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+    <script>
+    /* ============================================================
+       FIREBASE CONFIGURATION
+       ============================================================
+       This file connects your website to YOUR Firebase project so
+       that text and photo changes made on settings.html sync to
+       every visitor, on every device, in real time.
+
+       This setup uses only Firestore + Authentication — both free
+       on Firebase's no-cost "Spark" plan, no credit card needed.
+       Photos are stored as compressed text inside Firestore itself,
+       so Firebase Storage (which now requires a billing plan) is
+       never used.
+
+       HOW TO SET THIS UP (takes about 5 minutes):
+       1. Go to https://console.firebase.google.com and create a
+          free project (any name, e.g. "excellent-spirit-website").
+       2. In the project, click "Build > Firestore Database" and
+          click "Create database" (start in production mode).
+       3. Click "Build > Authentication" > "Get started" > enable
+          the "Email/Password" sign-in method. Then go to the
+          "Users" tab and add ONE user with your own email and a
+          password you choose — this is how you'll log in to
+          settings.html to make edits.
+       4. Click the gear icon > "Project settings" > scroll to
+          "Your apps" > click the </> (Web) icon to register a web
+          app (no need to set up hosting). Firebase will show you a
+          firebaseConfig object — copy those values into the
+          CMS_FIREBASE_CONFIG object below, replacing the
+          placeholders.
+       5. In Firestore, set the security rules shown in
+          FIREBASE-SETUP.md so visitors can read content but only
+          your logged-in admin account can change it.
+
+       IMPORTANT: this config block is repeated on every page (not
+       loaded from one shared file), so paste your real values into
+       this same block on all 7 files: index.html, about.html,
+       academics.html, admissions.html, gallery.html, contact.html,
+       and settings.html.
+
+       Until you complete this, every page will simply show its
+       original built-in text and images (nothing breaks) — only
+       settings.html will show a "Firebase not connected yet" notice.
+       ============================================================ */
+
+    window.CMS_FIREBASE_CONFIG = {
+      apiKey: "AIzaSyBLxNm9Rq6hRAzVat11UYaJFW6viH9pZzI",
+      authDomain: "esis-ec217.firebaseapp.com",
+      projectId: "esis-ec217",
+      storageBucket: "esis-ec217.firebasestorage.app",
+      messagingSenderId: "367089969270",
+      appId: "1:367089969270:web:831d1f682f81605d675757"
+    };
+
+    // The single Firestore document all site text is stored in.
+    window.CMS_DOC_PATH = { collection: "content", doc: "site" };
+
+    // The Firestore collection photos are stored in — one small document
+    // per photo (so a page full of photos never risks one document
+    // growing past Firestore's 1MB-per-document limit).
+    window.CMS_IMAGES_COLLECTION = "siteImages";
+
+    // Treated as "not configured yet" until real values are pasted in above.
+    window.CMS_IS_CONFIGURED = window.CMS_FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY" &&
+                                window.CMS_FIREBASE_CONFIG.projectId !== "YOUR_PROJECT_ID";
+    </script>
+    <script>
+    /* ============================================================
+       CMS SYNC (read-only)
+       ============================================================
+       Included on every public page (not settings.html). Connects
+       to Firestore in real time and, whenever the admin saves a
+       change on settings.html, updates matching elements on this
+       page instantly — no refresh needed, and it syncs the same
+       way on every device.
+
+       Text lives in one shared document (content/site). Photos are
+       stored as compressed base64 strings, one per document in the
+       siteImages collection — no Firebase Storage involved, so no
+       billing plan is required to run this.
+
+       If Firebase hasn't been configured yet (see the CMS_FIREBASE_CONFIG block below)
+       this script quietly does nothing and the page just shows its
+       normal built-in text and images.
+       ============================================================ */
+
+    window.CMS_DATA = {};
+
+    (function () {
+      if (!window.CMS_IS_CONFIGURED) {
+        console.info("[CMS] Firebase not configured yet — showing default site content. See the CMS_FIREBASE_CONFIG block in this page's <head>/<body> scripts.");
+        return;
+      }
+
+      try {
+        firebase.initializeApp(window.CMS_FIREBASE_CONFIG);
+      } catch (e) {
+        console.warn("[CMS] Firebase failed to initialize:", e);
+        return;
+      }
+
+      var db = firebase.firestore();
+      var docRef = db.collection(window.CMS_DOC_PATH.collection).doc(window.CMS_DOC_PATH.doc);
+      var imagesRef = db.collection(window.CMS_IMAGES_COLLECTION);
+
+      function applyText(key, value) {
+        if (value === undefined || value === null || value === "") return;
+        document.querySelectorAll('[data-cms-text="' + key + '"]').forEach(function (el) {
+          el.textContent = value;
+        });
+      }
+
+      function applyImage(key, dataUrl) {
+        document.querySelectorAll('[data-cms-img="' + key + '"]').forEach(function (el) {
+          var placeholder = el.querySelector(".cms-placeholder-content");
+          if (dataUrl) {
+            el.style.backgroundImage = "url(\"" + dataUrl + "\")";
+            el.style.backgroundSize = "cover";
+            el.style.backgroundPosition = "center";
+            if (placeholder) placeholder.style.display = "none";
+          } else {
+            el.style.backgroundImage = "";
+            if (placeholder) placeholder.style.display = "";
+          }
+        });
+      }
+
+      function applyHref(key, value) {
+        if (!value) return;
+        // tel: links
+        document.querySelectorAll('[data-cms-tel="' + key + '"]').forEach(function (el) {
+          el.setAttribute("href", "tel:" + value.replace(/\s+/g, ""));
+        });
+        // mailto: links
+        document.querySelectorAll('[data-cms-mailto="' + key + '"]').forEach(function (el) {
+          el.setAttribute("href", "mailto:" + value);
+        });
+        // wa.me links (preserves any ?text= query already on the link)
+        document.querySelectorAll('[data-cms-wa="' + key + '"]').forEach(function (el) {
+          var href = el.getAttribute("href") || "";
+          el.setAttribute("href", href.replace(/wa\.me\/\d+/, "wa.me/" + value));
+        });
+        // iframe embeds (e.g. Google Maps)
+        document.querySelectorAll('[data-cms-iframe="' + key + '"]').forEach(function (el) {
+          el.setAttribute("src", value);
+        });
+      }
+
+      function applyAll(data) {
+        window.CMS_DATA = data || {};
+        Object.keys(window.CMS_DATA).forEach(function (key) {
+          applyText(key, window.CMS_DATA[key]);
+          applyHref(key, window.CMS_DATA[key]);
+        });
+        // Let the page know fresh data has arrived (contact form etc. can listen for this)
+        document.dispatchEvent(new CustomEvent("cms:updated", { detail: window.CMS_DATA }));
+      }
+
+      // Text + links: all stored in one small document, read together.
+      docRef.onSnapshot(
+        function (snap) {
+          applyAll(snap.exists ? snap.data() : {});
+        },
+        function (err) {
+          console.warn("[CMS] Could not read live content (check Firestore security rules):", err);
+        }
+      );
+
+      // Photos: each lives in its own document (one per field) so a handful of
+      // photos never risk pushing a single document over Firestore's 1MB limit.
+      imagesRef.onSnapshot(
+        function (snap) {
+          snap.docChanges().forEach(function (change) {
+            var key = change.doc.id;
+            var dataUrl = change.type === "removed" ? null : (change.doc.data() || {}).data;
+            applyImage(key, dataUrl);
+          });
+        },
+        function (err) {
+          console.warn("[CMS] Could not read live photos (check Firestore security rules):", err);
+        }
+      );
+    })();
+    </script>
 
     <script>
         // Active nav highlight
@@ -384,6 +588,39 @@
             document.getElementById('mobileMenu').classList.toggle('hidden');
             document.getElementById('menuIcon').classList.toggle('hidden');
             document.getElementById('closeIcon').classList.toggle('hidden');
+        }
+
+        function openModal(item) {
+            var imgDiv = item.querySelector('[data-cms-img]');
+            var emoji = item.querySelector('span.text-5xl');
+            var caption = item.querySelector('h4');
+            var sub = item.querySelector('p.text-sm');
+            var modal = document.getElementById('galleryModal');
+            var modalImage = document.getElementById('galleryModalImage');
+            var modalEmoji = document.getElementById('galleryModalEmoji');
+            var modalPlaceholder = document.getElementById('galleryModalPlaceholder');
+
+            var bgImage = imgDiv ? imgDiv.style.backgroundImage : '';
+            if (bgImage) {
+                modalImage.style.backgroundImage = bgImage;
+                modalImage.style.backgroundSize = 'cover';
+                modalImage.style.backgroundPosition = 'center';
+                modalPlaceholder.style.display = 'none';
+            } else {
+                modalImage.style.backgroundImage = '';
+                modalPlaceholder.style.display = '';
+                modalEmoji.textContent = emoji ? emoji.textContent : '';
+            }
+            document.getElementById('galleryModalCaption').textContent = caption ? caption.textContent : '';
+            document.getElementById('galleryModalSub').textContent = sub ? sub.textContent : '';
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('galleryModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
         function filterGallery(category) {
