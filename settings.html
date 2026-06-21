@@ -96,7 +96,13 @@
         .sidebar-drawer-close:hover { background: rgba(255,255,255,0.1); color: #fff; }
         .sidebar-drawer-nav {
             flex: 1; overflow-y: auto; padding: 0.875rem 0.75rem 1.5rem;
-            display: flex; flex-direction: column; gap: 0.2rem;
+            display: flex; flex-direction: column;
+        }
+        #groupNav { display: flex; flex-direction: column; gap: 0.2rem; }
+        .sidebar-drawer-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 0.875rem 0.25rem; }
+        .sidebar-drawer-group-label {
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+            color: #6b6789; padding: 0 0.9rem; margin-bottom: 0.4rem;
         }
 
         .nav-item {
@@ -220,7 +226,15 @@
                 </svg>
             </button>
         </div>
-        <nav id="groupNav" aria-label="Content sections" class="sidebar-drawer-nav"></nav>
+        <nav aria-label="Section navigation" class="sidebar-drawer-nav">
+            <div id="groupNav"></div>
+            <div class="sidebar-drawer-divider"></div>
+            <p class="sidebar-drawer-group-label">Account</p>
+            <button type="button" class="nav-item" data-view="view-password" onclick="activateView('view-password')">
+                <span class="nav-icon">🔑</span>
+                <span class="nav-label">Change Password</span>
+            </button>
+        </nav>
     </aside>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
@@ -327,24 +341,21 @@
             <!-- Page title row -->
             <div class="flex items-start justify-between gap-4 mb-6 sm:mb-8">
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Edit Website Content</h2>
+                    <h2 id="pageTitle" class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Edit Website Content</h2>
                     <p class="text-sm text-gray-400 mt-1">Changes save automatically and go live within seconds.</p>
                 </div>
             </div>
 
-            <!-- Change password card -->
-            <div class="section-card mb-6 sm:mb-8">
-                <button onclick="toggleChangePassword()" class="section-header w-full text-left hover:bg-gray-50 transition-colors rounded-t-[1.25rem]" style="cursor:pointer">
+            <!-- Change password view -->
+            <div id="view-password" class="settings-view hidden section-card mb-6 sm:mb-8">
+                <div class="section-header">
                     <div class="section-icon bg-gray-100"><span>🔑</span></div>
                     <div class="flex-1 min-w-0">
-                        <p class="font-semibold text-gray-800 text-sm leading-tight">Change Admin Password</p>
+                        <p class="font-bold text-gray-900 text-sm sm:text-base leading-tight">Change Admin Password</p>
                         <p class="text-xs text-gray-400 mt-0.5">Update the password used to log into this page</p>
                     </div>
-                    <svg id="changePwChevron" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 transition-transform flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div id="changePwForm" class="hidden section-body border-t border-gray-100">
+                </div>
+                <div class="section-body">
                     <div class="grid gap-4 sm:grid-cols-3">
                         <div class="field-wrap">
                             <label class="field-label" for="changePwCurrent">Current Password</label>
@@ -635,6 +646,27 @@
       if (e.key === "Escape") closeDrawer();
     });
 
+    // Shows exactly one .settings-view panel (a content section or the password
+    // view) and marks the matching sidebar nav item active. Used by both the
+    // dynamically-built section list and the static "Change Password" item.
+    var viewTitles = {
+      "view-password": { title: "Change Admin Password", sub: "Update the password used to log into this page." }
+    };
+    function activateView(viewId) {
+      document.querySelectorAll(".settings-view").forEach(function (s) {
+        s.classList.toggle("hidden", s.id !== viewId);
+      });
+      document.querySelectorAll(".nav-item[data-view]").forEach(function (p) {
+        p.classList.toggle("active", p.getAttribute("data-view") === viewId);
+      });
+      var meta = viewTitles[viewId];
+      var titleEl = document.getElementById("pageTitle");
+      var subEl = titleEl ? titleEl.nextElementSibling : null;
+      if (titleEl) titleEl.textContent = meta ? meta.title : "Edit Website Content";
+      if (subEl) subEl.textContent = meta ? meta.sub : "Changes save automatically and go live within seconds.";
+      closeDrawer();
+    }
+
     function setSaveStatus(text, kind) {
       if (!statusEl) statusEl = document.getElementById("saveStatus");
       if (!text) {
@@ -775,14 +807,6 @@
       setTimeout(function () { successEl.classList.add("hidden"); }, 3000);
     }
 
-    function toggleChangePassword() {
-      var form     = document.getElementById("changePwForm");
-      var chevron  = document.getElementById("changePwChevron");
-      var isHidden = form.classList.contains("hidden");
-      form.classList.toggle("hidden", !isHidden);
-      chevron.style.transform = isHidden ? "rotate(180deg)" : "";
-    }
-
     function cmsSignOut() {
       sessionStorage.removeItem(CMS_SESS_KEY);
       document.getElementById("signOutBtn").classList.add("hidden");
@@ -857,7 +881,7 @@
         // Nav item (sidebar button — shows only this section's content when clicked)
         var pill = document.createElement("button");
         pill.type = "button";
-        pill.href = "#" + anchorId;
+        pill.dataset.view = anchorId;
         pill.className = "nav-item";
         pill.title = groupName;
         pill.setAttribute("aria-label", groupName);
@@ -865,13 +889,13 @@
           '<span class="nav-icon">' + meta.icon + '</span>' +
           '<span class="nav-label">' + groupName.replace(/^Global — .+/, "Global").replace(/ Page.*/, "") + '</span>' +
           '<span class="nav-badge">' + groups[groupName].length + '</span>';
-        pill.addEventListener("click", function () { showGroup(anchorId); closeDrawer(); });
+        pill.addEventListener("click", function () { activateView(anchorId); });
         navEl.appendChild(pill);
 
         // Card
         var card = document.createElement("section");
         card.id = anchorId;
-        card.className = "section-card scroll-mt-28 sm:scroll-mt-32 hidden";
+        card.className = "settings-view section-card scroll-mt-28 sm:scroll-mt-32 hidden";
 
         // Card header
         var header = document.createElement("div");
@@ -947,18 +971,9 @@
         bodyEl.appendChild(card);
       });
 
-      // Show only one section's content at a time — switches when a nav item is clicked
-      var pills = navEl.querySelectorAll(".nav-item");
-      var sections = bodyEl.querySelectorAll("section[id]");
-
-      function showGroup(anchorId) {
-        sections.forEach(function (s) { s.classList.toggle("hidden", s.id !== anchorId); });
-        pills.forEach(function (p) { p.classList.toggle("active", p.getAttribute("href") === "#" + anchorId); });
-      }
-
-      // Open the first group by default
-      if (sections.length) {
-        showGroup(sections[0].id);
+      // Open the first content section by default (password view stays hidden until chosen)
+      if (groupOrder.length) {
+        activateView("group-0");
       }
     }
 
