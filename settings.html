@@ -178,6 +178,50 @@
             .section-header { padding: 1rem 1.125rem; }
             .section-body   { padding: 1.125rem; }
         }
+
+        /* ── Global Search ── */
+        #searchOverlay {
+            position: fixed; inset: 0; z-index: 60;
+            background: rgba(10,9,20,0.6); backdrop-filter: blur(3px);
+            display: flex; align-items: flex-start; justify-content: center;
+            padding-top: 5rem; padding-left: 1rem; padding-right: 1rem;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        #searchOverlay.open { opacity: 1; pointer-events: all; }
+        #searchBox {
+            background: #fff; border-radius: 1.25rem; width: 100%; max-width: 42rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transform: translateY(-12px); transition: transform 0.2s ease;
+        }
+        #searchOverlay.open #searchBox { transform: translateY(0); }
+        #searchInputWrap {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.875rem 1.125rem; border-bottom: 1px solid #f3f4f6;
+        }
+        #searchInput {
+            flex: 1; border: none; outline: none; font-size: 1rem;
+            font-family: 'Poppins', sans-serif; color: #111827; background: transparent;
+        }
+        #searchInput::placeholder { color: #9ca3af; }
+        #searchResults { max-height: 22rem; overflow-y: auto; }
+        .search-result-item {
+            display: flex; align-items: flex-start; gap: 0.75rem;
+            padding: 0.875rem 1.125rem; cursor: pointer; border: none; background: none;
+            width: 100%; text-align: left; font-family: inherit;
+            transition: background 0.1s;
+        }
+        .search-result-item:hover, .search-result-item:focus { background: #f9fafb; outline: none; }
+        .search-result-item + .search-result-item { border-top: 1px solid #f9fafb; }
+        .search-result-icon { width: 2rem; height: 2rem; border-radius: 0.5rem; background: #ecfdf5; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; margin-top: 0.1rem; }
+        .search-result-group { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #9ca3af; margin-bottom: 0.15rem; }
+        .search-result-label { font-size: 0.875rem; font-weight: 600; color: #111827; line-height: 1.3; }
+        .search-result-label mark { background: #d1fae5; color: #065f46; border-radius: 2px; padding: 0 2px; font-weight: 700; }
+        #searchEmpty { padding: 2rem 1.125rem; text-align: center; color: #9ca3af; font-size: 0.875rem; }
+        #searchFooter { padding: 0.5rem 1.125rem; border-top: 1px solid #f3f4f6; display: flex; align-items: center; justify-content: space-between; }
+        .search-kbd { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.65rem; color: #9ca3af; }
+        .search-kbd kbd { background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 0.3rem; padding: 0.15rem 0.375rem; font-family: inherit; font-size: 0.65rem; color: #6b7280; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
@@ -192,8 +236,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
-                <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <span class="text-white font-bold text-xs">ES</span>
+                <div class="w-8 h-8 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 shadow-sm cms-logo-wrap" style="background:linear-gradient(135deg,#10b981,#047857)">
+                    <img data-cms-logo class="w-full h-full object-cover hidden" alt="School logo">
+                    <span class="text-white font-bold text-xs cms-logo-initials">ES</span>
                 </div>
                 <div class="min-w-0">
                     <p class="font-bold text-gray-900 text-sm leading-tight truncate">Site Settings</p>
@@ -203,6 +248,12 @@
             <!-- Actions -->
             <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                 <span id="saveStatus" class="save-pill hidden items-center gap-1.5 text-xs font-medium mr-1"></span>
+                <!-- Search button -->
+                <button id="searchOpenBtn" type="button" onclick="openSearch()" aria-label="Search settings" title="Search settings (Ctrl+K)" class="w-9 h-9 flex items-center justify-center rounded-lg text-gray-500 hover:text-gray-800 hover:bg-gray-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 w-[1.125rem] h-[1.125rem]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                    </svg>
+                </button>
                 <button id="signOutBtn" onclick="cmsSignOut()" class="hidden text-xs font-semibold text-gray-500 hover:text-gray-800 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">Sign out</button>
                 <a href="index.html" class="text-xs font-semibold text-primary-700 hover:text-primary-800 px-3 py-1.5 rounded-lg hover:bg-primary-50 transition-colors whitespace-nowrap">
                     <span class="sm:hidden">← Back</span>
@@ -236,6 +287,28 @@
             </button>
         </nav>
     </aside>
+
+    <!-- ── Global Search Overlay ── -->
+    <div id="searchOverlay" role="dialog" aria-modal="true" aria-label="Search settings" onclick="onSearchOverlayClick(event)">
+        <div id="searchBox">
+            <div id="searchInputWrap">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 flex-shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input id="searchInput" type="text" placeholder="Search any setting…" autocomplete="off" oninput="onSearchInput()" onkeydown="onSearchKeydown(event)">
+                <button type="button" onclick="closeSearch()" style="display:flex;align-items:center;justify-content:center;width:1.5rem;height:1.5rem;border-radius:0.4rem;border:none;cursor:pointer;background:#f3f4f6;color:#6b7280;flex-shrink:0;transition:background 0.15s" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="searchResults" role="listbox"></div>
+            <div id="searchFooter">
+                <span class="search-kbd"><kbd>↑</kbd><kbd>↓</kbd> navigate &nbsp;·&nbsp; <kbd>Enter</kbd> go to &nbsp;·&nbsp; <kbd>Esc</kbd> close</span>
+                <span style="font-size:0.65rem;color:#d1d5db">Ctrl+K to open</span>
+            </div>
+        </div>
+    </div>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
@@ -483,7 +556,8 @@
       addGroup("Global — Header, Footer & Contact Details", [
         { key: "global_schoolName", label: "School name (line 1)", type: "text", defaultValue: "Excellent Spirit" },
         { key: "global_schoolNameSub", label: "School name (line 2)", type: "text", defaultValue: "International School" },
-        { key: "global_logoInitials", label: "Logo initials (e.g. ES)", type: "text", defaultValue: "ES" },
+        { key: "global_logo", label: "School logo image (replaces the initials circle)", type: "image" },
+        { key: "global_logoInitials", label: "Logo initials — shown when no logo image is uploaded (e.g. ES)", type: "text", defaultValue: "ES" },
         { key: "global_tagline", label: "Motto / tagline", type: "text", defaultValue: "Excelling in All!" },
         { key: "global_footerDescription", label: "Footer description", type: "textarea", defaultValue: "Nurturing excellence in every child. Quality education in Ashaley Botwe, Accra." },
         { key: "global_address", label: "School address", type: "textarea", defaultValue: "Ashaley Botwe, Old Town, Accra, Ghana" },
@@ -643,7 +717,12 @@
     }
 
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeDrawer();
+      if (e.key === "Escape") {
+        // Search overlay takes priority; drawer close is handled by search script
+        if (!document.getElementById("searchOverlay").classList.contains("open")) {
+          closeDrawer();
+        }
+      }
     });
 
     // Shows exactly one .settings-view panel (a content section or the password
@@ -837,6 +916,8 @@
           setSaveStatus("Couldn't load content — check Firestore rules", "error");
         }
         renderForm();
+        // Update the settings header logo if one has been uploaded
+        if (currentImages['global_logo']) applySettingsLogo(currentImages['global_logo']);
         show("editorState");
       });
     }
@@ -856,7 +937,7 @@
 
       // Sub-group labels for Global fields to break them into logical clusters
       var globalSubGroups = {
-        "School Identity":  ["global_schoolName","global_schoolNameSub","global_logoInitials","global_tagline"],
+        "School Identity":  ["global_schoolName","global_schoolNameSub","global_logo","global_logoInitials","global_tagline"],
         "Contact Details":  ["global_address","global_email","global_phone","global_whatsappNumber","global_weekdayHours","global_saturdayHours"],
         "Site-wide Text":   ["global_announcementText","global_footerDescription","global_copyrightText"]
       };
@@ -896,6 +977,7 @@
         var card = document.createElement("section");
         card.id = anchorId;
         card.className = "settings-view section-card scroll-mt-28 sm:scroll-mt-32 hidden";
+        card.setAttribute("data-group", groupName);
 
         // Card header
         var header = document.createElement("div");
@@ -980,6 +1062,7 @@
     function renderField(field) {
       var wrap = document.createElement("div");
       wrap.className = "field-wrap" + (field.type === "textarea" ? " sm:col-span-2" : "");
+      wrap.setAttribute("data-field-key", field.key);
 
       if (field.type === "image") {
         wrap.appendChild(renderImageField(field));
@@ -1027,6 +1110,7 @@
     function renderImageField(field) {
       var wrap = document.createElement("div");
       wrap.className = "field-wrap";
+      wrap.setAttribute("data-field-key", field.key);
 
       var label = document.createElement("label");
       label.className = "field-label";
@@ -1227,6 +1311,24 @@
       });
     }
 
+    function applySettingsLogo(dataUrl) {
+      document.querySelectorAll('[data-cms-logo]').forEach(function (img) {
+        var wrap = img.parentElement;
+        var initials = wrap ? wrap.querySelector('.cms-logo-initials') : null;
+        if (dataUrl) {
+          img.src = dataUrl;
+          img.classList.remove('hidden');
+          wrap.style.background = 'transparent';
+          if (initials) initials.style.display = 'none';
+        } else {
+          img.classList.add('hidden');
+          img.src = '';
+          wrap.style.background = '';
+          if (initials) initials.style.display = '';
+        }
+      });
+    }
+
     function saveImageNow(key, dataUrl, progressEl) {
       setSaveStatus("Saving…", "saving");
       cmsImagesRef.doc(key).set({
@@ -1234,6 +1336,7 @@
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }).then(function () {
         currentImages[key] = dataUrl;
+        if (key === 'global_logo') applySettingsLogo(dataUrl);
         setSaveStatus("All changes saved", "ok");
         if (progressEl) progressEl.classList.add("hidden");
         setTimeout(function () { setSaveStatus(""); }, 2000);
@@ -1244,11 +1347,183 @@
       });
     }
 
+    /* ============================================================
+       GLOBAL SEARCH
+       ============================================================ */
+    (function () {
+      var searchOverlay = document.getElementById('searchOverlay');
+      var searchInput   = document.getElementById('searchInput');
+      var searchResults = document.getElementById('searchResults');
+      var searchEmpty   = null; // created on demand
+      var activeIdx     = -1;
+      var currentItems  = [];
+
+      // Group emoji map
+      var groupIcons = {
+        'Global': '🌐', 'Home': '🏠', 'About': '📖', 'Academics': '🎓',
+        'Admissions': '📋', 'Contact': '📞', 'Gallery': '🖼️', 'Password': '🔑'
+      };
+      function iconForGroup(g) {
+        for (var k in groupIcons) { if (g && g.indexOf(k) !== -1) return groupIcons[k]; }
+        return '⚙️';
+      }
+
+      function highlight(text, query) {
+        if (!query) return escHtml(text);
+        var re = new RegExp('(' + escRegex(query) + ')', 'gi');
+        return escHtml(text).replace(re, '<mark>$1</mark>');
+      }
+      function escHtml(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+      function escRegex(s) {
+        return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }
+
+      function getFields() {
+        // Use the manifest built at page load
+        return window.CMS_FIELDS || [];
+      }
+
+      window.openSearch = function () {
+        searchOverlay.classList.add('open');
+        searchInput.value = '';
+        activeIdx = -1;
+        renderResults('');
+        setTimeout(function () { searchInput.focus(); }, 50);
+      };
+
+      window.closeSearch = function () {
+        searchOverlay.classList.remove('open');
+        searchInput.value = '';
+        activeIdx = -1;
+      };
+
+      window.onSearchOverlayClick = function (e) {
+        if (e.target === searchOverlay) closeSearch();
+      };
+
+      window.onSearchInput = function () {
+        activeIdx = -1;
+        renderResults(searchInput.value.trim());
+      };
+
+      window.onSearchKeydown = function (e) {
+        var items = searchResults.querySelectorAll('.search-result-item');
+        if (e.key === 'Escape') { closeSearch(); return; }
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          activeIdx = Math.min(activeIdx + 1, items.length - 1);
+          updateActive(items);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          activeIdx = Math.max(activeIdx - 1, 0);
+          updateActive(items);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          var target = activeIdx >= 0 ? items[activeIdx] : items[0];
+          if (target) target.click();
+        }
+      };
+
+      function updateActive(items) {
+        items.forEach(function (el, i) {
+          el.classList.toggle('active', i === activeIdx);
+          if (i === activeIdx) {
+            el.scrollIntoView({ block: 'nearest' });
+            el.style.background = '#f0fdf4';
+          } else {
+            el.style.background = '';
+          }
+        });
+      }
+
+      function renderResults(query) {
+        searchResults.innerHTML = '';
+        var fields = getFields();
+        var q = query.toLowerCase();
+
+        var matched = q
+          ? fields.filter(function (f) {
+              return (f.label && f.label.toLowerCase().indexOf(q) !== -1) ||
+                     (f.group && f.group.toLowerCase().indexOf(q) !== -1) ||
+                     (f.key  && f.key.toLowerCase().indexOf(q)  !== -1);
+            })
+          : fields.slice(0, 20);  // show first 20 when no query
+
+        if (matched.length === 0) {
+          var empty = document.createElement('div');
+          empty.id = 'searchEmpty';
+          empty.innerHTML = '<p style="margin-bottom:0.25rem">🔍 No results for <strong>"' + escHtml(query) + '"</strong></p><p style="font-size:0.75rem;margin-top:0.25rem">Try a different keyword or use the menu to browse sections.</p>';
+          searchResults.appendChild(empty);
+          return;
+        }
+
+        // Limit to 50
+        matched.slice(0, 50).forEach(function (field, i) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'search-result-item';
+          btn.setAttribute('role', 'option');
+          btn.innerHTML =
+            '<div class="search-result-icon">' + iconForGroup(field.group) + '</div>' +
+            '<div style="min-width:0">' +
+              '<div class="search-result-group">' + escHtml(field.group || '') + '</div>' +
+              '<div class="search-result-label">' + highlight(field.label || field.key, query) + '</div>' +
+            '</div>';
+          btn.addEventListener('click', function () {
+            navigateToField(field);
+          });
+          searchResults.appendChild(btn);
+        });
+      }
+
+      function navigateToField(field) {
+        closeSearch();
+        // Find the group view for this field's group and activate it
+        var groupViews = document.querySelectorAll('.settings-view[data-group]');
+        var targetView = null;
+        groupViews.forEach(function (v) {
+          if (v.getAttribute('data-group') === field.group) targetView = v;
+        });
+        if (targetView) {
+          activateView(targetView.id);
+        }
+        // Scroll to the specific field input after a short delay
+        setTimeout(function () {
+          var el = document.querySelector('[data-field-key="' + field.key + '"]');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            var input = el.querySelector('input, textarea');
+            if (input) {
+              input.focus();
+              input.style.borderColor = '#10b981';
+              input.style.boxShadow = '0 0 0 3px rgba(16,185,129,0.2)';
+              setTimeout(function () { input.style.borderColor = ''; input.style.boxShadow = ''; }, 2000);
+            }
+          }
+        }, 200);
+      }
+
+      // Keyboard shortcut: Ctrl+K / Cmd+K
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          e.preventDefault();
+          if (searchOverlay.classList.contains('open')) closeSearch();
+          else openSearch();
+        }
+        if (e.key === 'Escape' && searchOverlay.classList.contains('open')) {
+          closeSearch();
+        }
+      });
+    })();
+
     function resetField(key, isImage) {
       setSaveStatus("Saving…", "saving");
       if (isImage) {
         cmsImagesRef.doc(key).delete().then(function () {
           delete currentImages[key];
+          if (key === 'global_logo') applySettingsLogo(null);
           setSaveStatus("All changes saved", "ok");
           setTimeout(function () { setSaveStatus(""); }, 2000);
         }).catch(function (err) {

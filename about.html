@@ -39,8 +39,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 lg:h-20">
                 <a href="index.html" class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                        <span class="text-white font-bold text-lg" data-cms-text="global_logoInitials">ES</span>
+                    <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 cms-logo-wrap" style="background:#059669">
+                        <img data-cms-logo class="w-full h-full object-cover hidden" alt="School logo">
+                        <span class="text-white font-bold text-lg cms-logo-initials" data-cms-text="global_logoInitials">ES</span>
                     </div>
                     <div class="block">
                         <span class="font-bold text-gray-900" data-cms-text="global_schoolName">Excellent Spirit</span>
@@ -257,8 +258,9 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
                 <div>
                     <div class="flex items-center gap-2 mb-6">
-                        <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold" data-cms-text="global_logoInitials">ES</span>
+                        <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 cms-logo-wrap" style="background:#059669">
+                            <img data-cms-logo class="w-full h-full object-cover hidden" alt="School logo">
+                            <span class="text-white font-bold cms-logo-initials" data-cms-text="global_logoInitials">ES</span>
                         </div>
                         <div>
                             <span class="font-bold" data-cms-text="global_schoolName">Excellent Spirit</span>
@@ -416,6 +418,24 @@
         });
       }
 
+
+      function applyLogo(dataUrl) {
+        document.querySelectorAll('[data-cms-logo]').forEach(function (img) {
+          var wrap = img.parentElement;
+          var initials = wrap ? wrap.querySelector('.cms-logo-initials') : null;
+          if (dataUrl) {
+            img.src = dataUrl;
+            img.classList.remove('hidden');
+            wrap.style.background = 'transparent';
+            if (initials) initials.style.display = 'none';
+          } else {
+            img.classList.add('hidden');
+            img.src = '';
+            wrap.style.background = '#059669';
+            if (initials) initials.style.display = '';
+          }
+        });
+      }
       function applyImage(key, dataUrl) {
         document.querySelectorAll('[data-cms-img="' + key + '"]').forEach(function (el) {
           var placeholder = el.querySelector(".cms-placeholder-content");
@@ -480,6 +500,7 @@
             var key = change.doc.id;
             var dataUrl = change.type === "removed" ? null : (change.doc.data() || {}).data;
             applyImage(key, dataUrl);
+          if (key === 'global_logo') applyLogo(dataUrl);
           });
         },
         function (err) {
