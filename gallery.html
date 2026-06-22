@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="overflow-x:hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,9 +28,9 @@
         .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="bg-white">
+<body class="bg-white overflow-x-hidden">
     <!-- Announcement Bar -->
-    <div class="bg-amber-500 text-white text-center py-2 px-4 text-sm font-medium">
+    <div class="bg-amber-500 text-white text-center py-2 px-4 text-xs sm:text-sm font-medium">
         <span data-cms-text="global_announcementText">🎓 Now Enrolling for 2026/2027 Academic Year</span> &nbsp;|&nbsp; <a href="admissions.html" class="underline font-semibold hover:text-amber-100">Apply Now →</a>
     </div>
 
@@ -38,12 +38,12 @@
     <nav id="navbar" class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 lg:h-20">
-                <a href="index.html" class="flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2 min-w-0 shrink">
                     <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
                         <span class="text-white font-bold text-lg" data-cms-text="global_logoInitials">ES</span>
                     </div>
-                    <div class="block">
-                        <span class="font-bold text-gray-900" data-cms-text="global_schoolName">Excellent Spirit</span>
+                    <div class="block min-w-0">
+                        <span class="font-bold text-gray-900 truncate block" data-cms-text="global_schoolName">Excellent Spirit</span>
                         <span class="block text-xs text-gray-500" data-cms-text="global_schoolNameSub">International School</span>
                     </div>
                 </a>
@@ -83,7 +83,7 @@
     <section class="gradient-bg pt-16 lg:pt-20 pb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span class="inline-block bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">Photo Gallery</span>
-            <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4" data-cms-text="gallery_heroTitle">Life at Excellent Spirit</h1>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4" data-cms-text="gallery_heroTitle">Life at Excellent Spirit</h1>
             <p class="text-xl text-white/90 max-w-2xl mx-auto" data-cms-text="gallery_heroSubtitle">Take a glimpse into our school environment, classrooms, and student activities.</p>
         </div>
     </section>
@@ -91,7 +91,7 @@
     <!-- Gallery Filter -->
     <section class="py-8 bg-white border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap justify-center gap-4">
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
                 <button onclick="filterGallery('all')" class="filter-btn active bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-all" data-filter="all">All Photos</button>
                 <button onclick="filterGallery('campus')" class="filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-6 py-2 rounded-full font-medium transition-all" data-filter="campus">Campus</button>
                 <button onclick="filterGallery('classroom')" class="filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-6 py-2 rounded-full font-medium transition-all" data-filter="classroom">Classrooms</button>
@@ -104,7 +104,7 @@
     <!-- Gallery Grid -->
     <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="galleryGrid">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8" id="galleryGrid">
                 <!-- Campus Photos -->
                 <div class="gallery-item campus group cursor-pointer" data-category="campus" onclick="openModal(this)">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
@@ -262,28 +262,68 @@
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="gradient-bg rounded-3xl p-12 text-center">
-                <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">Want to See Our School in Person?</h2>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">Want to See Our School in Person?</h2>
                 <p class="text-xl text-white/90 max-w-2xl mx-auto mb-8">Schedule a visit to tour our facilities and see firsthand why parents choose Excellent Spirit International School.</p>
-                <div class="flex flex-wrap justify-center gap-4">
+                <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
                     <a href="contact.html" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all">Schedule a Visit</a>
-                    <a href="admissions.html" class="bg-white/20 hover:bg-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all backdrop-blur-sm border border-white/30">Start Admissions</a>
+                    <a href="admissions.html" class="bg-white/20 hover:bg-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition-all backdrop-blur-sm border border-white/30">Start Admissions</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Photo Modal (lightbox) -->
-    <div id="galleryModal" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4" onclick="closeModal()">
-        <button onclick="closeModal()" class="absolute top-6 right-6 text-white text-4xl leading-none hover:text-gray-300">&times;</button>
-        <div class="max-w-3xl w-full" onclick="event.stopPropagation()">
-            <div id="galleryModalImage" class="aspect-[4/3] rounded-2xl bg-gray-700 flex items-center justify-center overflow-hidden">
-                <div id="galleryModalPlaceholder" class="text-center text-white">
-                    <span id="galleryModalEmoji" class="text-7xl"></span>
+    <!-- Lightbox Modal -->
+    <div id="galleryModal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/95" onclick="closeModal()"></div>
+
+        <!-- Close button -->
+        <button onclick="closeModal()" aria-label="Close"
+            class="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- Counter -->
+        <div id="modalCounter" class="absolute top-4 left-1/2 -translate-x-1/2 z-10 text-white/60 text-sm font-medium"></div>
+
+        <!-- Prev arrow -->
+        <button id="modalPrev" onclick="stepModal(-1)" aria-label="Previous"
+            class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </button>
+
+        <!-- Next arrow -->
+        <button id="modalNext" onclick="stepModal(1)" aria-label="Next"
+            class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+
+        <!-- Image area -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center px-14 sm:px-20 py-16">
+            <div class="w-full max-w-4xl">
+                <div id="galleryModalImage"
+                    class="w-full rounded-xl bg-gray-800 overflow-hidden flex items-center justify-center"
+                    style="max-height:70vh; min-height:200px">
+                    <img id="modalImg" src="" alt=""
+                        class="hidden max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-xl">
+                    <div id="galleryModalPlaceholder" class="flex flex-col items-center justify-center p-12 text-white/40">
+                        <svg class="w-16 h-16 mb-3" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                            <path stroke-linecap="round" d="M21 15l-5-5L5 21"/>
+                        </svg>
+                        <span class="text-sm">No image uploaded yet</span>
+                    </div>
                 </div>
-            </div>
-            <div class="text-center mt-4">
-                <h3 id="galleryModalCaption" class="text-white text-xl font-bold"></h3>
-                <p id="galleryModalSub" class="text-white/70"></p>
+                <div class="text-center mt-4 px-4">
+                    <h3 id="galleryModalCaption" class="text-white font-bold text-lg sm:text-xl leading-tight"></h3>
+                    <p id="galleryModalSub" class="text-white/60 text-sm mt-1"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -291,7 +331,7 @@
     <!-- Footer -->
     <footer class="bg-slate-900 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
                 <div>
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
@@ -327,8 +367,8 @@
                     <h4 class="font-bold text-lg mb-6">Contact Info</h4>
                     <ul class="space-y-3 text-gray-400">
                         <li class="flex items-center gap-2"><span>📍</span> <span data-cms-text="global_address">Ashaley Botwe, Old Town, Accra, Ghana</span></li>
-                        <li class="flex items-center gap-2"><span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" data-cms-mailto="global_email" data-cms-text="global_email" class="text-gray-400 hover:text-white transition-colors">excellentspiritinternational@gmail.com</a></li>
-                        <li class="flex items-center gap-2"><span>🕐</span> Mon – Fri: <span data-cms-text="global_weekdayHours">[School Hours]</span></li>
+                        <li class="flex items-center gap-2"><span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" data-cms-mailto="global_email" data-cms-text="global_email" class="text-gray-400 hover:text-white transition-colors break-all">excellentspiritinternational@gmail.com</a></li>
+                        <li class="flex items-center gap-2"><span>🕐</span> Mon – Fri: <span data-cms-text="global_weekdayHours">8:00 AM – 3:00 PM</span></li>
                     </ul>
                 </div>
             </div>
@@ -549,38 +589,91 @@
             document.getElementById('closeIcon').classList.toggle('hidden');
         }
 
-        function openModal(item) {
-            var imgDiv = item.querySelector('[data-cms-img]');
-            var emoji = item.querySelector('span.text-5xl');
-            var caption = item.querySelector('h4');
-            var sub = item.querySelector('p.text-sm');
-            var modal = document.getElementById('galleryModal');
-            var modalImage = document.getElementById('galleryModalImage');
-            var modalEmoji = document.getElementById('galleryModalEmoji');
-            var modalPlaceholder = document.getElementById('galleryModalPlaceholder');
+        // ── Lightbox ────────────────────────────────────────────────────
+        var _modalItems = [];   // visible gallery items
+        var _modalIdx   = 0;
 
-            var bgImage = imgDiv ? imgDiv.style.backgroundImage : '';
-            if (bgImage) {
-                modalImage.style.backgroundImage = bgImage;
-                modalImage.style.backgroundSize = 'cover';
-                modalImage.style.backgroundPosition = 'center';
-                modalPlaceholder.style.display = 'none';
-            } else {
-                modalImage.style.backgroundImage = '';
-                modalPlaceholder.style.display = '';
-                modalEmoji.textContent = emoji ? emoji.textContent : '';
-            }
-            document.getElementById('galleryModalCaption').textContent = caption ? caption.textContent : '';
-            document.getElementById('galleryModalSub').textContent = sub ? sub.textContent : '';
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+        function openModal(item) {
+            // build list of currently visible items
+            _modalItems = Array.from(document.querySelectorAll('.gallery-item'))
+                .filter(function(el){ return el.style.display !== 'none'; });
+            _modalIdx = _modalItems.indexOf(item);
+            if (_modalIdx < 0) _modalIdx = 0;
+            _showModalAt(_modalIdx);
+            document.getElementById('galleryModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
+
+        function _showModalAt(idx) {
+            var items = _modalItems;
+            if (!items.length) return;
+            idx = (idx + items.length) % items.length;
+            _modalIdx = idx;
+
+            var item    = items[idx];
+            var imgDiv  = item.querySelector('[data-cms-img]');
+            var caption = item.querySelector('h4');
+            var sub     = item.querySelector('p.text-sm');
+            var bg      = imgDiv ? imgDiv.style.backgroundImage : '';
+
+            // extract data URL from background-image: url("...")
+            var dataUrl = '';
+            if (bg) {
+                var m = bg.match(/url\(["']?([^"')]+)["']?\)/);
+                if (m) dataUrl = m[1];
+            }
+
+            var modalImg   = document.getElementById('modalImg');
+            var placeholder = document.getElementById('galleryModalPlaceholder');
+
+            if (dataUrl) {
+                modalImg.src = dataUrl;
+                modalImg.alt = caption ? caption.textContent : '';
+                modalImg.classList.remove('hidden');
+                placeholder.style.display = 'none';
+                document.getElementById('galleryModalImage').style.background = 'transparent';
+            } else {
+                modalImg.classList.add('hidden');
+                modalImg.src = '';
+                placeholder.style.display = '';
+                document.getElementById('galleryModalImage').style.background = '';
+            }
+
+            document.getElementById('galleryModalCaption').textContent = caption ? caption.textContent : '';
+            document.getElementById('galleryModalSub').textContent     = sub ? sub.textContent : '';
+            document.getElementById('modalCounter').textContent        = (idx + 1) + ' / ' + items.length;
+
+            // show/hide arrows
+            document.getElementById('modalPrev').style.visibility = items.length > 1 ? '' : 'hidden';
+            document.getElementById('modalNext').style.visibility = items.length > 1 ? '' : 'hidden';
+        }
+
+        function stepModal(dir) { _showModalAt(_modalIdx + dir); }
 
         function closeModal() {
-            var modal = document.getElementById('galleryModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            document.getElementById('galleryModal').classList.add('hidden');
+            document.body.style.overflow = '';
         }
+
+        // Keyboard nav
+        document.addEventListener('keydown', function(e) {
+            var modal = document.getElementById('galleryModal');
+            if (modal.classList.contains('hidden')) return;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') stepModal(1);
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   stepModal(-1);
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Touch/swipe support
+        (function(){
+            var sx = 0;
+            var modal = document.getElementById('galleryModal');
+            modal.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+            modal.addEventListener('touchend',   function(e){
+                var dx = e.changedTouches[0].clientX - sx;
+                if (Math.abs(dx) > 50) stepModal(dx < 0 ? 1 : -1);
+            }, {passive:true});
+        })();
 
         function filterGallery(category) {
             const items = document.querySelectorAll('.gallery-item');

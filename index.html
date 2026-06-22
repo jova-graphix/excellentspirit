@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="overflow-x:hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,9 +58,9 @@
     }
     </script>
 </head>
-<body class="bg-white">
+<body class="bg-white overflow-x-hidden">
     <!-- Announcement Bar -->
-    <div class="bg-amber-500 text-white text-center py-2 px-4 text-sm font-medium">
+    <div class="bg-amber-500 text-white text-center py-2 px-4 text-xs sm:text-sm font-medium">
         <span data-cms-text="global_announcementText">🎓 Now Enrolling for 2026/2027 Academic Year</span> &nbsp;|&nbsp; <a href="admissions.html" class="underline font-semibold hover:text-amber-100">Apply Now →</a>
     </div>
 
@@ -68,13 +68,13 @@
     <nav id="navbar" class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 lg:h-20">
-                <a href="index.html" class="flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2 min-w-0 shrink">
                     <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 cms-logo-wrap" style="background:#059669">
                         <img data-cms-logo class="w-full h-full object-cover hidden" alt="School logo">
                         <span class="text-white font-bold text-lg cms-logo-initials" data-cms-text="global_logoInitials">ES</span>
                     </div>
-                    <div class="block">
-                        <span class="font-bold text-gray-900" data-cms-text="global_schoolName">Excellent Spirit</span>
+                    <div class="block min-w-0">
+                        <span class="font-bold text-gray-900 truncate block" data-cms-text="global_schoolName">Excellent Spirit</span>
                         <span class="block text-xs text-gray-500" data-cms-text="global_schoolNameSub">International School</span>
                     </div>
                 </a>
@@ -127,17 +127,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h1 class="text-4xl lg:text-6xl font-bold text-white leading-tight mb-6" data-cms-text="home_heroTitle">
+                    <h1 class="text-3xl sm:text-4xl lg:text-6xl font-bold text-white leading-tight mb-6" data-cms-text="home_heroTitle">
                         Nurturing Excellent Spirits in Every Child
                     </h1>
                     <p class="text-xl text-white/90 mb-8 leading-relaxed" data-cms-text="home_heroSubtitle">
                         Quality Crèche, Nursery, KG, and Primary education in Ashaley Botwe, Accra. Where academic excellence meets character development.
                     </p>
                     <div class="flex flex-wrap gap-4">
-                        <a href="admissions.html" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg hover:shadow-xl">
+                        <a href="admissions.html" class="bg-amber-500 hover:bg-amber-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition-all shadow-lg hover:shadow-xl">
                             Start Your Child's Journey
                         </a>
-                        <a href="about.html" class="bg-white/20 hover:bg-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all backdrop-blur-sm border border-white/30">
+                        <a href="about.html" class="bg-white/20 hover:bg-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition-all backdrop-blur-sm border border-white/30">
                             Learn More
                         </a>
                     </div>
@@ -279,7 +279,7 @@
                 <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-4">Academic Programs We Offer</h2>
                 <p class="text-gray-600 text-lg max-w-2xl mx-auto">Comprehensive early childhood and primary education following the Ghana Education Service curriculum.</p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
                 <div class="bg-white rounded-3xl p-8 card-hover shadow-sm border border-gray-100">
                     <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
                         <span class="text-4xl">👶</span>
@@ -371,7 +371,7 @@
                     <a href="admissions.html" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all">
                         Start Admissions Process
                     </a>
-                    <a href="contact.html" class="bg-white/20 hover:bg-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all backdrop-blur-sm border border-white/30">
+                    <a href="contact.html" class="bg-white/20 hover:bg-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition-all backdrop-blur-sm border border-white/30">
                         Schedule a Visit
                     </a>
                 </div>
@@ -387,7 +387,7 @@
                 <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-4">What Parents Appreciate</h2>
                 <p class="text-gray-600 text-lg">Review-inspired highlights from our school community</p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
                 <div class="bg-gray-50 rounded-2xl p-8">
                     <div class="flex items-center gap-1 text-amber-400 mb-4">
                         <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -445,8 +445,7 @@
                                 <span class="text-xl">🕐</span>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-900">School Hours</h4>
-                                <p class="text-gray-600">Monday – Friday: <span data-cms-text="global_weekdayHours">[School Hours]</span></p>
+
                             </div>
                         </div>
                     </div>
@@ -475,7 +474,7 @@
     <!-- Footer -->
     <footer class="bg-slate-900 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
                 <div>
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 cms-logo-wrap" style="background:#059669">
@@ -515,10 +514,10 @@
                             <span>📍</span> <span data-cms-text="global_address">Ashaley Botwe, Old Town, Accra, Ghana</span>
                         </li>
                         <li class="flex items-center gap-2">
-                            <span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" data-cms-mailto="global_email" data-cms-text="global_email" class="text-gray-400 hover:text-white transition-colors">excellentspiritinternational@gmail.com</a>
+                            <span>✉️</span> <a href="mailto:excellentspiritinternational@gmail.com" data-cms-mailto="global_email" data-cms-text="global_email" class="text-gray-400 hover:text-white transition-colors break-all">excellentspiritinternational@gmail.com</a>
                         </li>
                         <li class="flex items-center gap-2">
-                            <span>🕐</span> Mon – Fri: <span data-cms-text="global_weekdayHours">[School Hours]</span>
+                            <span>🕐</span> Mon – Fri: <span data-cms-text="global_weekdayHours">8:00 AM – 3:00 PM</span>
                         </li>
                     </ul>
                 </div>
