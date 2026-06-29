@@ -932,19 +932,23 @@
           errEl.textContent = "Current password is incorrect.";
           errEl.classList.remove("hidden");
           if (btn) { btn.disabled = false; btn.textContent = "Update Password"; }
-          return;
+          return; // stop here — do NOT proceed to update
         }
-        return cmsAdminDocRef.set({ pwHash: cmsHash(newPw) }, { merge: true });
-      }).then(function (result) {
-        if (result === undefined) return; // early return above (wrong pw)
-        document.getElementById("changePwCurrent").value = "";
-        document.getElementById("changePwNew").value = "";
-        document.getElementById("changePwConfirm").value = "";
-        successEl.classList.remove("hidden");
-        setTimeout(function () { successEl.classList.add("hidden"); }, 3000);
-        if (btn) { btn.disabled = false; btn.textContent = "Update Password"; }
+        // Current password correct — update to new hash
+        cmsAdminDocRef.set({ pwHash: cmsHash(newPw) }, { merge: true }).then(function () {
+          document.getElementById("changePwCurrent").value = "";
+          document.getElementById("changePwNew").value = "";
+          document.getElementById("changePwConfirm").value = "";
+          successEl.classList.remove("hidden");
+          setTimeout(function () { successEl.classList.add("hidden"); }, 3000);
+          if (btn) { btn.disabled = false; btn.textContent = "Update Password"; }
+        }).catch(function () {
+          errEl.textContent = "Could not update password — check Firestore rules.";
+          errEl.classList.remove("hidden");
+          if (btn) { btn.disabled = false; btn.textContent = "Update Password"; }
+        });
       }).catch(function () {
-        errEl.textContent = "Could not update password — check Firestore rules.";
+        errEl.textContent = "Could not verify password — check Firestore rules.";
         errEl.classList.remove("hidden");
         if (btn) { btn.disabled = false; btn.textContent = "Update Password"; }
       });
