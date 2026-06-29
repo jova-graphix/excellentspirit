@@ -823,7 +823,7 @@
       // Otherwise check Firestore to see whether a password has been set yet
       show("loginState");
       cmsAdminDocRef.get().then(function (snap) {
-        var hasPassword = snap.exists && !!snap.data().pwHash;
+        var hasPassword = snap.exists && snap.data() && !!snap.data().pwHash;
         if (hasPassword) {
           document.getElementById("signinPanel").classList.remove("hidden");
           document.getElementById("setupPanel").classList.add("hidden");
@@ -831,8 +831,15 @@
           document.getElementById("setupPanel").classList.remove("hidden");
           document.getElementById("signinPanel").classList.add("hidden");
         }
-      }).catch(function () {
-        // Firestore unreadable — fall back to showing setup panel
+      }).catch(function (err) {
+        // Firestore read failed — surface the error rather than silently showing
+        // setup (which would let anyone on a new device overwrite the password)
+        console.error("[CMS] Could not read _admin/config from Firestore:", err);
+        var errEl = document.getElementById("setupError");
+        if (errEl) {
+          errEl.textContent = "Cannot reach Firestore. Check your security rules allow read on the _admin collection, then reload.";
+          errEl.classList.remove("hidden");
+        }
         document.getElementById("setupPanel").classList.remove("hidden");
         document.getElementById("signinPanel").classList.add("hidden");
       });
