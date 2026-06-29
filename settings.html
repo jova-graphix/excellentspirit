@@ -494,7 +494,9 @@
           placeholders.
        5. In Firestore, set the security rules shown in
           FIREBASE-SETUP.md so visitors can read content but only
-          your logged-in admin account can change it.
+          your logged-in admin account can change it. Make sure the
+          rules also allow read/write access to the _admin collection
+          (used to store the shared admin password across devices).
 
        IMPORTANT: this config block is repeated on every page (not
        loaded from one shared file), so paste your real values into
@@ -794,11 +796,11 @@
       cmsLocalInit();
     });
 
-    /* ---- Local password auth helpers ---- */
-    var CMS_PW_KEY   = "cms_admin_pw_hash";
-    var CMS_SESS_KEY = "cms_admin_session";
+    /* ---- Cross-device password auth (hash stored in Firestore) ---- */
+    var CMS_SESS_KEY   = "cms_admin_session";
+    var cmsAdminDocRef = null; // set after Firestore is ready
 
-    // Simple non-cryptographic hash (good enough for a local admin gate)
+    // Simple non-cryptographic hash (good enough for an admin gate)
     function cmsHash(str) {
       var hash = 0;
       for (var i = 0; i < str.length; i++) {
@@ -808,30 +810,39 @@
     }
 
     function cmsLocalInit() {
-      var hasPassword = !!localStorage.getItem(CMS_PW_KEY);
-      var hasSession  = !!sessionStorage.getItem(CMS_SESS_KEY);
+      // cmsDb is already initialised at this point
+      cmsAdminDocRef = cmsDb.collection("_admin").doc("config");
 
-      if (hasSession) {
-        // Already authenticated this session
+      // If this session is already authenticated, go straight to the editor
+      if (sessionStorage.getItem(CMS_SESS_KEY)) {
         document.getElementById("signOutBtn").classList.remove("hidden");
         loadContentAndRender();
         return;
       }
 
+      // Otherwise check Firestore to see whether a password has been set yet
       show("loginState");
-      if (hasPassword) {
-        document.getElementById("signinPanel").classList.remove("hidden");
-        document.getElementById("setupPanel").classList.add("hidden");
-      } else {
+      cmsAdminDocRef.get().then(function (snap) {
+        var hasPassword = snap.exists && !!snap.data().pwHash;
+        if (hasPassword) {
+          document.getElementById("signinPanel").classList.remove("hidden");
+          document.getElementById("setupPanel").classList.add("hidden");
+        } else {
+          document.getElementById("setupPanel").classList.remove("hidden");
+          document.getElementById("signinPanel").classList.add("hidden");
+        }
+      }).catch(function () {
+        // Firestore unreadable — fall back to showing setup panel
         document.getElementById("setupPanel").classList.remove("hidden");
         document.getElementById("signinPanel").classList.add("hidden");
-      }
+      });
     }
 
     function cmsSetupPassword() {
       var pw  = document.getElementById("setupPassword").value;
       var pw2 = document.getElementById("setupPasswordConfirm").value;
       var err = document.getElementById("setupError");
+      var btn = document.querySelector("#setupPanel button");
       err.classList.add("hidden");
 
       if (pw.length < 6) {
@@ -845,41 +856,55 @@
         return;
       }
 
-      localStorage.setItem(CMS_PW_KEY, cmsHash(pw));
-      sessionStorage.setItem(CMS_SESS_KEY, "1");
-      document.getElementById("signOutBtn").classList.remove("hidden");
-      loadContentAndRender();
+      if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+
+      cmsAdminDocRef.set({ pwHash: cmsHash(pw) }, { merge: true }).then(function () {
+        sessionStorage.setItem(CMS_SESS_KEY, "1");
+        document.getElementById("signOutBtn").classList.remove("hidden");
+        loadContentAndRender();
+      }).catch(function (e) {
+        err.textContent = "Could not save password — check Firestore rules.";
+        err.classList.remove("hidden");
+        if (btn) { btn.disabled = false; btn.textContent = "Set Password & Enter"; }
+      });
     }
 
     function cmsLocalSignIn() {
       var pw    = document.getElementById("loginPassword").value;
       var errEl = document.getElementById("loginError");
+      var btn   = document.querySelector("#signinPanel button");
       errEl.classList.add("hidden");
 
-      if (cmsHash(pw) === localStorage.getItem(CMS_PW_KEY)) {
-        sessionStorage.setItem(CMS_SESS_KEY, "1");
-        document.getElementById("signOutBtn").classList.remove("hidden");
-        loadContentAndRender();
-      } else {
-        errEl.textContent = "Incorrect password. Please try again.";
+      if (btn) { btn.disabled = true; btn.textContent = "Checking…"; }
+
+      cmsAdminDocRef.get().then(function (snap) {
+        var storedHash = snap.exists ? snap.data().pwHash : null;
+        if (storedHash && cmsHash(pw) === storedHash) {
+          sessionStorage.setItem(CMS_SESS_KEY, "1");
+          document.getElementById("signOutBtn").classList.remove("hidden");
+          loadContentAndRender();
+        } else {
+          errEl.textContent = "Incorrect password. Please try again.";
+          errEl.classList.remove("hidden");
+          if (btn) { btn.disabled = false; btn.textContent = "Sign In"; }
+        }
+      }).catch(function () {
+        errEl.textContent = "Could not verify password — check Firestore rules.";
         errEl.classList.remove("hidden");
-      }
+        if (btn) { btn.disabled = false; btn.textContent = "Sign In"; }
+      });
     }
 
     function cmsChangePassword() {
-      var current  = document.getElementById("changePwCurrent").value;
-      var newPw    = document.getElementById("changePwNew").value;
-      var confirm  = document.getElementById("changePwConfirm").value;
-      var errEl    = document.getElementById("changePwError");
+      var current   = document.getElementById("changePwCurrent").value;
+      var newPw     = document.getElementById("changePwNew").value;
+      var confirm   = document.getElementById("changePwConfirm").value;
+      var errEl     = document.getElementById("changePwError");
       var successEl = document.getElementById("changePwSuccess");
+      var btn       = document.querySelector("#view-password button");
       errEl.classList.add("hidden");
       successEl.classList.add("hidden");
 
-      if (cmsHash(current) !== localStorage.getItem(CMS_PW_KEY)) {
-        errEl.textContent = "Current password is incorrect.";
-        errEl.classList.remove("hidden");
-        return;
-      }
       if (newPw.length < 6) {
         errEl.textContent = "New password must be at least 6 characters.";
         errEl.classList.remove("hidden");
@@ -891,19 +916,38 @@
         return;
       }
 
-      localStorage.setItem(CMS_PW_KEY, cmsHash(newPw));
-      document.getElementById("changePwCurrent").value = "";
-      document.getElementById("changePwNew").value = "";
-      document.getElementById("changePwConfirm").value = "";
-      successEl.classList.remove("hidden");
-      setTimeout(function () { successEl.classList.add("hidden"); }, 3000);
+      if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+
+      // Verify current password against Firestore before updating
+      cmsAdminDocRef.get().then(function (snap) {
+        var storedHash = snap.exists ? snap.data().pwHash : null;
+        if (!storedHash || cmsHash(current) !== storedHash) {
+          errEl.textContent = "Current password is incorrect.";
+          errEl.classList.remove("hidden");
+          if (btn) { btn.disabled = false; btn.textContent = "Update Password"; }
+          return;
+        }
+        return cmsAdminDocRef.set({ pwHash: cmsHash(newPw) }, { merge: true });
+      }).then(function (result) {
+        if (result === undefined) return; // early return above (wrong pw)
+        document.getElementById("changePwCurrent").value = "";
+        document.getElementById("changePwNew").value = "";
+        document.getElementById("changePwConfirm").value = "";
+        successEl.classList.remove("hidden");
+        setTimeout(function () { successEl.classList.add("hidden"); }, 3000);
+        if (btn) { btn.disabled = false; btn.textContent = "Update Password"; }
+      }).catch(function () {
+        errEl.textContent = "Could not update password — check Firestore rules.";
+        errEl.classList.remove("hidden");
+        if (btn) { btn.disabled = false; btn.textContent = "Update Password"; }
+      });
     }
 
     function cmsSignOut() {
       sessionStorage.removeItem(CMS_SESS_KEY);
       document.getElementById("signOutBtn").classList.add("hidden");
       show("loginState");
-      // Re-show sign-in panel (password already set)
+      // Re-show sign-in panel (password already set across devices)
       document.getElementById("signinPanel").classList.remove("hidden");
       document.getElementById("setupPanel").classList.add("hidden");
       // Clear the password field
